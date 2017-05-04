@@ -1,0 +1,22 @@
+
+Asesor:
+    Consultar historial de avisos
+    Consultar evidencia alumno
+    Administrar seguimiento alumno
+    Administrar lista asistencia
+    ¿Reservar actividad?
+    *Consultar calendario de actividades
+    *Consultar historial de avisos
+    Consultar grupos y actividades
+    Consultar historial de observaciones
+Alumno:
+    Reservar actividad
+    Consultar portafolio de evidencias (falta: hoja de seguimiento, bitácora y reflexión)
+    Consultar avances
+    *Consultar historial de avisos
+    *Consultar calendario de actividades
+Coordinador:
+    Administrar reservación conversación
+    Administrar reservación asesoría
+    Administrar EE
+    Administrar Actividad 
