@@ -1,4 +1,4 @@
-package siga;
+package siga.logica;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,13 +8,15 @@ import javafx.stage.Stage;
 
 /**
  *
+ * @author Domínguez Delgado Angel Eduardo
+ * @author Domínguez González José Andrés
  * @author Hernández González Esmeralda Yamileth
  */
 public class Siga extends Application {
   
   @Override
   public void start(Stage stage) throws Exception {
-    Parent pane = FXMLLoader.load(getClass().getResource("/siga/ventanas/ReservarActividad.fxml"));
+    Parent pane = FXMLLoader.load(getClass().getResource("/siga/presentacion/ReservarActividad.fxml"));
     Scene scene = new Scene(pane);
     stage.setTitle("Reservar Actividad");
     stage.setScene(scene);

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="472.0" prefWidth="532.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="siga.controladores.FXMLReservarActividadController">
+<AnchorPane id="AnchorPane" prefHeight="472.0" prefWidth="532.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="siga.logica.FXMLReservarActividadController">
    <children>
       <ImageView fitHeight="71.0" fitWidth="80.0" layoutX="32.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
