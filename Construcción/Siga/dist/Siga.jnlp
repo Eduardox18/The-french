@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Siga.jnlp">
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="SIGA.jnlp">
   <information>
-    <title>Siga</title>
+    <title>SIGA</title>
     <vendor>Personal</vendor>
     <description>null</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Siga.jar" size="132924" download="eager" />
+    <jar href="SIGA.jar" size="150743" download="eager" />
   </resources>
-  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Siga" >
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="SIGA" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="siga.logica.Siga"  name="Siga" />
+  <jfx:javafx-desc  width="800" height="600" main-class="logica.Main"  name="SIGA" />
   <update check="always"/>
 </jnlp>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="71.0" fitWidth="80.0" layoutX="43.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@recursos/icono.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="130.0" layoutY="15.0" prefHeight="42.0" prefWidth="392.0" text="Completa el formulario para registrar una nueva">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="130.0" layoutY="51.0" text="Actividad en el Sistema.">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="65.0" layoutY="108.0" text="Idioma:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="348.0" layoutY="107.0" text="Fecha:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="152.0" layoutY="105.0" prefWidth="150.0">
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" text="Inglés" />
+                  <MenuItem mnemonicParsing="false" text="Francés" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+      </ComboBox>
+      <DatePicker layoutX="398.0" layoutY="105.0" promptText="             dd/mm/aa" />
+      <TableView layoutX="43.0" layoutY="145.0" prefHeight="200.0" prefWidth="531.0">
+        <columns>
+          <TableColumn prefWidth="144.0" text="Hora" />
+          <TableColumn prefWidth="199.0" text="Actividad" />
+            <TableColumn prefWidth="187.0" text="Profesor" />
+        </columns>
+      </TableView>
+      <Button layoutX="401.0" layoutY="361.0" mnemonicParsing="false" text="Cancelar" />
+      <Button layoutX="507.0" layoutY="361.0" mnemonicParsing="false" text="Reservar" />
+   </children>
+</AnchorPane>

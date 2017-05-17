@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/lalo/Documents/Proyectos%20GitHub/The-french/Construcción/Siga/src/siga/presentacion/ReservarActividad.fxml</file>
-            <file>file:/Users/lalo/Documents/Proyectos%20GitHub/The-french/Construcción/Siga/src/siga/logica/Siga.java</file>
-            <file>file:/Users/lalo/Documents/Proyectos%20GitHub/The-french/Construcción/Siga/src/siga/logica/FXMLReservarActividadController.java</file>
-            <file>file:/Users/lalo/Documents/Proyectos%20GitHub/The-french/Construcción/Siga/src/siga/presentacion/Inicial.fxml</file>
-            <file>file:/Users/lalo/Documents/Proyectos%20GitHub/The-french/Construcción/Siga/src/siga/logica/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/Personal/Desktop/Main/src/logica/ControladorPrincipal.java</file>
+            <file>file:/C:/Users/Personal/Desktop/Main/src/presentacion/Principal.fxml</file>
+            <file>file:/C:/Users/Personal/Desktop/Main/src/presentacion/Inicial.fxml</file>
+            <file>file:/C:/Users/Personal/Desktop/Main/src/logica/Main.java</file>
+            <file>file:/C:/Users/Personal/Desktop/Main/src/presentacion/ReservarActividad.fxml</file>
         </group>
     </open-files>
 </project-private>
