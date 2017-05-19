@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import presentacion.Dialogo;
 
 /**
  * Clase Usuario encargada de verificar la existencia de un usuario en la base de datos.
@@ -69,7 +70,8 @@ public class Usuario implements UsuarioDAO {
                     passRecuperado = rs.getString("passwordUsuario");
                 }
             } catch (SQLException e) {
-                System.out.println("Excepcion");
+                Dialogo dialogo = new Dialogo();
+                dialogo.alertaError();
             }
             return passRecuperado.equals(obtenerPassword(password));
         }
@@ -100,7 +102,8 @@ public class Usuario implements UsuarioDAO {
                 passCifrado = rs.getString("cifrado");
             }
         } catch (SQLException e) {
-            //alerta
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
         }
         return passCifrado;
     }
@@ -130,7 +133,8 @@ public class Usuario implements UsuarioDAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Excepcion");
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
         }
         return false;
     }

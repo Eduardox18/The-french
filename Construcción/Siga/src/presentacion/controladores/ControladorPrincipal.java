@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package presentacion;
+package presentacion.controladores;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,18 +13,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import presentacion.Dialogo;
 
 /**
  *
- * @author Angel Eduardo Domínguez 
+ * @author Angel Eduardo Domínguez
  */
 public class ControladorPrincipal {
 
-    @FXML 
+    @FXML
     private MenuItem barReservarActividad;
 
-    @FXML 
-    private MenuItem barRegistrarBitacora; 
+    @FXML
+    private MenuItem barRegistrarBitacora;
 
     @FXML
     void abrirReservarActividad(ActionEvent event) {
@@ -35,20 +36,22 @@ public class ControladorPrincipal {
             BorderPane border = ControladorLogIn.getPrincipal();
             border.setCenter(paneReservarActividad);
         } catch (IOException e) {
-            //Alerta de excepción
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
         }
     }
-    
+
     @FXML
     void abrirRegistrarBitacora(ActionEvent event) {
         try {
             URL registrarBitacora = getClass().getResource("/presentacion/RegistrarBitacora.fxml");
             AnchorPane paneRegistrarBitacora = FXMLLoader.load(registrarBitacora);
-            
+
             BorderPane border = ControladorLogIn.getPrincipal();
             border.setCenter(paneRegistrarBitacora);
         } catch (IOException e) {
-            //Alerta de excepción
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
         }
     }
 

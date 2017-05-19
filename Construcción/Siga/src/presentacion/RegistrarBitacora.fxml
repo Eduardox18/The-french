@@ -8,7 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentacion.ControladorRegistrarBitacora">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentacion.controladores.ControladorRegistrarBitacora">
    <children>
       <Label layoutX="17.0" layoutY="42.0" text="No. Bitácora:" />
       <Label layoutX="19.0" layoutY="79.0" text="Código de actividad:" />
