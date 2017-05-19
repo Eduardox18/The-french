@@ -1,4 +1,4 @@
-package logica;
+package presentacion;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,26 +28,26 @@ public class ControladorLogIn extends Application {
     private static BorderPane root = new BorderPane();
     private static BorderPane panePrincipal = new BorderPane();
 
-    public static BorderPane getRoot() {
+    public static BorderPane getPrincipal() {
         return panePrincipal;
     }
 
     @Override
     public void start(Stage primaryStage) {
 
-        AnchorPane paneUno = null;
+        AnchorPane paneLogin = null;
 
         URL login = getClass().getResource("/presentacion/LogIn.fxml");
         try {
-            paneUno = FXMLLoader.load(login);
+            paneLogin = FXMLLoader.load(login);
         } catch (IOException ex) {
             Logger.getLogger(ControladorLogIn.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        root.setCenter(paneUno);
+        root.setCenter(paneLogin);
 
-        primaryStage.setTitle("LogIn");
         Scene scene = new Scene(root, 249, 358);
+        primaryStage.setTitle("LogIn");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -58,14 +58,14 @@ public class ControladorLogIn extends Application {
         try {
             URL menuBarURL = getClass().getResource("/presentacion/Principal.fxml");
             MenuBar bar = FXMLLoader.load(menuBarURL);
-
             URL paneInicialURL = getClass().getResource("/presentacion/Inicial.fxml");
             AnchorPane paneInicial = FXMLLoader.load(paneInicialURL);
+            
             Stage stage = (Stage) botonIngresar.getScene().getWindow();
             stage.close();
-            
-            panePrincipal.setCenter(paneInicial);
+
             panePrincipal.setTop(bar);
+            panePrincipal.setCenter(paneInicial);
             Scene sceneDos = new Scene(panePrincipal, 602, 429);
             stagePrincipal.setTitle("Inicial");
             stagePrincipal.setScene(sceneDos);

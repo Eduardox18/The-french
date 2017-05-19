@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package presentacion;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +32,7 @@ public class ControladorPrincipal {
             URL reservarActividad = getClass().getResource("/presentacion/ReservarActividad.fxml");
             AnchorPane paneReservarActividad = FXMLLoader.load(reservarActividad);
 
-            BorderPane border = ControladorLogIn.getRoot();
+            BorderPane border = ControladorLogIn.getPrincipal();
             border.setCenter(paneReservarActividad);
         } catch (IOException e) {
             //Alerta de excepción
@@ -45,7 +45,7 @@ public class ControladorPrincipal {
             URL registrarBitacora = getClass().getResource("/presentacion/RegistrarBitacora.fxml");
             AnchorPane paneRegistrarBitacora = FXMLLoader.load(registrarBitacora);
             
-            BorderPane border = ControladorLogIn.getRoot();
+            BorderPane border = ControladorLogIn.getPrincipal();
             border.setCenter(paneRegistrarBitacora);
         } catch (IOException e) {
             //Alerta de excepción
