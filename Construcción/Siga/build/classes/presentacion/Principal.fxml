@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logica.ControladorPrincipal">
+<MenuBar xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logica.ControladorPrincipal">
   <menus>
     <Menu mnemonicParsing="false" text="Administrar">
       <items>
-        <MenuItem fx:id="displayOne" mnemonicParsing="false" onAction="#switchToOne" text="Actividades" />
+        <MenuItem mnemonicParsing="false" text="Actividades" />
             <Menu mnemonicParsing="false" text="Reservacion">
               <items>
                 <MenuItem mnemonicParsing="false" text="Conversación" />
@@ -22,13 +22,13 @@
     </Menu>
     <Menu mnemonicParsing="false" text="Reservar">
       <items>
-        <MenuItem fx:id="displayTwo" mnemonicParsing="false" onAction="#switchToTwo" text="Actividad" />
+        <MenuItem fx:id="barReservarActividad" mnemonicParsing="false" onAction="#abrirReservarActividad" text="Actividad" />
       </items>
     </Menu>
       <Menu mnemonicParsing="false" text="Registrar">
         <items>
           <MenuItem mnemonicParsing="false" text="Hoja de Seguimiento" />
-            <MenuItem mnemonicParsing="false" text="Bitácora" />
+            <MenuItem fx:id="barRegistrarBitacora" mnemonicParsing="false" onAction="#abrirRegistrarBitacora" text="Bitácora" />
             <MenuItem mnemonicParsing="false" text="Autoevaluación" />
         </items>
       </Menu>

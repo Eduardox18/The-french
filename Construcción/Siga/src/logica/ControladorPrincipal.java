@@ -16,55 +16,40 @@ import javafx.scene.layout.BorderPane;
 
 /**
  *
- * @author Personal
+ * @author Angel Eduardo Domínguez 
  */
 public class ControladorPrincipal {
-  
-    @FXML // fx:id="displayOne"
-  private MenuItem displayOne; // Value injected by FXMLLoader
 
-  @FXML // fx:id="displayTwo"
-  private MenuItem displayTwo; // Value injected by FXMLLoader
+    @FXML 
+    private MenuItem barReservarActividad;
 
-  /**
-   * Event handler for MenuItem one
-   */
-  @FXML
-  void switchToOne(ActionEvent event) {
+    @FXML 
+    private MenuItem barRegistrarBitacora; 
+
+    @FXML
+    void abrirReservarActividad(ActionEvent event) {
+        try {
+            URL reservarActividad = getClass().getResource("/presentacion/ReservarActividad.fxml");
+            AnchorPane paneReservarActividad = FXMLLoader.load(reservarActividad);
+
+            BorderPane border = ControladorLogIn.getRoot();
+            border.setCenter(paneReservarActividad);
+        } catch (IOException e) {
+            //Alerta de excepción
+        }
+    }
     
-    try {
-      
-      URL paneOneUrl = getClass().getResource("/presentacion/Inicial.fxml");
-      AnchorPane paneOne = FXMLLoader.load( paneOneUrl );
-      
-      BorderPane border = Main.getRoot();
-      border.setCenter(paneOne);
-      
-    } catch (IOException e) {
-      e.printStackTrace();
+    @FXML
+    void abrirRegistrarBitacora(ActionEvent event) {
+        try {
+            URL registrarBitacora = getClass().getResource("/presentacion/RegistrarBitacora.fxml");
+            AnchorPane paneRegistrarBitacora = FXMLLoader.load(registrarBitacora);
+            
+            BorderPane border = ControladorLogIn.getRoot();
+            border.setCenter(paneRegistrarBitacora);
+        } catch (IOException e) {
+            //Alerta de excepción
+        }
     }
 
-
-  }
-
-  /**
-   * Event handler for MenuItem two
-   */
-  @FXML
-  void switchToTwo(ActionEvent event) {
-
-    try {
-      
-      URL paneTwoUrl = getClass().getResource("/presentacion/ReservarActividad.fxml");
-      AnchorPane paneTwo = FXMLLoader.load( paneTwoUrl );
-      
-      BorderPane border = Main.getRoot();
-      border.setCenter(paneTwo);
-    
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-  }
-  
 }

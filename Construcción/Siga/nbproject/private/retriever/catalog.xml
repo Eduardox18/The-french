@@ -2,4 +2,5 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://javafx.com/javafx/8.0.40" uri="javafx.com/javafx/8.0.40"/>
     <system systemId="http://javafx.com/javafx/8" uri="javafx.com/javafx/8"/>
+    <system systemId="http://javafx.com/javafx/8.0.111" uri="www.oracle.com/technetwork/java/javase/overview/index.html"/>
 </catalog>
