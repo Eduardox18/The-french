@@ -53,17 +53,13 @@ public class Usuario implements UsuarioDAO {
             sentencia.setString(1, nombre);
             rs = sentencia.executeQuery();
             
-            if(rs.next() && rs != null) {
+            if(rs.next()) {
                 passRecuperado = rs.getString("passwordUsuario");
             }
         } catch (SQLException e) {
             
         }
-        
-        if(passRecuperado.equals(obtenerPassword(password))) {
-            System.out.println("Si jaló");
-        }
-        return false;
+        return passRecuperado.equals(obtenerPassword(password));
     }
     
     @Override
@@ -75,16 +71,16 @@ public class Usuario implements UsuarioDAO {
         
         try {
             conexion = new Conexion().connection();
-            String consulta = "SELECT sha2('?', 256) as cifrado";
+            String consulta = "SELECT sha2('?', 256) AS cifrado";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, nombre);
             rs = sentencia.executeQuery();
             
-            if(rs.next() && rs != null) {
+            if(rs.next()) {
                 passCifrado = rs.getString("cifrado");
             }
         } catch (SQLException e) {
-            
+            //AlertaGUI
         }
         return passCifrado;
     }

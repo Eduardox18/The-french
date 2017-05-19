@@ -9,11 +9,15 @@ import static javafx.application.Application.launch;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import logica.Usuario;
 
 /**
  * FXML Controller class
@@ -21,62 +25,84 @@ import javafx.stage.Stage;
  * @author Angel Eduardo Domínguez Delgado
  */
 public class ControladorLogIn extends Application {
-
-    @FXML
-    Button botonIngresar;
-
+    
     private static BorderPane root = new BorderPane();
     private static BorderPane panePrincipal = new BorderPane();
-
+    
+    @FXML
+    private Button botonIngresar;
+    @FXML
+    private TextField tfUsuario;
+    @FXML
+    private TextField tfPassword;
+    
     public static BorderPane getPrincipal() {
         return panePrincipal;
     }
-
+    
     @Override
     public void start(Stage primaryStage) {
-
+        
         AnchorPane paneLogin = null;
-
+        
         URL login = getClass().getResource("/presentacion/LogIn.fxml");
         try {
             paneLogin = FXMLLoader.load(login);
         } catch (IOException ex) {
             Logger.getLogger(ControladorLogIn.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         root.setCenter(paneLogin);
-
+        
         Scene scene = new Scene(root, 249, 358);
         primaryStage.setTitle("LogIn");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
+    
     @FXML
     public void abrirInicio() {
-        Stage stagePrincipal = new Stage();
-        try {
-            URL menuBarURL = getClass().getResource("/presentacion/Principal.fxml");
-            MenuBar bar = FXMLLoader.load(menuBarURL);
-            URL paneInicialURL = getClass().getResource("/presentacion/Inicial.fxml");
-            AnchorPane paneInicial = FXMLLoader.load(paneInicialURL);
-            
-            Stage stage = (Stage) botonIngresar.getScene().getWindow();
-            stage.close();
-
-            panePrincipal.setTop(bar);
-            panePrincipal.setCenter(paneInicial);
-            Scene sceneDos = new Scene(panePrincipal, 602, 429);
-            stagePrincipal.setTitle("Inicial");
-            stagePrincipal.setScene(sceneDos);
-            stagePrincipal.show();
-        } catch (IOException ex) {
-            //Alerta de excepción
+        Usuario usuario = new Usuario();
+        
+        if (tfUsuario.equals("") || tfPassword.equals("")) {
+            Alert alertaCampos = new Alert(AlertType.WARNING);
+            alertaCampos.setTitle("Campos incompletos");
+            alertaCampos.setContentText("Por favor completa todos los campos.");
+            alertaCampos.showAndWait();
+        } else {
+            if (usuario.consultaUsuario(tfUsuario.getText(), tfPassword.getText())) {
+                Stage stagePrincipal = new Stage();
+                try {
+                    URL menuBarURL = getClass().getResource("/presentacion/Principal.fxml");
+                    MenuBar bar = FXMLLoader.load(menuBarURL);
+                    URL paneInicialURL = getClass().getResource("/presentacion/Inicial.fxml");
+                    AnchorPane paneInicial = FXMLLoader.load(paneInicialURL);
+                    
+                    Stage stage = (Stage) botonIngresar.getScene().getWindow();
+                    stage.close();
+                    
+                    panePrincipal.setTop(bar);
+                    panePrincipal.setCenter(paneInicial);
+                    Scene sceneDos = new Scene(panePrincipal, 602, 429);
+                    stagePrincipal.setTitle("Inicial");
+                    stagePrincipal.setScene(sceneDos);
+                    stagePrincipal.show();
+                } catch (IOException ex) {
+                    //Alerta de excepción
+                }
+            } else {
+                Alert alertaUsuario = new Alert(AlertType.WARNING);
+                alertaUsuario.setTitle("Usuario no encontrado");
+                alertaUsuario.setContentText("El usuario que ingresó no existe.");
+                alertaUsuario.showAndWait();
+                tfUsuario.setText(null);
+                tfPassword.setText(null);
+            }
         }
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }
-
+    
 }

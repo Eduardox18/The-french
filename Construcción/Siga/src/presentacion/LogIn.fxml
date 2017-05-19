@@ -16,8 +16,8 @@
             <Image url="@recursos/user.png" />
          </image>
       </ImageView>
-      <TextField layoutX="41.0" layoutY="195.0" promptText="Usuario" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="41.0" />
-      <PasswordField layoutX="41.0" layoutY="250.0" promptText="Contraseña" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="41.0" />
+      <TextField fx:id="tfUsuario" layoutX="41.0" layoutY="195.0" promptText="Usuario" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="41.0" />
+      <PasswordField fx:id="tfPassword" layoutX="41.0" layoutY="250.0" promptText="Contraseña" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="41.0" />
       <Button fx:id="botonIngresar" layoutX="76.0" layoutY="317.0" mnemonicParsing="false" onAction="#abrirInicio" prefHeight="27.0" prefWidth="98.0" text="Ingresar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="76.0" AnchorPane.rightAnchor="75.0" />
       <Label layoutX="104.0" layoutY="14.0" text="SIGA">
          <font>
