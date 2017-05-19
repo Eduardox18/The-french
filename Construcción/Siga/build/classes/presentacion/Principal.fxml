@@ -8,16 +8,16 @@
   <menus>
     <Menu mnemonicParsing="false" text="Administrar">
       <items>
-        <MenuItem mnemonicParsing="false" text="Actividades" />
+        <MenuItem disable="true" mnemonicParsing="false" text="Actividades" />
             <Menu mnemonicParsing="false" text="Reservacion">
               <items>
-                <MenuItem mnemonicParsing="false" text="Conversación" />
-                  <MenuItem mnemonicParsing="false" text="Asesoría" />
+                <MenuItem disable="true" mnemonicParsing="false" text="Conversación" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Asesoría" />
               </items>
             </Menu>
-            <MenuItem mnemonicParsing="false" text="Lista de Asistencia" />
-            <MenuItem mnemonicParsing="false" text="Seguimiento del Alumno" />
-            <MenuItem mnemonicParsing="false" text="Experiencias Educativas" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Lista de Asistencia" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Seguimiento del Alumno" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Experiencias Educativas" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Reservar">
@@ -27,27 +27,27 @@
     </Menu>
       <Menu mnemonicParsing="false" text="Registrar">
         <items>
-          <MenuItem mnemonicParsing="false" text="Hoja de Seguimiento" />
+          <MenuItem disable="true" mnemonicParsing="false" text="Hoja de Seguimiento" />
             <MenuItem fx:id="barRegistrarBitacora" mnemonicParsing="false" onAction="#abrirRegistrarBitacora" text="Bitácora" />
-            <MenuItem mnemonicParsing="false" text="Autoevaluación" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Autoevaluación" />
         </items>
       </Menu>
       <Menu mnemonicParsing="false" text="Consultar">
         <items>
-          <MenuItem mnemonicParsing="false" text="Grupos" />
-            <MenuItem mnemonicParsing="false" text="Avances" />
-            <MenuItem mnemonicParsing="false" text="Historial Avisos" />
-            <MenuItem mnemonicParsing="false" text="Resultados Evidencias" />
+          <MenuItem disable="true" mnemonicParsing="false" text="Grupos" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Avances" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Historial Avisos" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Resultados Evidencias" />
             <Menu mnemonicParsing="false" text="Portafolio de Evidencias">
               <items>
-                <MenuItem mnemonicParsing="false" text="Autoevaluación" />
-                  <MenuItem mnemonicParsing="false" text="Actividades" />
-                  <MenuItem mnemonicParsing="false" text="Hoja de Seguimiento" />
-                  <MenuItem mnemonicParsing="false" text="Bitácora" />
+                <MenuItem disable="true" mnemonicParsing="false" text="Autoevaluación" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Actividades" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Hoja de Seguimiento" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Bitácora" />
               </items>
             </Menu>
-            <MenuItem mnemonicParsing="false" text="Calendario de Actividades" />
-            <MenuItem mnemonicParsing="false" text="Historial de Observaciones" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Calendario de Actividades" />
+            <MenuItem disable="true" mnemonicParsing="false" text="Historial de Observaciones" />
         </items>
       </Menu>
   </menus>

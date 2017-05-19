@@ -64,11 +64,13 @@ public class ControladorLogIn extends Application {
     public void abrirInicio() {
         Usuario usuario = new Usuario();
         
-        if (tfUsuario.equals("") || tfPassword.equals("")) {
+        if (tfUsuario.getText().trim().isEmpty() || tfPassword.getText().trim().isEmpty()) {
             Alert alertaCampos = new Alert(AlertType.WARNING);
             alertaCampos.setTitle("Campos incompletos");
-            alertaCampos.setContentText("Por favor completa todos los campos.");
+            alertaCampos.setHeaderText("Alerta");
+            alertaCampos.setContentText("Por favor completa todos los campos");
             alertaCampos.showAndWait();
+            tfPassword.setText("");
         } else {
             if (usuario.consultaUsuario(tfUsuario.getText(), tfPassword.getText())) {
                 Stage stagePrincipal = new Stage();
@@ -93,10 +95,11 @@ public class ControladorLogIn extends Application {
             } else {
                 Alert alertaUsuario = new Alert(AlertType.WARNING);
                 alertaUsuario.setTitle("Usuario no encontrado");
-                alertaUsuario.setContentText("El usuario que ingresó no existe.");
+                alertaUsuario.setHeaderText("Alerta");
+                alertaUsuario.setContentText("El usuario que ingresó no existe o la información "
+                        + "ingresada es incorrecta, favor de verificarla.");
                 alertaUsuario.showAndWait();
-                tfUsuario.setText(null);
-                tfPassword.setText(null);
+                tfPassword.setText("");
             }
         }
     }
