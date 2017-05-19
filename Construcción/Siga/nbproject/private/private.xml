@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/lalo/Documents/Proyectos%20GitHub/The-french/Construcción/SIGA/src/datos/UsuarioDAO.java</file>
-            <file>file:/Users/lalo/Documents/Proyectos%20GitHub/The-french/Construcción/SIGA/src/logica/Usuario.java</file>
+            <file>file:/Users/andres/Documents/The-french/Construcción/Siga/src/presentacion/RegistrarBitacora.fxml</file>
+            <file>file:/Users/andres/Documents/The-french/Construcción/Siga/src/presentacion/LogIn.fxml</file>
+            <file>file:/Users/andres/Documents/The-french/Construcción/Siga/src/datos/UsuarioDAO.java</file>
+            <file>file:/Users/andres/Documents/The-french/Construcción/Siga/src/datos/Conexion.java</file>
+            <file>file:/Users/andres/Documents/The-french/Construcción/Siga/src/logica/Usuario.java</file>
         </group>
     </open-files>
 </project-private>
