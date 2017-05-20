@@ -98,7 +98,7 @@ public class Usuario implements UsuarioDAO {
             sentencia.setString(1, password);
             rs = sentencia.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next() && rs != null) {
                 passCifrado = rs.getString("cifrado");
             }
         } catch (SQLException e) {

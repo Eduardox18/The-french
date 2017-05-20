@@ -82,7 +82,7 @@ public class ControladorLogIn extends Application {
                     panePrincipal.setTop(bar);
                     panePrincipal.setCenter(paneInicial);
                     Scene sceneDos = new Scene(panePrincipal, 602, 429);
-                    stagePrincipal.setTitle("Inicial");
+                    stagePrincipal.setTitle("SIGA");
                     stagePrincipal.setScene(sceneDos);
                     stagePrincipal.show();
                 } catch (IOException ex) {

@@ -16,16 +16,17 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Actividad`
+-- Table structure for table `actividad`
 --
 
-DROP TABLE IF EXISTS `Actividad`;
+DROP TABLE IF EXISTS `actividad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Actividad` (
+CREATE TABLE `actividad` (
   `idActividad` int(11) NOT NULL AUTO_INCREMENT,
   `nombreActividad` varchar(45) NOT NULL,
   `profesorActividad` varchar(45) NOT NULL,
+  `idiomaActividad` varchar(10) NOT NULL,
   `horaActividad` time NOT NULL,
   `diaActividad` date NOT NULL,
   PRIMARY KEY (`idActividad`)
@@ -33,12 +34,12 @@ CREATE TABLE `Actividad` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Actividad`
+-- Dumping data for table `actividad`
 --
 
-LOCK TABLES `Actividad` WRITE;
-/*!40000 ALTER TABLE `Actividad` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Actividad` ENABLE KEYS */;
+LOCK TABLES `actividad` WRITE;
+/*!40000 ALTER TABLE `actividad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `actividad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -142,7 +143,7 @@ DROP TABLE IF EXISTS `asesoria`;
 CREATE TABLE `asesoria` (
   `noAsesoria` int(11) NOT NULL AUTO_INCREMENT,
   `asesoria_idActividad` int(11) NOT NULL,
-  `palabraAsesoria` varchar(12) NOT NULL,
+  `palabraAsesoria` varchar(8) NOT NULL,
   PRIMARY KEY (`noAsesoria`,`asesoria_idActividad`),
   KEY `fk_asesoria_asesoria1_idx` (`asesoria_idActividad`),
   CONSTRAINT `fk_asesoria_asesoria1` FOREIGN KEY (`asesoria_idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -681,15 +682,11 @@ DROP TABLE IF EXISTS `reservacion`;
 CREATE TABLE `reservacion` (
   `idreservacion` int(11) NOT NULL AUTO_INCREMENT,
   `fechaReservacion` date NOT NULL,
-  `fechaRegistro` date NOT NULL,
-  `CalendarioActividades_idCalendarioActividades` int(11) NOT NULL,
   `actividad_idActividad` int(11) NOT NULL,
   `alumno_matriculaAlumno` varchar(9) NOT NULL,
   PRIMARY KEY (`idreservacion`),
-  KEY `fk_reservacion_CalendarioActividades1_idx` (`CalendarioActividades_idCalendarioActividades`),
   KEY `fk_reservacion_actividad1_idx` (`actividad_idActividad`),
   KEY `fk_reservacion_alumno1_idx` (`alumno_matriculaAlumno`),
-  CONSTRAINT `fk_reservacion_CalendarioActividades1` FOREIGN KEY (`CalendarioActividades_idCalendarioActividades`) REFERENCES `calendarioActividades` (`idCalendarioActividades`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_reservacion_actividad1` FOREIGN KEY (`actividad_idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_reservacion_alumno1` FOREIGN KEY (`alumno_matriculaAlumno`) REFERENCES `alumno` (`matriculaAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -811,31 +808,6 @@ LOCK TABLES `seguimientoCurso` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tallerLectura`
---
-
-DROP TABLE IF EXISTS `tallerLectura`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tallerLectura` (
-  `noTallerLectura` int(11) NOT NULL AUTO_INCREMENT,
-  `asesoria_idActividad` int(11) NOT NULL,
-  PRIMARY KEY (`noTallerLectura`,`asesoria_idActividad`),
-  KEY `fk_tallerLectura_asesoria1_idx` (`asesoria_idActividad`),
-  CONSTRAINT `fk_tallerLectura_asesoria1` FOREIGN KEY (`asesoria_idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tallerLectura`
---
-
-LOCK TABLES `tallerLectura` WRITE;
-/*!40000 ALTER TABLE `tallerLectura` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tallerLectura` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `usuario`
 --
 
@@ -869,4 +841,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-19 12:08:32
+-- Dump completed on 2017-05-19 23:48:54

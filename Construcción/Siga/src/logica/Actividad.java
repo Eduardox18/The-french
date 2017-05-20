@@ -1,14 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logica;
 
 import datos.ActividadDAO;
+import datos.Conexion;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -17,32 +20,45 @@ import javafx.collections.ObservableList;
  */
 public class Actividad implements ActividadDAO{
     
-    private SimpleStringProperty nombre;
-    private SimpleStringProperty profesor;
+    private SimpleStringProperty nombreActividad;
+    private SimpleStringProperty profesorActividad;
+    private SimpleStringProperty idiomaActividad;
     private Time horaActividad;
     private Date diaActividad;
     
-    public Actividad(String xNombre, String xProfesor, Time horaActividad, Date diaActividad) {
-        this.nombre = new SimpleStringProperty(xNombre);
-        this.profesor = new SimpleStringProperty(xProfesor);
+    public Actividad() {}
+    
+    public Actividad(String xNombre, String xProfesor, Time horaActividad, Date diaActividad, 
+            String xIdioma) {
+        this.nombreActividad = new SimpleStringProperty(xNombre);
+        this.profesorActividad = new SimpleStringProperty(xProfesor);
+        this.idiomaActividad = new SimpleStringProperty(xIdioma);
         this.horaActividad = horaActividad;
         this.diaActividad = diaActividad;
     }
     
     public String getNombre() {
-        return nombre.get();
+        return nombreActividad.get();
     }
     
     public void setNombre(String xNombre) {
-        nombre.set(xNombre);
+        nombreActividad.set(xNombre);
+    }
+    
+    public String getIdioma() {
+        return idiomaActividad.get();
+    }
+    
+    public void setIdioma(String xIdioma) {
+        idiomaActividad.set(xIdioma);
     }
     
     public String getProfesor() {
-        return profesor.get();
+        return profesorActividad.get();
     }
     
     public void setProfesor(String xProfesor) {
-        profesor.set(xProfesor);
+        profesorActividad.set(xProfesor);
     }
     
     public Time getHoraActividad() {
@@ -62,22 +78,34 @@ public class Actividad implements ActividadDAO{
     }
 
     @Override
-    public boolean agregarActividad(Actividad actividad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ObservableList<Actividad> consultarActividades() {
+        Connection conexion;
+        PreparedStatement sentencia;
+        ResultSet rs;
+        Actividad actividadResultado = new Actividad();
+        ObservableList<Actividad> listaActividades = FXCollections.observableArrayList();
+        
+        try {
+            conexion = new Conexion().connection();
+            String consulta = "SELECT * FROM actividad";
+            sentencia = conexion.prepareStatement(consulta);
+            rs = sentencia.executeQuery();
+            
+            while(rs.next() && rs != null) {
+                actividadResultado.setNombre(rs.getString("nombreActividad"));
+                actividadResultado.setProfesor(rs.getString("profesorActividad"));
+                actividadResultado.setHoraActividad(rs.getTime("horaActividad"));
+                actividadResultado.setDiaActividad(rs.getDate("diaActividad"));
+                actividadResultado.setIdioma(rs.getString("idiomaActividad"));
+                listaActividades.add(actividadResultado);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaActividades;
     }
-
-    @Override
-    public boolean eliminarActividad(int idActividad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean editarActividad(int idActividad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ObservableList<Actividad> consultarActividad(int idActividad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public int obtenerIDActividad() {
+        return 0;
     }
 }
