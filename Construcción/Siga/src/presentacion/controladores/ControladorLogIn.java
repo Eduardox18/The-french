@@ -69,8 +69,9 @@ public class ControladorLogIn extends Application {
             tfPassword.setText("");
         } else {
             if (usuario.consultaUsuario(tfUsuario.getText(), tfPassword.getText())) {
-                Stage stagePrincipal = new Stage();
                 try {
+                    usuario.recuperarIDUsuario(tfUsuario.getText());
+                    Stage stagePrincipal = new Stage();
                     URL menuBarURL = getClass().getResource("/presentacion/Principal.fxml");
                     MenuBar bar = FXMLLoader.load(menuBarURL);
                     URL paneInicialURL = getClass().getResource("/presentacion/Inicial.fxml");
@@ -82,7 +83,7 @@ public class ControladorLogIn extends Application {
                     panePrincipal.setTop(bar);
                     panePrincipal.setCenter(paneInicial);
                     Scene sceneDos = new Scene(panePrincipal, 602, 429);
-                    stagePrincipal.setTitle("SIGA");
+                    stagePrincipal.setTitle("SIGA. Usuario: " + tfUsuario.getText());
                     stagePrincipal.setScene(sceneDos);
                     stagePrincipal.show();
                 } catch (IOException ex) {

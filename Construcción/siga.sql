@@ -29,8 +29,9 @@ CREATE TABLE `actividad` (
   `idiomaActividad` varchar(10) NOT NULL,
   `horaActividad` time NOT NULL,
   `diaActividad` date NOT NULL,
+  `tipoActividad` varchar(20) NOT NULL,
   PRIMARY KEY (`idActividad`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tipoAsesoria';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COMMENT='tipoAsesoria';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +40,7 @@ CREATE TABLE `actividad` (
 
 LOCK TABLES `actividad` WRITE;
 /*!40000 ALTER TABLE `actividad` DISABLE KEYS */;
+INSERT INTO `actividad` VALUES (1,'Sobre franceses y torres','Karen Mezura','Francés','15:50:00','2017-11-06','Asesoría'),(2,'Las 13 colonias','Octavio Ocharán','Inglés','17:30:00','2017-03-01','Conversación'),(3,'Mexico and the walls','Melany Trump','Inglés','11:00:00','2017-03-01','Asesoría'),(4,'Omelette du Fromage','Elizabeth DeWitt','Francés','19:00:00','2017-10-13','Conversación'),(5,'Nuestro pan es el mejor','Anton Ego','Francés','17:30:00','2017-11-06','Conversación'),(6,'Make America great again','John Kennedy','Francés','15:00:00','2017-10-13','Asesoría');
 /*!40000 ALTER TABLE `actividad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,32 +133,6 @@ CREATE TABLE `asesor` (
 LOCK TABLES `asesor` WRITE;
 /*!40000 ALTER TABLE `asesor` DISABLE KEYS */;
 /*!40000 ALTER TABLE `asesor` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `asesoria`
---
-
-DROP TABLE IF EXISTS `asesoria`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `asesoria` (
-  `noAsesoria` int(11) NOT NULL AUTO_INCREMENT,
-  `asesoria_idActividad` int(11) NOT NULL,
-  `palabraAsesoria` varchar(8) NOT NULL,
-  PRIMARY KEY (`noAsesoria`,`asesoria_idActividad`),
-  KEY `fk_asesoria_asesoria1_idx` (`asesoria_idActividad`),
-  CONSTRAINT `fk_asesoria_asesoria1` FOREIGN KEY (`asesoria_idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `asesoria`
---
-
-LOCK TABLES `asesoria` WRITE;
-/*!40000 ALTER TABLE `asesoria` DISABLE KEYS */;
-/*!40000 ALTER TABLE `asesoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -282,32 +258,6 @@ CREATE TABLE `calendarioActividades` (
 LOCK TABLES `calendarioActividades` WRITE;
 /*!40000 ALTER TABLE `calendarioActividades` DISABLE KEYS */;
 /*!40000 ALTER TABLE `calendarioActividades` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `conversacion`
---
-
-DROP TABLE IF EXISTS `conversacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `conversacion` (
-  `noconversacion` int(11) NOT NULL AUTO_INCREMENT,
-  `asesoria_idActividad` int(11) NOT NULL,
-  `palabraConversacion` varchar(12) NOT NULL,
-  PRIMARY KEY (`noconversacion`,`asesoria_idActividad`),
-  KEY `fk_conversacion_asesoria1_idx` (`asesoria_idActividad`),
-  CONSTRAINT `fk_conversacion_asesoria1` FOREIGN KEY (`asesoria_idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `conversacion`
---
-
-LOCK TABLES `conversacion` WRITE;
-/*!40000 ALTER TABLE `conversacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `conversacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -841,4 +791,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-19 23:48:54
+-- Dump completed on 2017-05-20 21:17:39

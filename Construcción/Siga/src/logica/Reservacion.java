@@ -20,7 +20,7 @@ public class Reservacion implements ReservacionDAO {
     }
 
     @Override
-    public boolean agregarReservacion(Reservacion reservacion, int idActividad, int idUsuario) {
+    public boolean agregarReservacion(Date fechaReservacion, int idActividad, int idUsuario) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

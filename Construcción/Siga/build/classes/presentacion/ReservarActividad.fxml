@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentacion.controladores.ControladorReservarActividad">
    <children>
       <ImageView fitHeight="71.0" fitWidth="80.0" layoutX="36.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="21.0">
          <image>
@@ -64,7 +64,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="494.0" layoutY="359.0" mnemonicParsing="false" text="Reservar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="35.0">
+      <Button fx:id="btReservar" layoutX="494.0" layoutY="359.0" mnemonicParsing="false" onAction="#guardarActividad" text="Reservar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="35.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

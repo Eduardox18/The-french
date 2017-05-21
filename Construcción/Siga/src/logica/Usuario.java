@@ -17,6 +17,7 @@ public class Usuario implements UsuarioDAO {
 
     private String nombre;
     private String password;
+    private static int usuarioActual;
 
     public Usuario() {
     }
@@ -40,6 +41,14 @@ public class Usuario implements UsuarioDAO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public int getUsuarioActual() {
+        return usuarioActual;
+    }
+    
+    public void setUsuarioActual(int xUsuarioActual) {
+        usuarioActual = xUsuarioActual;
     }
 
     /**
@@ -66,7 +75,7 @@ public class Usuario implements UsuarioDAO {
                 sentencia.setString(1, nombre);
                 rs = sentencia.executeQuery();
 
-                if (rs.next()) {
+                while (rs.next() && rs != null) {
                     passRecuperado = rs.getString("passwordUsuario");
                 }
             } catch (SQLException e) {
@@ -118,7 +127,6 @@ public class Usuario implements UsuarioDAO {
         Connection conexion;
         PreparedStatement sentencia;
         ResultSet rs;
-        String usuario;
 
         try {
             conexion = new Conexion().connection();
@@ -126,9 +134,8 @@ public class Usuario implements UsuarioDAO {
             sentencia = conexion.prepareStatement(consulta);
             rs = sentencia.executeQuery();
 
-            if (rs.next() && rs != null) {
-                usuario = rs.getString("nombreUsuario");
-                if (nombre.equals(usuario)) {
+            while (rs.next() && rs != null) {
+                if (nombre.equals(rs.getString("nombreUsuario"))) {
                     return true;
                 }
             }
@@ -138,5 +145,25 @@ public class Usuario implements UsuarioDAO {
         }
         return false;
     }
-
+    
+    public void recuperarIDUsuario(String nombre) {
+        Connection conexion;
+        PreparedStatement sentencia;
+        ResultSet rs;
+        
+        try {
+            conexion = new Conexion().connection();
+            String consulta = "SELECT idUsuario FROM usuario WHERE nombreUsuario = ?";
+            sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, nombre);
+            rs = sentencia.executeQuery();
+            
+            if(rs.next()) {
+                usuarioActual = Integer.parseInt(rs.getString("idUsuario"));
+            }
+        } catch (SQLException ex) {
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
+        }
+    }
 }

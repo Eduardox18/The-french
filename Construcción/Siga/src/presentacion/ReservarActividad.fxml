@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentacion.controladores.ControladorReservarActividad">
    <children>
       <ImageView fitHeight="71.0" fitWidth="80.0" layoutX="36.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="21.0">
          <image>
@@ -53,18 +53,19 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></DatePicker>
-      <TableView layoutX="36.0" layoutY="144.0" prefHeight="200.0" prefWidth="531.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="35.0">
+      <TableView layoutX="36.0" layoutY="144.0" prefHeight="200.0" prefWidth="467.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="35.0">
         <columns>
-          <TableColumn prefWidth="144.0" text="Hora" />
-          <TableColumn prefWidth="199.0" text="Actividad" />
-            <TableColumn prefWidth="187.0" text="Profesor" />
+          <TableColumn prefWidth="154.05518341064453" text="Actividad" />
+            <TableColumn prefWidth="154.94479370117188" text="Profesor" />
+            <TableColumn minWidth="0.0" prefWidth="117.54776000976562" text="Tipo" />
+          <TableColumn prefWidth="105.45223999023438" text="Hora" />
         </columns>
       </TableView>
       <Button layoutX="408.0" layoutY="359.0" mnemonicParsing="false" text="Cancelar" AnchorPane.bottomAnchor="14.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button layoutX="494.0" layoutY="359.0" mnemonicParsing="false" text="Reservar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="35.0">
+      <Button fx:id="btReservar" layoutX="494.0" layoutY="359.0" mnemonicParsing="false" onAction="#guardarActividad" text="Reservar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="35.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

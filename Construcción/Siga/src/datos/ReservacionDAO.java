@@ -1,6 +1,6 @@
 package datos;
 
-import logica.Reservacion;
+import java.sql.Date;
 
 /**
  *
@@ -8,5 +8,5 @@ import logica.Reservacion;
  */
 public interface ReservacionDAO {
     
-    public boolean agregarReservacion(Reservacion reservacion, int idActividad, int idUsuario);
+    public boolean agregarReservacion(Date fechaReservacion, int idActividad, int idUsuario);
 }

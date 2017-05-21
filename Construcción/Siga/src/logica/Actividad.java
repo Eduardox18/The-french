@@ -8,11 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import presentacion.Dialogo;
 
 /**
  *
@@ -25,6 +24,7 @@ public class Actividad implements ActividadDAO{
     private SimpleStringProperty idiomaActividad;
     private Time horaActividad;
     private Date diaActividad;
+    private SimpleStringProperty tipoActividad;
     
     public Actividad() {}
     
@@ -76,9 +76,18 @@ public class Actividad implements ActividadDAO{
     public void setDiaActividad(Date diaActividad) {
         this.diaActividad = diaActividad;
     }
+    
+    public String getTipo() {
+        return tipoActividad.get();
+    }
+    
+    public void setTipo(String xTipo) {
+        tipoActividad.set(xTipo);
+    } 
 
     @Override
-    public ObservableList<Actividad> consultarActividades() {
+    public ObservableList<Actividad> consultarActividades(String idiomaActividad, 
+            Date diaActividad) {
         Connection conexion;
         PreparedStatement sentencia;
         ResultSet rs;
@@ -87,25 +96,32 @@ public class Actividad implements ActividadDAO{
         
         try {
             conexion = new Conexion().connection();
-            String consulta = "SELECT * FROM actividad";
+            String consulta = "SELECT nombreActividad, profesorActividad, tipoActividad, horaActividad FROM actividad WHERE idiomaActividad = ? AND diaActividad = ?";
             sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, idiomaActividad);
+            sentencia.setDate(2, diaActividad);
             rs = sentencia.executeQuery();
             
             while(rs.next() && rs != null) {
                 actividadResultado.setNombre(rs.getString("nombreActividad"));
                 actividadResultado.setProfesor(rs.getString("profesorActividad"));
+                actividadResultado.setTipo(rs.getString("tipoActividad"));
                 actividadResultado.setHoraActividad(rs.getTime("horaActividad"));
-                actividadResultado.setDiaActividad(rs.getDate("diaActividad"));
-                actividadResultado.setIdioma(rs.getString("idiomaActividad"));
                 listaActividades.add(actividadResultado);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
         }
         return listaActividades;
     }
     
-    public int obtenerIDActividad() {
+    public int obtenerIDActividad(String nombreActividad, String profesorActividad, 
+            Date horaActividad) {
+        Connection conexion;
+        PreparedStatement sentencia;
+        ResultSet rs;
         return 0;
+        //EN CONSTRUCCIÓN
     }
 }

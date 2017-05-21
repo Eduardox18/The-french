@@ -1,5 +1,6 @@
 package datos;
 
+import java.sql.Date;
 import javafx.collections.ObservableList;
 import logica.Actividad;
 
@@ -9,5 +10,6 @@ import logica.Actividad;
  */
 public interface ActividadDAO {
 
-    public ObservableList<Actividad> consultarActividades();
+    public ObservableList<Actividad> consultarActividades(String idiomaActividad, 
+            Date diaActividad);
 }
