@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import logica.Actividad;
 import logica.Curso;
+import logica.Reservacion;
 import logica.Usuario;
 import presentacion.Dialogo;
 
@@ -62,9 +63,11 @@ public class ControladorReservarActividad implements Initializable {
             llenarTabla();
         });
         
-        //Listener para la tabla, se utiliza para saber cuando hay un item seleccionado
+        //Listener para la tabla, se utiliza para saber cuando hay un item 
+        //seleccionado
         
-        tablaActividades.getSelectionModel().selectedIndexProperty().addListener((obs, oldSelection, newSelection) -> {
+        tablaActividades.getSelectionModel().selectedIndexProperty().
+            addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 btReservar.setDisable(false);
             }
@@ -78,10 +81,14 @@ public class ControladorReservarActividad implements Initializable {
      */
     private void llenarTabla () {
         Actividad actividad = new Actividad();
-        colActividad.setCellValueFactory(new PropertyValueFactory<>("nombreActividad"));
-        colProfesor.setCellValueFactory(new PropertyValueFactory<>("asesorActividad"));
-        colTipo.setCellValueFactory(new PropertyValueFactory<>("tipoActividad"));
-        colHora.setCellValueFactory(new PropertyValueFactory<>("horaActividad"));
+        colActividad.setCellValueFactory(
+            new PropertyValueFactory<>("nombreActividad"));
+        colProfesor.setCellValueFactory(
+            new PropertyValueFactory<>("asesorActividad"));
+        colTipo.setCellValueFactory(
+            new PropertyValueFactory<>("tipoActividad"));
+        colHora.setCellValueFactory(
+            new PropertyValueFactory<>("horaActividad"));
         LocalDate fecha;
         Date fechaSql;
         try {
@@ -108,10 +115,12 @@ public class ControladorReservarActividad implements Initializable {
     
     @FXML
     public void guardarActividad() {
-//        Reservacion reservacion = new Reservacion();
-//        reservacion.agregarReservacion(fechaReservacion, 
-//            tablaActividades.getSelectionModel().getSelectedItem().getDiaActividad(), 
-//            0);
+        Usuario usuario = new Usuario();
+        Reservacion reservacion = new Reservacion();
+        reservacion.agregarReservacion(
+            tablaActividades.getSelectionModel().getSelectedItem().
+                obtenerIDActividad(),
+            usuario.getUsuarioActual());
     }
     
 }

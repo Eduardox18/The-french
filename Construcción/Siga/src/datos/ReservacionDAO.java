@@ -8,6 +8,5 @@ import java.sql.Date;
  */
 public interface ReservacionDAO {
     
-    public boolean agregarReservacion(Date fechaReservacion, int idActividad, 
-            String matriculaAlumno);
+    public boolean agregarReservacion(int idActividad, String matriculaAlumno);
 }

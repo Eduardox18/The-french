@@ -33,4 +33,12 @@ public class Dialogo {
                 + "ingresada es incorrecta, favor de verificarla.");
         alertaUsuario.showAndWait();
     }
+    
+    public void alertaReservacionExistosa() {
+        Alert alertaUsuario = new Alert(Alert.AlertType.INFORMATION);
+        alertaUsuario.setTitle("¡Reservación exitosa!");
+        alertaUsuario.setHeaderText("Alerta");
+        alertaUsuario.setContentText("La reservación se realizó exitosamente");
+        alertaUsuario.showAndWait();
+    }
 }
