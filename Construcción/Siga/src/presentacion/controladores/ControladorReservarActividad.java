@@ -117,10 +117,14 @@ public class ControladorReservarActividad implements Initializable {
     public void guardarActividad() {
         Usuario usuario = new Usuario();
         Reservacion reservacion = new Reservacion();
-        reservacion.agregarReservacion(
+        boolean verificacion = reservacion.agregarReservacion(
             tablaActividades.getSelectionModel().getSelectedItem().
                 obtenerIDActividad(),
             usuario.getUsuarioActual());
+        if(verificacion == true) {
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaReservacionExistosa();
+        }
     }
     
 }
