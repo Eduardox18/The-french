@@ -14,6 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import logica.Actividad;
+import logica.Curso;
+import logica.Usuario;
 import presentacion.Dialogo;
 
 /**
@@ -27,7 +29,7 @@ public class ControladorReservarActividad implements Initializable {
     private Button btReservar;
     
     @FXML
-    private ComboBox<String> cbIdiomas;
+    private ComboBox<Curso> cbIdiomas;
     
     @FXML
     private TableView<Actividad> tablaActividades;
@@ -52,8 +54,7 @@ public class ControladorReservarActividad implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cbIdiomas.getItems().setAll("37182");
-        cbIdiomas.getSelectionModel().selectFirst();
+        llenarCombo();
         selectorFecha.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTabla();
         });
@@ -92,6 +93,17 @@ public class ControladorReservarActividad implements Initializable {
             Dialogo dia = new Dialogo();
             dia.alertaCamposVacios();
         }
+    }
+    
+    /**
+     * 
+     * 
+     */
+    private void llenarCombo () {
+        Curso curso = new Curso();
+        Usuario usuario = new Usuario();
+        cbIdiomas.setItems(curso.obtenerCursos(usuario.getUsuarioActual()));
+        cbIdiomas.getSelectionModel().selectFirst();
     }
     
     @FXML

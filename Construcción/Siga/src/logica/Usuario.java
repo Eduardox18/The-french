@@ -17,7 +17,7 @@ public class Usuario implements UsuarioDAO {
 
     private String nombre;
     private String password;
-    private static int usuarioActual;
+    private static String usuarioActual;
 
     public Usuario() {
     }
@@ -43,11 +43,11 @@ public class Usuario implements UsuarioDAO {
         this.password = password;
     }
     
-    public int getUsuarioActual() {
+    public String getUsuarioActual() {
         return usuarioActual;
     }
     
-    public void setUsuarioActual(int xUsuarioActual) {
+    public void setUsuarioActual(String xUsuarioActual) {
         usuarioActual = xUsuarioActual;
     }
 
@@ -146,24 +146,26 @@ public class Usuario implements UsuarioDAO {
         return false;
     }
     
-    public void recuperarIDUsuario(String nombre) {
+    public void obtenerMatriculaAlumno(String nombre) {
         Connection conexion;
         PreparedStatement sentencia;
         ResultSet rs;
         
         try {
             conexion = new Conexion().connection();
-            String consulta = "SELECT idUsuario FROM usuario WHERE nombreUsuario = ?";
+            String consulta = "SELECT alumno.matriculaAlumno FROM alumno, usuario WHERE "
+                    + "alumno.usuario_idusuario = usuario.idusuario AND usuario.nombreUsuario = ?";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, nombre);
             rs = sentencia.executeQuery();
             
             if(rs.next()) {
-                usuarioActual = Integer.parseInt(rs.getString("idUsuario"));
+                usuarioActual = rs.getString("matriculaAlumno");
             }
         } catch (SQLException ex) {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
     }
+    
 }

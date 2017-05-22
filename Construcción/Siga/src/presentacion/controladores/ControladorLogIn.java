@@ -63,9 +63,6 @@ public class ControladorLogIn extends Application {
     public void abrirInicio() {
         Usuario usuario = new Usuario();
         Dialogo dialogo = new Dialogo();
-        
-        tfUsuario.setText("zS15011624");
-        tfPassword.setText("angeldominguez");
 
         if (tfUsuario.getText().trim().isEmpty() || tfPassword.getText().trim().isEmpty()) {
             dialogo.alertaCamposVacios();
@@ -73,7 +70,7 @@ public class ControladorLogIn extends Application {
         } else {
             if (usuario.consultaUsuario(tfUsuario.getText(), tfPassword.getText())) {
                 try {
-                    usuario.recuperarIDUsuario(tfUsuario.getText());
+                    usuario.obtenerMatriculaAlumno(tfUsuario.getText());
                     Stage stagePrincipal = new Stage();
                     URL menuBarURL = getClass().getResource("/presentacion/Principal.fxml");
                     MenuBar bar = FXMLLoader.load(menuBarURL);
