@@ -14,7 +14,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import logica.Actividad;
-import logica.Reservacion;
 import presentacion.Dialogo;
 
 /**
@@ -53,7 +52,7 @@ public class ControladorReservarActividad implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cbIdiomas.getItems().setAll("Inglés", "Francés");
+        cbIdiomas.getItems().setAll("37182");
         cbIdiomas.getSelectionModel().selectFirst();
         selectorFecha.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTabla();
@@ -79,7 +78,7 @@ public class ControladorReservarActividad implements Initializable {
     private void llenarTabla () {
         Actividad actividad = new Actividad();
         colActividad.setCellValueFactory(new PropertyValueFactory<>("nombreActividad"));
-        colProfesor.setCellValueFactory(new PropertyValueFactory<>("profesorActividad"));
+        colProfesor.setCellValueFactory(new PropertyValueFactory<>("asesorActividad"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipoActividad"));
         colHora.setCellValueFactory(new PropertyValueFactory<>("horaActividad"));
         LocalDate fecha;
@@ -88,7 +87,7 @@ public class ControladorReservarActividad implements Initializable {
             fecha = selectorFecha.getValue();
             fechaSql = Date.valueOf(fecha);
             tablaActividades.setItems(actividad.consultarActividades(
-            cbIdiomas.getSelectionModel().getSelectedItem(), fechaSql));
+            39182, fechaSql));
         } catch (NullPointerException e) {
             Dialogo dia = new Dialogo();
             dia.alertaCamposVacios();
@@ -97,10 +96,10 @@ public class ControladorReservarActividad implements Initializable {
     
     @FXML
     public void guardarActividad() {
-        Reservacion reservacion = new Reservacion();
-        reservacion.agregarReservacion(fechaReservacion, 
-            tablaActividades.getSelectionModel().getSelectedItem().getDiaActividad(), 
-            0);
+//        Reservacion reservacion = new Reservacion();
+//        reservacion.agregarReservacion(fechaReservacion, 
+//            tablaActividades.getSelectionModel().getSelectedItem().getDiaActividad(), 
+//            0);
     }
     
 }

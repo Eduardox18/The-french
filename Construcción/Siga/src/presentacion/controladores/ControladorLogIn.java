@@ -64,8 +64,8 @@ public class ControladorLogIn extends Application {
         Usuario usuario = new Usuario();
         Dialogo dialogo = new Dialogo();
         
-        tfUsuario.setText("S15011613");
-        tfPassword.setText("andresdominguez");
+        tfUsuario.setText("zS15011624");
+        tfPassword.setText("angeldominguez");
 
         if (tfUsuario.getText().trim().isEmpty() || tfPassword.getText().trim().isEmpty()) {
             dialogo.alertaCamposVacios();

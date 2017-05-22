@@ -18,64 +18,38 @@ import presentacion.Dialogo;
  */
 public class Actividad implements ActividadDAO{
     
-//    private SimpleStringProperty nombreActividad;
-//    private SimpleStringProperty profesorActividad;
-//    private SimpleStringProperty idiomaActividad;
-//    private Time horaActividad;
-//    private Date diaActividad;
-//    private SimpleStringProperty tipoActividad;
     private String nombreActividad;
-    private String profesorActividad;
-    private String idiomaActividad;
+    private String tipoActividad;
     private Time horaActividad;
     private Date diaActividad;
-    private String tipoActividad;
+    private String asesorActividad;
     
     public Actividad() {}
     
-    public Actividad(String xNombre, String xProfesor, Time horaActividad, Date diaActividad, 
-            String xIdioma, String xTipo) {
-//        this.nombreActividad = new SimpleStringProperty(xNombre);
-//        this.profesorActividad = new SimpleStringProperty(xProfesor);
-//        this.idiomaActividad = new SimpleStringProperty(xIdioma);
-        nombreActividad = xNombre;
-        profesorActividad = xProfesor;
-        idiomaActividad = xIdioma;
-        tipoActividad = xTipo;
+    public Actividad(String nombre, String tipoActividad, Time horaActividad, Date diaActividad,
+    String asesorActividad) {
+        this.nombreActividad = nombre;
+        this.tipoActividad = tipoActividad;
         this.horaActividad = horaActividad;
         this.diaActividad = diaActividad;
-        
+        this.asesorActividad = asesorActividad;
     }
     
     public String getNombreActividad() {
-        //return nombreActividad.get();
         return nombreActividad;
     }
     
-    public void setNombreActividad(String xNombre) {
-        //nombreActividad.set(xNombre);
-        nombreActividad = xNombre;
+    public void setNombreActividad(String nombreActividad) {
+        this.nombreActividad = nombreActividad;
     }
     
-    public String getIdiomaActividad() {
-        //return idiomaActividad.get();
-        return idiomaActividad;
+    public String getTipoActividad() {
+        return tipoActividad;
     }
     
-    public void setIdiomaActividad(String xIdioma) {
-        //idiomaActividad.set(xIdioma);
-        idiomaActividad = xIdioma;
-    }
-    
-    public String getProfesorActividad() {
-        //return profesorActividad.get();
-        return profesorActividad;
-    }
-    
-    public void setProfesorActividad(String xProfesor) {
-        //profesorActividad.set(xProfesor);
-        profesorActividad = xProfesor;
-    }
+    public void setTipoActividad(String tipoActividad) {
+        this.tipoActividad = tipoActividad;
+    } 
     
     public Time getHoraActividad() {
         return horaActividad;
@@ -93,19 +67,22 @@ public class Actividad implements ActividadDAO{
         this.diaActividad = diaActividad;
     }
     
-    public String getTipoActividad() {
-        //return tipoActividad.get();
-        return tipoActividad;
+    public String getAsesorActividad() {
+        return asesorActividad;
+    }
+
+    public void setAsesorActividad(String asesorActividad) {
+        this.asesorActividad = asesorActividad;
     }
     
-    public void setTipoActividad(String xTipo) {
-        //tipoActividad.set(xTipo);
-        tipoActividad = xTipo;
-    } 
-
+    /**
+     * 
+     * @param nrcCurso
+     * @param diaActividad
+     * @return 
+     */
     @Override
-    public ObservableList<Actividad> consultarActividades(String idiomaActividad, 
-            Date diaActividad) {
+    public ObservableList<Actividad> consultarActividades(int nrcCurso, Date diaActividad) {
         Connection conexion;
         PreparedStatement sentencia;
         ResultSet rs;
@@ -114,16 +91,20 @@ public class Actividad implements ActividadDAO{
         
         try {
             conexion = new Conexion().connection();
-            String consulta = "SELECT nombreActividad, profesorActividad, tipoActividad, horaActividad FROM actividad WHERE idiomaActividad = ? AND diaActividad = ?";
+            String consulta = "SELECT actividad.nombreActividad, CONCAT (asesor.nombreAsesor,' ', "
+                    + "asesor.apPaternoAsesor, ' ', asesor.apMaternoAsesor) AS asesorActividad, "
+                    + "actividad.tipoActividad, actividad.horaActividad FROM actividad, "
+                    + "curso, asesor WHERE curso.nrcCurso = ? AND curso.asesor_noPersonalAsesor "
+                    + "= asesor.noPersonalAsesor AND actividad.diaActividad = ?;";
             sentencia = conexion.prepareStatement(consulta);
-            sentencia.setString(1, idiomaActividad);
+            sentencia.setInt(1, nrcCurso);
             sentencia.setDate(2, diaActividad);
             rs = sentencia.executeQuery();
             
             while(rs.next() && rs != null) {
                 actividadResultado = new Actividad();
                 actividadResultado.setNombreActividad(rs.getString("nombreActividad"));
-                actividadResultado.setProfesorActividad(rs.getString("profesorActividad"));
+                actividadResultado.setAsesorActividad(rs.getString("asesorActividad"));
                 actividadResultado.setTipoActividad(rs.getString("tipoActividad"));
                 actividadResultado.setHoraActividad(rs.getTime("horaActividad"));
                 listaActividades.add(actividadResultado);
@@ -135,6 +116,10 @@ public class Actividad implements ActividadDAO{
         return listaActividades;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public int obtenerIDActividad() {
         Connection conexion;
         PreparedStatement sentencia;
@@ -142,11 +127,10 @@ public class Actividad implements ActividadDAO{
         
         try {
             conexion = new Conexion().connection();
-            String consulta = " SELECT idActividad FROM actividad WHERE nombreActividad = ? AND profesorActividad = ? AND horaActividad = ?;";
+            String consulta = " SELECT idActividad FROM actividad WHERE nombreActividad = ? AND horaActividad = ?;";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, nombreActividad);
-            sentencia.setString(2, profesorActividad);
-            sentencia.setTime(3, horaActividad);
+            sentencia.setTime(2, horaActividad);
             rs = sentencia.executeQuery();
             
             if(rs.next() && rs != null) {

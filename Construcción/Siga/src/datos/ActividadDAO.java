@@ -10,6 +10,5 @@ import logica.Actividad;
  */
 public interface ActividadDAO {
 
-    public ObservableList<Actividad> consultarActividades(String idiomaActividad, 
-            Date diaActividad);
+    public ObservableList<Actividad> consultarActividades(int nrcCurso, Date diaActividad);
 }
