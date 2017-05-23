@@ -25,13 +25,14 @@ DROP TABLE IF EXISTS `actividad`;
 CREATE TABLE `actividad` (
   `idActividad` int(11) NOT NULL AUTO_INCREMENT,
   `nombreActividad` varchar(45) NOT NULL,
-  `profesorActividad` varchar(45) NOT NULL,
-  `idiomaActividad` varchar(10) NOT NULL,
+  `tipoActividad` varchar(20) NOT NULL,
   `horaActividad` time NOT NULL,
   `diaActividad` date NOT NULL,
-  `tipoActividad` varchar(20) NOT NULL,
-  PRIMARY KEY (`idActividad`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COMMENT='tipoAsesoria';
+  `curso_nrcCurso` int(11) NOT NULL,
+  PRIMARY KEY (`idActividad`),
+  KEY `fk_actividad_curso1_idx` (`curso_nrcCurso`),
+  CONSTRAINT `fk_actividad_curso1` FOREIGN KEY (`curso_nrcCurso`) REFERENCES `curso` (`nrcCurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='tipoAsesoria';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `actividad` (
 
 LOCK TABLES `actividad` WRITE;
 /*!40000 ALTER TABLE `actividad` DISABLE KEYS */;
-INSERT INTO `actividad` VALUES (1,'Sobre franceses y torres','Karen Mezura','Francés','15:50:00','2017-11-06','Asesoría'),(2,'Las 13 colonias','Octavio Ocharán','Inglés','17:30:00','2017-03-01','Conversación'),(3,'Mexico and the walls','Melany Trump','Inglés','11:00:00','2017-03-01','Asesoría'),(4,'Omelette du Fromage','Elizabeth DeWitt','Francés','19:00:00','2017-10-13','Conversación'),(5,'Nuestro pan es el mejor','Anton Ego','Francés','17:30:00','2017-11-06','Conversación'),(6,'Make America great again','John Kennedy','Francés','15:00:00','2017-10-13','Asesoría');
+INSERT INTO `actividad` VALUES (1,'Sobre franceses y torres','Asesoría','15:50:00','2017-11-06',37182),(2,'Make America great again','Conversación','16:20:00','2017-10-21',39182);
 /*!40000 ALTER TABLE `actividad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,15 +57,14 @@ CREATE TABLE `alumno` (
   `nombreAlumno` varchar(45) NOT NULL,
   `apPaternoAlumno` varchar(45) NOT NULL,
   `apMaternoAlumno` varchar(45) DEFAULT NULL,
-  `telefonoAlumno` int(10) NOT NULL,
-  `noInscripcionAlumno` int(10) NOT NULL,
+  `telefonoAlumno` int(11) NOT NULL,
   `correoEAlumno` varchar(45) NOT NULL,
   `semestreAlumno` int(1) NOT NULL,
   `usuario_idusuario` int(11) NOT NULL,
   PRIMARY KEY (`matriculaAlumno`),
   KEY `fk_alumno_usuario1_idx` (`usuario_idusuario`),
   CONSTRAINT `fk_alumno_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,6 +73,7 @@ CREATE TABLE `alumno` (
 
 LOCK TABLES `alumno` WRITE;
 /*!40000 ALTER TABLE `alumno` DISABLE KEYS */;
+INSERT INTO `alumno` VALUES ('S15011613','José Andrés','Domínguez','González',211793212,'thesgtpepper23@gmail.com',4,2),('S15011624','Angel Eduardo','Domínguez','Delgado',1231793212,'lalo@gmail.com',4,1);
 /*!40000 ALTER TABLE `alumno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +92,7 @@ CREATE TABLE `alumnoTieneHistorialObservaciones` (
   KEY `fk_HistorialObservaciones_has_Alumno_HistorialObservaciones_idx` (`HistorialObservaciones_idHistorialObservaciones`),
   CONSTRAINT `fk_HistorialObservaciones_has_Alumno_Alumno1` FOREIGN KEY (`Alumno_matriculaAlumno`) REFERENCES `alumno` (`matriculaAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_HistorialObservaciones_has_Alumno_HistorialObservaciones1` FOREIGN KEY (`HistorialObservaciones_idHistorialObservaciones`) REFERENCES `historialObservaciones` (`idHistorialObservaciones`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -115,15 +116,17 @@ CREATE TABLE `asesor` (
   `nombreAsesor` varchar(45) NOT NULL,
   `apPaternoAsesor` varchar(45) NOT NULL,
   `apMaternoAsesor` varchar(45) DEFAULT NULL,
-  `telefonoAsesor` int(10) NOT NULL,
+  `telefonoAsesor` int(11) NOT NULL,
   `correoEAsesor` varchar(45) NOT NULL,
-  `horarioAtencion` varchar(45) NOT NULL,
   `noGrupos` int(2) NOT NULL,
   `usuario_idusuario` int(11) NOT NULL,
+  `horarioAtencion_idhorarioAtencion` int(11) NOT NULL,
   PRIMARY KEY (`noPersonalAsesor`),
   KEY `fk_asesor_usuario1_idx` (`usuario_idusuario`),
+  KEY `fk_asesor_horarioAtencion1_idx` (`horarioAtencion_idhorarioAtencion`),
+  CONSTRAINT `fk_asesor_horarioAtencion1` FOREIGN KEY (`horarioAtencion_idhorarioAtencion`) REFERENCES `horarioAtencion` (`idhorarioAtencion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_asesor_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +135,34 @@ CREATE TABLE `asesor` (
 
 LOCK TABLES `asesor` WRITE;
 /*!40000 ALTER TABLE `asesor` DISABLE KEYS */;
+INSERT INTO `asesor` VALUES (1,'Karen','Cortés','Verdín',1232422892,'karen@gmail.com',3,3,1),(2,'Juan Carlos','Pérez','Arriaga',373829382,'elrevo@gmail.com',2,4,2);
 /*!40000 ALTER TABLE `asesor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `asesoria`
+--
+
+DROP TABLE IF EXISTS `asesoria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `asesoria` (
+  `noAsesoria` int(11) NOT NULL AUTO_INCREMENT,
+  `actividad_idActividad` int(11) NOT NULL,
+  `palabraAsesoria` varchar(8) NOT NULL,
+  PRIMARY KEY (`noAsesoria`,`actividad_idActividad`),
+  KEY `fk_asesoria_asesoria1_idx` (`actividad_idActividad`),
+  CONSTRAINT `fk_asesoria_asesoria1` FOREIGN KEY (`actividad_idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `asesoria`
+--
+
+LOCK TABLES `asesoria` WRITE;
+/*!40000 ALTER TABLE `asesoria` DISABLE KEYS */;
+/*!40000 ALTER TABLE `asesoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -157,7 +187,7 @@ CREATE TABLE `autoevaluación` (
   PRIMARY KEY (`idAutoevaluación`),
   KEY `fk_autoevaluación_portafolioEvidencias1_idx` (`portafolioEvidencias_idportafolioEvidencias`),
   CONSTRAINT `fk_autoevaluación_portafolioEvidencias1` FOREIGN KEY (`portafolioEvidencias_idportafolioEvidencias`) REFERENCES `portafolioEvidencias` (`idportafolioEvidencias`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +214,7 @@ CREATE TABLE `aviso` (
   `fechaAviso` date NOT NULL,
   `descripcionAviso` varchar(45) NOT NULL,
   PRIMARY KEY (`idAviso`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -218,7 +248,7 @@ CREATE TABLE `bitacora` (
   PRIMARY KEY (`idBitacora`),
   KEY `fk_Bitacora_portafolioEvidencias1_idx` (`portafolioEvidencias_idportafolioEvidencias`),
   CONSTRAINT `fk_Bitacora_portafolioEvidencias1` FOREIGN KEY (`portafolioEvidencias_idportafolioEvidencias`) REFERENCES `portafolioEvidencias` (`idportafolioEvidencias`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,15 +270,13 @@ DROP TABLE IF EXISTS `calendarioActividades`;
 CREATE TABLE `calendarioActividades` (
   `idCalendarioActividades` int(11) NOT NULL AUTO_INCREMENT,
   `fechaLimiteExamen` date NOT NULL,
-  `seccionCalendarioActividades` int(5) NOT NULL,
   `materialReportar` varchar(45) NOT NULL,
-  `moduloCalendarioActividades` int(2) NOT NULL,
   `convCalendarioActividades` varchar(45) NOT NULL,
   `Coordinador_noPersonalCoordinador` int(11) NOT NULL,
   PRIMARY KEY (`idCalendarioActividades`),
   KEY `fk_CalendarioActividades_Coordinador1_idx` (`Coordinador_noPersonalCoordinador`),
   CONSTRAINT `fk_CalendarioActividades_Coordinador1` FOREIGN KEY (`Coordinador_noPersonalCoordinador`) REFERENCES `coordinador` (`noPersonalCoordinador`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,7 +285,34 @@ CREATE TABLE `calendarioActividades` (
 
 LOCK TABLES `calendarioActividades` WRITE;
 /*!40000 ALTER TABLE `calendarioActividades` DISABLE KEYS */;
+INSERT INTO `calendarioActividades` VALUES (1,'2017-06-10','Evidencias','Opcional',92831),(2,'2017-12-10','Examen y evidencias','Obligatoria',92831);
 /*!40000 ALTER TABLE `calendarioActividades` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `conversacion`
+--
+
+DROP TABLE IF EXISTS `conversacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `conversacion` (
+  `noconversacion` int(11) NOT NULL AUTO_INCREMENT,
+  `actividad_idActividad` int(11) NOT NULL,
+  `palabraConversacion` varchar(12) NOT NULL,
+  PRIMARY KEY (`noconversacion`,`actividad_idActividad`),
+  KEY `fk_conversacion_asesoria1_idx` (`actividad_idActividad`),
+  CONSTRAINT `fk_conversacion_asesoria1` FOREIGN KEY (`actividad_idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `conversacion`
+--
+
+LOCK TABLES `conversacion` WRITE;
+/*!40000 ALTER TABLE `conversacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `conversacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -281,7 +336,7 @@ CREATE TABLE `coordinador` (
   KEY `fk_coordinador_horarioAtencion1_idx` (`horarioAtencion_idhorarioAtencion`),
   CONSTRAINT `fk_coordinador_horarioAtencion1` FOREIGN KEY (`horarioAtencion_idhorarioAtencion`) REFERENCES `horarioAtencion` (`idhorarioAtencion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_coordinador_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=92832 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -290,6 +345,7 @@ CREATE TABLE `coordinador` (
 
 LOCK TABLES `coordinador` WRITE;
 /*!40000 ALTER TABLE `coordinador` DISABLE KEYS */;
+INSERT INTO `coordinador` VALUES (92831,'Frida','Aguilar',NULL,'frida@gmail.com',1231231321,5,3);
 /*!40000 ALTER TABLE `coordinador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,27 +357,26 @@ DROP TABLE IF EXISTS `curso`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `curso` (
-  `idCurso` int(11) NOT NULL AUTO_INCREMENT,
+  `nrcCurso` int(5) NOT NULL,
   `creditosCurso` int(5) NOT NULL,
-  `codigoCurso` int(20) NOT NULL,
+  `codigoCurso` int(6) NOT NULL,
   `nombreCurso` varchar(45) NOT NULL,
   `noHorasTeoria` int(5) NOT NULL,
   `noHorasPractica` int(5) NOT NULL,
-  `prerrequisitoCurso` varchar(45) NOT NULL,
+  `prerrequisitoCurso` varchar(45) DEFAULT NULL,
   `limiteAlumnosCurso` int(5) NOT NULL,
   `moduloCurso` int(5) NOT NULL,
-  `nrcCurso` int(10) NOT NULL,
-  `periodoCurso` varchar(45) NOT NULL,
-  `fechaInicioCurso` varchar(45) NOT NULL,
-  `fechaFinCurso` varchar(45) NOT NULL,
   `seccion_idseccion` int(11) NOT NULL,
   `asesor_noPersonalAsesor` int(11) NOT NULL,
-  PRIMARY KEY (`idCurso`),
+  `periodo_idperiodo` int(11) NOT NULL,
+  PRIMARY KEY (`nrcCurso`),
   KEY `fk_curso_seccion1_idx` (`seccion_idseccion`),
   KEY `fk_curso_asesor1_idx` (`asesor_noPersonalAsesor`),
+  KEY `fk_curso_periodo1_idx` (`periodo_idperiodo`),
   CONSTRAINT `fk_curso_asesor1` FOREIGN KEY (`asesor_noPersonalAsesor`) REFERENCES `asesor` (`noPersonalAsesor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curso_periodo1` FOREIGN KEY (`periodo_idperiodo`) REFERENCES `periodo` (`idperiodo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_curso_seccion1` FOREIGN KEY (`seccion_idseccion`) REFERENCES `seccion` (`idseccion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,6 +385,7 @@ CREATE TABLE `curso` (
 
 LOCK TABLES `curso` WRITE;
 /*!40000 ALTER TABLE `curso` DISABLE KEYS */;
+INSERT INTO `curso` VALUES (37182,9,281928,'Francés I',20,20,NULL,15,1,1,1,1),(39182,9,93928,'Inglés II',15,25,'Inglés I',15,2,3,2,2);
 /*!40000 ALTER TABLE `curso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,7 +404,7 @@ CREATE TABLE `diasFestivosCalendario` (
   PRIMARY KEY (`iddiasFestivosCalendario`,`calendarioActividades_idCalendarioActividades`),
   KEY `fk_diasFestivosCalendario_calendarioActividades1_idx` (`calendarioActividades_idCalendarioActividades`),
   CONSTRAINT `fk_diasFestivosCalendario_calendarioActividades1` FOREIGN KEY (`calendarioActividades_idCalendarioActividades`) REFERENCES `calendarioActividades` (`idCalendarioActividades`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,13 +426,11 @@ DROP TABLE IF EXISTS `grupoAlumno`;
 CREATE TABLE `grupoAlumno` (
   `idGrupoAlumno` int(11) NOT NULL AUTO_INCREMENT,
   `noAlumnosRegistrados` int(5) NOT NULL,
-  `periodo` varchar(45) NOT NULL,
-  `seccion` varchar(45) NOT NULL,
-  `curso_idCurso` int(11) NOT NULL,
+  `curso_nrcCurso` int(11) NOT NULL,
   PRIMARY KEY (`idGrupoAlumno`),
-  KEY `fk_grupoAlumno_curso1_idx` (`curso_idCurso`),
-  CONSTRAINT `fk_grupoAlumno_curso1` FOREIGN KEY (`curso_idCurso`) REFERENCES `curso` (`idCurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `fk_grupoAlumno_curso1_idx` (`curso_nrcCurso`),
+  CONSTRAINT `fk_grupoAlumno_curso1` FOREIGN KEY (`curso_nrcCurso`) REFERENCES `curso` (`nrcCurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,6 +439,7 @@ CREATE TABLE `grupoAlumno` (
 
 LOCK TABLES `grupoAlumno` WRITE;
 /*!40000 ALTER TABLE `grupoAlumno` DISABLE KEYS */;
+INSERT INTO `grupoAlumno` VALUES (2,10,37182),(3,11,39182);
 /*!40000 ALTER TABLE `grupoAlumno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -400,7 +455,7 @@ CREATE TABLE `historialObservaciones` (
   `noObservacion` varchar(45) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
   PRIMARY KEY (`idHistorialObservaciones`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,11 +493,11 @@ CREATE TABLE `hojaSeguimiento` (
   `portafolioEvidencias_idportafolioEvidencias` int(11) NOT NULL,
   `Asesor_noPersonalAsesor` int(11) NOT NULL,
   PRIMARY KEY (`idHojaSeguimiento`),
-  KEY `fk_HojaSeguimiento_portafolioEvidencias1_idx` (`portafolioEvidencias_idportafolioEvidencias`),
   KEY `fk_HojaSeguimiento_Asesor1_idx` (`Asesor_noPersonalAsesor`),
+  KEY `fk_HojaSeguimiento_portafolioEvidencias1_idx` (`portafolioEvidencias_idportafolioEvidencias`),
   CONSTRAINT `fk_HojaSeguimiento_Asesor1` FOREIGN KEY (`Asesor_noPersonalAsesor`) REFERENCES `asesor` (`noPersonalAsesor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_HojaSeguimiento_portafolioEvidencias1` FOREIGN KEY (`portafolioEvidencias_idportafolioEvidencias`) REFERENCES `portafolioEvidencias` (`idportafolioEvidencias`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -466,7 +521,7 @@ CREATE TABLE `horarioAtencion` (
   `horaInicio` time NOT NULL,
   `horaFin` time NOT NULL,
   PRIMARY KEY (`idhorarioAtencion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -475,6 +530,7 @@ CREATE TABLE `horarioAtencion` (
 
 LOCK TABLES `horarioAtencion` WRITE;
 /*!40000 ALTER TABLE `horarioAtencion` DISABLE KEYS */;
+INSERT INTO `horarioAtencion` VALUES (1,'08:00:00','13:00:00'),(2,'10:00:00','15:00:00'),(3,'09:00:00','11:00:00');
 /*!40000 ALTER TABLE `horarioAtencion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -486,16 +542,17 @@ DROP TABLE IF EXISTS `inscripcion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inscripcion` (
-  `GrupoAlumno_idGrupoAlumno` int(11) NOT NULL,
-  `Alumno_matriculaAlumno` varchar(9) NOT NULL,
-  `fecha_inscripcion` date NOT NULL,
-  `noVaucher` int(20) NOT NULL,
-  PRIMARY KEY (`GrupoAlumno_idGrupoAlumno`,`Alumno_matriculaAlumno`),
-  KEY `fk_GrupoAlumno_has_Alumno_Alumno1_idx` (`Alumno_matriculaAlumno`),
-  KEY `fk_GrupoAlumno_has_Alumno_GrupoAlumno1_idx` (`GrupoAlumno_idGrupoAlumno`),
-  CONSTRAINT `fk_GrupoAlumno_has_Alumno_Alumno1` FOREIGN KEY (`Alumno_matriculaAlumno`) REFERENCES `alumno` (`matriculaAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_GrupoAlumno_has_Alumno_GrupoAlumno1` FOREIGN KEY (`GrupoAlumno_idGrupoAlumno`) REFERENCES `grupoAlumno` (`idGrupoAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `idinscripcion` int(11) NOT NULL AUTO_INCREMENT,
+  `noVaucher` int(11) NOT NULL,
+  `fechaInscripcion` date NOT NULL,
+  `grupoAlumno_idGrupoAlumno` int(11) NOT NULL,
+  `alumno_matriculaAlumno` varchar(9) NOT NULL,
+  PRIMARY KEY (`idinscripcion`),
+  KEY `fk_inscripcion_grupoAlumno1_idx` (`grupoAlumno_idGrupoAlumno`),
+  KEY `fk_inscripcion_alumno1_idx` (`alumno_matriculaAlumno`),
+  CONSTRAINT `fk_inscripcion_alumno1` FOREIGN KEY (`alumno_matriculaAlumno`) REFERENCES `alumno` (`matriculaAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_inscripcion_grupoAlumno1` FOREIGN KEY (`grupoAlumno_idGrupoAlumno`) REFERENCES `grupoAlumno` (`idGrupoAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -504,6 +561,7 @@ CREATE TABLE `inscripcion` (
 
 LOCK TABLES `inscripcion` WRITE;
 /*!40000 ALTER TABLE `inscripcion` DISABLE KEYS */;
+INSERT INTO `inscripcion` VALUES (1,3847217,'2017-01-10',2,'S15011624'),(3,3719912,'2017-07-01',3,'S15011624');
 /*!40000 ALTER TABLE `inscripcion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,7 +580,7 @@ CREATE TABLE `mesCalendario` (
   PRIMARY KEY (`idmesCalendario`,`calendarioActividades_idCalendarioActividades`),
   KEY `fk_mesCalendario_calendarioActividades1_idx` (`calendarioActividades_idCalendarioActividades`),
   CONSTRAINT `fk_mesCalendario_calendarioActividades1` FOREIGN KEY (`calendarioActividades_idCalendarioActividades`) REFERENCES `calendarioActividades` (`idCalendarioActividades`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -532,6 +590,31 @@ CREATE TABLE `mesCalendario` (
 LOCK TABLES `mesCalendario` WRITE;
 /*!40000 ALTER TABLE `mesCalendario` DISABLE KEYS */;
 /*!40000 ALTER TABLE `mesCalendario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `periodo`
+--
+
+DROP TABLE IF EXISTS `periodo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `periodo` (
+  `idperiodo` int(11) NOT NULL AUTO_INCREMENT,
+  `fechaInicio` date NOT NULL,
+  `fechaFin` date NOT NULL,
+  PRIMARY KEY (`idperiodo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `periodo`
+--
+
+LOCK TABLES `periodo` WRITE;
+/*!40000 ALTER TABLE `periodo` DISABLE KEYS */;
+INSERT INTO `periodo` VALUES (1,'2017-01-15','2017-07-15'),(2,'2017-07-20','2017-12-17');
+/*!40000 ALTER TABLE `periodo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -549,7 +632,7 @@ CREATE TABLE `periodoVacacional` (
   PRIMARY KEY (`idperiodoVacacional`,`calendarioActividades_idCalendarioActividades`),
   KEY `fk_periodoVacacional_calendarioActividades1_idx` (`calendarioActividades_idCalendarioActividades`),
   CONSTRAINT `fk_periodoVacacional_calendarioActividades1` FOREIGN KEY (`calendarioActividades_idCalendarioActividades`) REFERENCES `calendarioActividades` (`idCalendarioActividades`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -572,14 +655,13 @@ CREATE TABLE `portafolioEvidencias` (
   `idportafolioEvidencias` int(11) NOT NULL AUTO_INCREMENT,
   `reglamento` varchar(45) NOT NULL,
   `CalendarioActividades_idCalendarioActividades` int(11) NOT NULL,
-  `inscripcion_GrupoAlumno_idGrupoAlumno` int(11) NOT NULL,
-  `inscripcion_Alumno_matriculaAlumno` varchar(9) NOT NULL,
+  `inscripcion_idinscripcion` int(11) NOT NULL,
   PRIMARY KEY (`idportafolioEvidencias`),
   KEY `fk_portafolioEvidencias_CalendarioActividades1_idx` (`CalendarioActividades_idCalendarioActividades`),
-  KEY `fk_portafolioEvidencias_inscripcion1_idx` (`inscripcion_GrupoAlumno_idGrupoAlumno`,`inscripcion_Alumno_matriculaAlumno`),
+  KEY `fk_portafolioEvidencias_inscripcion1_idx` (`inscripcion_idinscripcion`),
   CONSTRAINT `fk_portafolioEvidencias_CalendarioActividades1` FOREIGN KEY (`CalendarioActividades_idCalendarioActividades`) REFERENCES `calendarioActividades` (`idCalendarioActividades`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_portafolioEvidencias_inscripcion1` FOREIGN KEY (`inscripcion_GrupoAlumno_idGrupoAlumno`, `inscripcion_Alumno_matriculaAlumno`) REFERENCES `inscripcion` (`GrupoAlumno_idGrupoAlumno`, `Alumno_matriculaAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_portafolioEvidencias_inscripcion1` FOREIGN KEY (`inscripcion_idinscripcion`) REFERENCES `inscripcion` (`idinscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -588,6 +670,7 @@ CREATE TABLE `portafolioEvidencias` (
 
 LOCK TABLES `portafolioEvidencias` WRITE;
 /*!40000 ALTER TABLE `portafolioEvidencias` DISABLE KEYS */;
+INSERT INTO `portafolioEvidencias` VALUES (1,'Asistir a todos los exámenes',1,1),(2,'No comer en clase y asistir a todas',2,3);
 /*!40000 ALTER TABLE `portafolioEvidencias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -610,7 +693,7 @@ CREATE TABLE `recepcionista` (
   KEY `fk_recepcionista_horarioAtencion1_idx` (`horarioAtencion_idhorarioAtencion`),
   CONSTRAINT `fk_Recepcionista_usuario1` FOREIGN KEY (`usuario_idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_recepcionista_horarioAtencion1` FOREIGN KEY (`horarioAtencion_idhorarioAtencion`) REFERENCES `horarioAtencion` (`idhorarioAtencion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -639,7 +722,7 @@ CREATE TABLE `reservacion` (
   KEY `fk_reservacion_alumno1_idx` (`alumno_matriculaAlumno`),
   CONSTRAINT `fk_reservacion_actividad1` FOREIGN KEY (`actividad_idActividad`) REFERENCES `actividad` (`idActividad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_reservacion_alumno1` FOREIGN KEY (`alumno_matriculaAlumno`) REFERENCES `alumno` (`matriculaAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -648,6 +731,7 @@ CREATE TABLE `reservacion` (
 
 LOCK TABLES `reservacion` WRITE;
 /*!40000 ALTER TABLE `reservacion` DISABLE KEYS */;
+INSERT INTO `reservacion` VALUES (1,'2017-05-22',1,'S15011624'),(2,'2017-05-22',2,'S15011624');
 /*!40000 ALTER TABLE `reservacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -661,17 +745,15 @@ DROP TABLE IF EXISTS `retroalimentación`;
 CREATE TABLE `retroalimentación` (
   `noRetroalimentación` int(11) NOT NULL AUTO_INCREMENT COMMENT '	',
   `nombreRetroalimentacion` varchar(45) NOT NULL,
-  `idiomaRetroalimentacion` varchar(45) NOT NULL,
   `tipoRetroalimentacion` varchar(45) NOT NULL,
-  `inscripcion_GrupoAlumno_idGrupoAlumno` int(11) NOT NULL,
-  `inscripcion_Alumno_matriculaAlumno` varchar(9) NOT NULL,
   `seccion_idseccion` int(11) NOT NULL,
+  `inscripcion_idinscripcion` int(11) NOT NULL,
   PRIMARY KEY (`noRetroalimentación`),
-  KEY `fk_retroalimentación_inscripcion1_idx` (`inscripcion_GrupoAlumno_idGrupoAlumno`,`inscripcion_Alumno_matriculaAlumno`),
   KEY `fk_retroalimentación_seccion1_idx` (`seccion_idseccion`),
-  CONSTRAINT `fk_retroalimentación_inscripcion1` FOREIGN KEY (`inscripcion_GrupoAlumno_idGrupoAlumno`, `inscripcion_Alumno_matriculaAlumno`) REFERENCES `inscripcion` (`GrupoAlumno_idGrupoAlumno`, `Alumno_matriculaAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_retroalimentación_inscripcion1_idx` (`inscripcion_idinscripcion`),
+  CONSTRAINT `fk_retroalimentación_inscripcion1` FOREIGN KEY (`inscripcion_idinscripcion`) REFERENCES `inscripcion` (`idinscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_retroalimentación_seccion1` FOREIGN KEY (`seccion_idseccion`) REFERENCES `seccion` (`idseccion`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -694,7 +776,7 @@ CREATE TABLE `seccion` (
   `idseccion` int(11) NOT NULL AUTO_INCREMENT,
   `noSeccion` int(2) NOT NULL,
   PRIMARY KEY (`idseccion`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -703,6 +785,7 @@ CREATE TABLE `seccion` (
 
 LOCK TABLES `seccion` WRITE;
 /*!40000 ALTER TABLE `seccion` DISABLE KEYS */;
+INSERT INTO `seccion` VALUES (1,1),(2,2),(3,3);
 /*!40000 ALTER TABLE `seccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -720,8 +803,8 @@ CREATE TABLE `seguimiento` (
   KEY `fk_SeguimientoCurso_has_curso1_curso1_idx` (`curso_idCurso`),
   KEY `fk_SeguimientoCurso_has_curso1_SeguimientoCurso1_idx` (`SeguimientoCurso_idSeguimientoCurso`),
   CONSTRAINT `fk_SeguimientoCurso_has_curso1_SeguimientoCurso1` FOREIGN KEY (`SeguimientoCurso_idSeguimientoCurso`) REFERENCES `seguimientoCurso` (`idSeguimientoCurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_SeguimientoCurso_has_curso1_curso1` FOREIGN KEY (`curso_idCurso`) REFERENCES `curso` (`idCurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_SeguimientoCurso_has_curso1_curso1` FOREIGN KEY (`curso_idCurso`) REFERENCES `curso` (`nrcCurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -745,7 +828,7 @@ CREATE TABLE `seguimientoCurso` (
   `noSeguimiento` varchar(45) NOT NULL,
   `descripcionSeguimiento` varchar(45) NOT NULL,
   PRIMARY KEY (`idSeguimientoCurso`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -766,10 +849,10 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario` (
   `idusuario` int(11) NOT NULL AUTO_INCREMENT,
-  `nombreUsuario` varchar(9) NOT NULL,
+  `nombreUsuario` varchar(10) NOT NULL,
   `passwordUsuario` varchar(256) NOT NULL,
   PRIMARY KEY (`idusuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -778,7 +861,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'S15011624','c45bb4815941a3722ca2182bf4e707afc74bbdc745077722cbeff4db3fa4ce7c'),(2,'S15011613','85a72bef03d94c5692c7d6a3d7b6621b4f517be44d12e241d6866f3114374ead');
+INSERT INTO `usuario` VALUES (1,'zS15011624','c45bb4815941a3722ca2182bf4e707afc74bbdc745077722cbeff4db3fa4ce7c'),(2,'zS15011613','85a72bef03d94c5692c7d6a3d7b6621b4f517be44d12e241d6866f3114374ead'),(3,'12098','57738c9220798c31cb67b84d3199fb738a44373d52ab979b9489c80adb464a90'),(4,'67291','c5d9abe6b98f309c2a1b598d9f169bbed87b4982cbb2a8faa1d7bc5e6076f0b6'),(5,'92831','75907fd07a199208e8b1bb4b478f518b94eba104447c60432e39621df88380d2');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -791,4 +874,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-20 21:17:39
+-- Dump completed on 2017-05-22 20:27:51
