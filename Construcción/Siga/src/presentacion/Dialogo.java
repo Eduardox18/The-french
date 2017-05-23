@@ -41,4 +41,12 @@ public class Dialogo {
         alertaUsuario.setContentText("La reservación se realizó exitosamente");
         alertaUsuario.showAndWait();
     }
+    
+    public void alertaExisteActividad() {
+        Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
+        alertaUsuario.setTitle("Reservación existente");
+        alertaUsuario.setHeaderText("Alerta");
+        alertaUsuario.setContentText("No puedes realizar la misma reservación más de una vez");
+        alertaUsuario.showAndWait();
+    }
 }

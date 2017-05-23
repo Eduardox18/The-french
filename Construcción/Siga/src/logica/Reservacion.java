@@ -5,10 +5,9 @@ import datos.ReservacionDAO;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import presentacion.Dialogo;
 
 /**
@@ -53,6 +52,25 @@ public class Reservacion implements ReservacionDAO {
         return false;
     }
     
-    
-    
+    public boolean comprobarReservaciones(String matriculaAlumno, int idActividad) {
+        Connection conexion;
+        PreparedStatement sentencia;
+        ResultSet rs = null;
+        
+        try {
+            conexion = new Conexion().connection();
+            String consulta = "SELECT actividad_idActividad, alumno_matriculaAlumno FROM "
+                    + "reservacion WHERE alumno_matriculaAlumno = ? AND actividad_idActividad = ?";
+            sentencia = conexion.prepareCall(consulta);
+            sentencia.setString(1, matriculaAlumno);
+            sentencia.setInt(2, idActividad);
+            rs = sentencia.executeQuery();
+            
+            return !rs.next();
+        } catch (SQLException ex) {
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
+        }
+        return false;
+    }
 }

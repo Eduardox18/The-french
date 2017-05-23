@@ -51,10 +51,6 @@
           <TableColumn fx:id="colHora" prefWidth="105.45223999023438" text="Hora" />
         </columns>
       </TableView>
-      <Button layoutX="408.0" layoutY="359.0" mnemonicParsing="false" text="Cancelar" AnchorPane.bottomAnchor="14.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
       <Button fx:id="btReservar" disable="true" layoutX="494.0" layoutY="359.0" mnemonicParsing="false" onAction="#guardarActividad" text="Reservar" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="35.0">
          <cursor>
             <Cursor fx:constant="HAND" />

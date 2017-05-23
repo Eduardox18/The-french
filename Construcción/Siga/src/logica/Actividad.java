@@ -93,9 +93,10 @@ public class Actividad implements ActividadDAO{
             conexion = new Conexion().connection();
             String consulta = "SELECT actividad.nombreActividad, CONCAT (asesor.nombreAsesor,' ', "
                     + "asesor.apPaternoAsesor, ' ', asesor.apMaternoAsesor) AS asesorActividad, "
-                    + "actividad.tipoActividad, actividad.horaActividad FROM actividad, "
-                    + "curso, asesor WHERE curso.nrcCurso = ? AND curso.asesor_noPersonalAsesor "
-                    + "= asesor.noPersonalAsesor AND actividad.diaActividad = ?;";
+                    + "actividad.tipoActividad, actividad.horaActividad FROM actividad, curso, "
+                    + "asesor WHERE curso.nrcCurso = ? AND curso.nrcCurso = "
+                    + "actividad.curso_nrcCurso AND curso.asesor_noPersonalAsesor = "
+                    + "asesor.noPersonalAsesor AND actividad.diaActividad = ?";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setInt(1, nrcCurso);
             sentencia.setDate(2, diaActividad);
@@ -127,7 +128,7 @@ public class Actividad implements ActividadDAO{
         
         try {
             conexion = new Conexion().connection();
-            String consulta = " SELECT idActividad FROM actividad WHERE nombreActividad = ? AND horaActividad = ?;";
+            String consulta = " SELECT idActividad FROM actividad WHERE nombreActividad = ? AND horaActividad = ?";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, nombreActividad);
             sentencia.setTime(2, horaActividad);

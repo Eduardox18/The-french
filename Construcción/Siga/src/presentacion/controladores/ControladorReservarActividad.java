@@ -28,28 +28,28 @@ public class ControladorReservarActividad implements Initializable {
 
     @FXML
     private Button btReservar;
-    
+
     @FXML
     private ComboBox<Curso> cbIdiomas;
-    
+
     @FXML
     private TableView<Actividad> tablaActividades;
-    
+
     @FXML
     private TableColumn<Actividad, String> colActividad;
-    
+
     @FXML
     private TableColumn<Actividad, String> colProfesor;
-    
+
     @FXML
     private TableColumn<Actividad, String> colTipo;
-    
+
     @FXML
     private TableColumn<Actividad, Time> colHora;
-    
+
     @FXML
     private DatePicker selectorFecha;
-    
+
     /**
      * Initializes the controller class.
      */
@@ -62,69 +62,74 @@ public class ControladorReservarActividad implements Initializable {
         cbIdiomas.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTabla();
         });
-        
+
         //Listener para la tabla, se utiliza para saber cuando hay un item 
         //seleccionado
-        
         tablaActividades.getSelectionModel().selectedIndexProperty().
-            addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                btReservar.setDisable(false);
-            }
-        });
-    }    
-   
+                addListener((obs, oldSelection, newSelection) -> {
+                    if (newSelection != null) {
+                        btReservar.setDisable(false);
+                    }
+                });
+    }
+
     /**
-     * 
-     * Recupera los datos de la base de datos que coincidan con el idioma y la
-     * fecha indicados y los muestra en la tabla
+     *
+     * Recupera los datos de la base de datos que coincidan con el idioma y la fecha indicados y los
+     * muestra en la tabla
      */
-    private void llenarTabla () {
+    private void llenarTabla() {
         Actividad actividad = new Actividad();
         colActividad.setCellValueFactory(
-            new PropertyValueFactory<>("nombreActividad"));
+                new PropertyValueFactory<>("nombreActividad"));
         colProfesor.setCellValueFactory(
-            new PropertyValueFactory<>("asesorActividad"));
+                new PropertyValueFactory<>("asesorActividad"));
         colTipo.setCellValueFactory(
-            new PropertyValueFactory<>("tipoActividad"));
+                new PropertyValueFactory<>("tipoActividad"));
         colHora.setCellValueFactory(
-            new PropertyValueFactory<>("horaActividad"));
+                new PropertyValueFactory<>("horaActividad"));
         LocalDate fecha;
         Date fechaSql;
         try {
             fecha = selectorFecha.getValue();
             fechaSql = Date.valueOf(fecha);
             tablaActividades.setItems(actividad.consultarActividades(
-            39182, fechaSql));
+                    cbIdiomas.getSelectionModel().getSelectedItem().getNrcCurso(), fechaSql));
         } catch (NullPointerException e) {
             Dialogo dia = new Dialogo();
             dia.alertaCamposVacios();
         }
     }
-    
+
     /**
-     * 
-     * 
+     *
+     *
      */
-    private void llenarCombo () {
+    private void llenarCombo() {
         Curso curso = new Curso();
         Usuario usuario = new Usuario();
         cbIdiomas.setItems(curso.obtenerCursos(usuario.getUsuarioActual()));
         cbIdiomas.getSelectionModel().selectFirst();
     }
-    
+
     @FXML
     public void guardarActividad() {
         Usuario usuario = new Usuario();
         Reservacion reservacion = new Reservacion();
-        boolean verificacion = reservacion.agregarReservacion(
-            tablaActividades.getSelectionModel().getSelectedItem().
-                obtenerIDActividad(),
-            usuario.getUsuarioActual());
-        if(verificacion == true) {
-            Dialogo dialogo = new Dialogo();
-            dialogo.alertaReservacionExistosa();
+        Dialogo dialogo = new Dialogo();
+        boolean existe = reservacion.comprobarReservaciones(usuario.getUsuarioActual(),
+                tablaActividades.getSelectionModel().getSelectedItem().obtenerIDActividad());
+        if (existe == true) {
+            boolean verificacion = reservacion.agregarReservacion(
+                    tablaActividades.getSelectionModel().getSelectedItem().
+                            obtenerIDActividad(),
+                    usuario.getUsuarioActual());
+            if (verificacion == true) {
+                dialogo.alertaReservacionExistosa();
+            }
+        } else {
+            dialogo.alertaExisteActividad();
         }
     }
-    
+
 }
