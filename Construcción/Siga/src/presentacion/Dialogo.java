@@ -8,6 +8,10 @@ import javafx.scene.control.Alert;
  */
 public class Dialogo {
 
+    /**
+     * 
+     * Muestra una alerta de error en la pantalla
+     */
     public void alertaError() {
         Alert alertaUsuario = new Alert(Alert.AlertType.ERROR);
         alertaUsuario.setTitle("Error");
@@ -17,6 +21,10 @@ public class Dialogo {
         alertaUsuario.showAndWait();
     }
 
+    /**
+     * 
+     * Muestra una alerta informando que fltan campos por llenar
+     */
     public void alertaCamposVacios() {
         Alert alertaCampos = new Alert(Alert.AlertType.WARNING);
         alertaCampos.setTitle("Campos incompletos");
@@ -25,6 +33,10 @@ public class Dialogo {
         alertaCampos.showAndWait();
     }
 
+    /**
+     * 
+     * Muestra una alerta informando que los datos ingresados no son correctos
+     */
     public void alertaInformacionErronea() {
         Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
         alertaUsuario.setTitle("Usuario no encontrado");
@@ -34,6 +46,10 @@ public class Dialogo {
         alertaUsuario.showAndWait();
     }
     
+    /**
+     * 
+     * Alerta que informa cuando la reservación se realiza de forma exitosa
+     */
     public void alertaReservacionExistosa() {
         Alert alertaUsuario = new Alert(Alert.AlertType.INFORMATION);
         alertaUsuario.setTitle("¡Reservación exitosa!");
@@ -42,6 +58,11 @@ public class Dialogo {
         alertaUsuario.showAndWait();
     }
     
+    /**
+     * 
+     * Alerta que informa si una actividad ya se encunetra reservada por un 
+     * alumno
+     */
     public void alertaExisteActividad() {
         Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
         alertaUsuario.setTitle("Reservación existente");

@@ -59,6 +59,11 @@ public class ControladorLogIn extends Application {
         primaryStage.show();
     }
 
+    /**
+     * 
+     * Inicia la ventana Inicial cargando los elementos del controlador y del 
+     * archivo XML
+     */
     @FXML
     public void abrirInicio() {
         Usuario usuario = new Usuario();

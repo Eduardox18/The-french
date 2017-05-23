@@ -24,6 +24,10 @@ public class Actividad implements ActividadDAO{
     private Date diaActividad;
     private String asesorActividad;
     
+    /**
+     * 
+     * Constructor vacio de la clase
+     */
     public Actividad() {}
     
     public Actividad(String nombre, String tipoActividad, Time horaActividad, Date diaActividad,
@@ -77,9 +81,12 @@ public class Actividad implements ActividadDAO{
     
     /**
      * 
-     * @param nrcCurso
-     * @param diaActividad
-     * @return 
+     * Método que devuelve un observable list con todos las actividades que cumplen
+     * con los parámetros
+     * @param nrcCurso NRC del curso que se desea buscar
+     * @param diaActividad Fecha en la que se desean buscar las actividades
+     * @return ObservableList de objetos Actividad, donde se encuentran todas las
+     * coincidencias de la búsqueda
      */
     @Override
     public ObservableList<Actividad> consultarActividades(int nrcCurso, Date diaActividad) {
@@ -118,8 +125,8 @@ public class Actividad implements ActividadDAO{
     }
     
     /**
-     * 
-     * @return 
+     * Devuelve el id del objeto Actividad que lo invoca
+     * @return ID de la actividad
      */
     public int obtenerIDActividad() {
         Connection conexion;

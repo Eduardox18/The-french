@@ -27,6 +27,12 @@ public class ControladorPrincipal {
     @FXML
     private MenuItem barRegistrarBitacora;
 
+    /**
+     * 
+     * Inicia la ventana Reservarctividad cargando los elementos del controlador
+     * y la interfaz XML
+     * @param event 
+     */
     @FXML
     void abrirReservarActividad(ActionEvent event) {
         try {
@@ -42,6 +48,12 @@ public class ControladorPrincipal {
         }
     }
 
+    /**
+     * 
+     * Inicia la ventana RegistrarBitacora cargando los elementos del controlador
+     * y la interfaz XML
+     * @param event 
+     */
     @FXML
     void abrirRegistrarBitacora(ActionEvent event) {
         try {

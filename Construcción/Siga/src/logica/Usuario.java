@@ -52,13 +52,11 @@ public class Usuario implements UsuarioDAO {
     }
 
     /**
-     * Método que verifica que coincida la contraseña del usuario ingresado con la registrada en la
-     * base de datos.
-     *
-     * @param nombre Nombre de usuario
-     * @param password Contraseña de usuario
-     * @return Regresa verdadero o falso, según la coincidencia de la contraseña del usuario en la
-     * base de datos.
+     * 
+     * Muestra los datos de un Usuario seleccionado
+     * @param nombre El nombre del Usuario
+     * @param password Contraseña del usuario
+     * @return true si la operación es exitosa, false en el caso contrario.
      */
     @Override
     public boolean consultaUsuario(String nombre, String password) {
@@ -146,6 +144,11 @@ public class Usuario implements UsuarioDAO {
         return false;
     }
     
+    /**
+     * 
+     * Establece La variable global usuarioActual con la matrícula del alumno
+     * @param nombre nombre de Usuario del alumno
+     */
     public void obtenerMatriculaAlumno(String nombre) {
         Connection conexion;
         PreparedStatement sentencia;

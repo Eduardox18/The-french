@@ -26,6 +26,13 @@ public class Reservacion implements ReservacionDAO {
         this.fechaReservacion = fechaReservacion;
     }
 
+    /**
+     * 
+     * Agrega una reservación del alumno a la base de datos
+     * @param idActividad ID de la Actividad que se desea reservar
+     * @param matriculaAlumno Matrícula del Alumno que hace la reservación
+     * @return true si la operación es exitosa, false en el caso contrario.
+     */
     @Override
     public boolean agregarReservacion(int idActividad, String matriculaAlumno) {
         Connection conexion;
@@ -52,6 +59,14 @@ public class Reservacion implements ReservacionDAO {
         return false;
     }
     
+    /**
+     * 
+     * Comprueba que el alumno no se encuntre ya inscrito en el curso
+     * @param matriculaAlumno La matrícula del alumno del que se desea consultar
+     * @param idActividad El ID de la actividad de la que se desea comprobar
+     * @return True si el alumno no se encuentra inscrito y false si aun no
+     * ha inscrito esa actividad
+     */
     public boolean comprobarReservaciones(String matriculaAlumno, int idActividad) {
         Connection conexion;
         PreparedStatement sentencia;

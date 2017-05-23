@@ -103,7 +103,8 @@ public class ControladorReservarActividad implements Initializable {
 
     /**
      *
-     *
+     *Obtiene los datos del combobox obtenidos del método obtenerCursos de la 
+     * clase Curso
      */
     private void llenarCombo() {
         Curso curso = new Curso();
@@ -112,13 +113,20 @@ public class ControladorReservarActividad implements Initializable {
         cbIdiomas.getSelectionModel().selectFirst();
     }
 
+    /**
+     * 
+     * Método llamado por el botón Reservar actividd que guarda la reservación
+     * en la base de datos
+     */
     @FXML
     public void guardarActividad() {
         Usuario usuario = new Usuario();
         Reservacion reservacion = new Reservacion();
         Dialogo dialogo = new Dialogo();
-        boolean existe = reservacion.comprobarReservaciones(usuario.getUsuarioActual(),
-                tablaActividades.getSelectionModel().getSelectedItem().obtenerIDActividad());
+        boolean existe = reservacion.comprobarReservaciones(usuario.
+            getUsuarioActual(),
+                tablaActividades.getSelectionModel().getSelectedItem().
+                    obtenerIDActividad());
         if (existe == true) {
             boolean verificacion = reservacion.agregarReservacion(
                     tablaActividades.getSelectionModel().getSelectedItem().

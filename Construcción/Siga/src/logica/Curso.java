@@ -50,6 +50,13 @@ public class Curso {
         return nombreCurso;
     }
     
+    /**
+     * 
+     * Devuleve todos los cursos en los que el Alumno se encuentre inscrito
+     * @param matriculaAlumno Matrícula del alumno del que se desea consultar
+     * @return Observable List con todos los cursos en los que se encuentra 
+     * inscrito el alumno
+     */
     public ObservableList<Curso> obtenerCursos (String matriculaAlumno) {
         ObservableList<Curso> cursosAlumno = FXCollections.observableArrayList();
         Connection conexion;
