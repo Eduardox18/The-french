@@ -83,7 +83,6 @@ public class Curso {
                 cursosAlumno.add(curso);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
