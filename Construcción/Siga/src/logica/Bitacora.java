@@ -39,29 +39,6 @@ public class Bitacora implements BitacoraDAO{
 
     /**
      * 
-     * Elimina una bitácora de la base de datos
-     * @param noBitacora El número de la bitácora que se desea borrar.
-     * @return true si la operación es exitosa, false en el caso contrario.
-     */
-    @Override
-    public boolean eliminarBitacora(int noBitacora) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * 
-     * Permite editar la información de un bitácora guardada previamente en el
-     * sistema
-     * @param noBitacora El número de la bitácora que se desea editar
-     * @return true si la operación es exitosa, false en el caso contrario.
-     */
-    @Override
-    public boolean editarBitacora(int noBitacora) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * 
      * Regresa los datos de una bitácora
      * @param noBitacora El número de la bitácora que se desea consultar
      * @return true si la operación es exitosa, false en el caso contrario.
