@@ -135,13 +135,13 @@ public class Actividad implements ActividadDAO{
         
         try {
             conexion = new Conexion().connection();
-            String consulta = " SELECT idActividad FROM actividad WHERE nombreActividad = ? AND horaActividad = ?";
+            String consulta = "SELECT idActividad FROM actividad WHERE nombreActividad = ? AND horaActividad = ?";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, nombreActividad);
             sentencia.setTime(2, horaActividad);
             rs = sentencia.executeQuery();
             
-            if(rs.next() && rs != null) {
+            if(rs.next()) {
                 return rs.getInt("idActividad");
             }
             
