@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
@@ -26,14 +25,9 @@
             <Font name="Arial" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cbIdiomas" layoutX="36.0" layoutY="109.0" prefHeight="27.0" prefWidth="136.0" AnchorPane.leftAnchor="36.0">
+      <ComboBox fx:id="cbIdiomas" layoutX="87.0" layoutY="108.0" prefHeight="27.0" prefWidth="136.0" AnchorPane.leftAnchor="87.0">
          <contextMenu>
-            <ContextMenu>
-              <items>
-                <MenuItem mnemonicParsing="false" text="Inglés" />
-                  <MenuItem mnemonicParsing="false" text="Francés" />
-              </items>
-            </ContextMenu>
+            <ContextMenu />
          </contextMenu>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -55,5 +49,11 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
+      <Label layoutX="38.0" layoutY="113.0" text="Curso:">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="btCancelar" layoutX="402.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelarReservacion" text="Cancelar" />
    </children>
 </AnchorPane>

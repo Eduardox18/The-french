@@ -15,4 +15,7 @@ public interface ReservacionDAO {
      * @return true si la operación es exitosa, false en el caso contrario.
      */
     public boolean agregarReservacion(int idActividad, String matriculaAlumno);
+    
+    //public Reservacion consultarReservacion(int noReservacion);
+    //public boolean eliminarReservacionAlumno(int noReservacion);
 }

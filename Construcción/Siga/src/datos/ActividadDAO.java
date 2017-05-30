@@ -21,4 +21,8 @@ public interface ActividadDAO {
      * coincidencias de la búsqueda
      */
     public ObservableList<Actividad> consultarActividades(int nrcCurso, Date diaActividad);
+    
+    //public boolean agregarActividad(Actividad actividad);
+    //public boolean editarActividad(int noActividad);
+    //public boolean eliminarActividad(int noActividad);
 }

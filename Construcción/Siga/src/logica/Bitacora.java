@@ -33,18 +33,7 @@ public class Bitacora implements BitacoraDAO{
      * algún error.
      */
     @Override
-    public boolean insertarBitacora(Bitacora bitacora) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    /**
-     * 
-     * Regresa los datos de una bitácora
-     * @param noBitacora El número de la bitácora que se desea consultar
-     * @return true si la operación es exitosa, false en el caso contrario.
-     */
-    @Override
-    public ObservableList<Bitacora> consultarBitacora(int noBitacora) {
+    public boolean registrarBitacora(Bitacora bitacora) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

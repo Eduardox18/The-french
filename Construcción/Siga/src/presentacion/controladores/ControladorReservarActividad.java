@@ -1,11 +1,14 @@
 package presentacion.controladores;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -13,6 +16,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import logica.Actividad;
 import logica.Curso;
 import logica.Reservacion;
@@ -28,6 +33,9 @@ public class ControladorReservarActividad implements Initializable {
 
     @FXML
     private Button btReservar;
+    
+    @FXML
+    private Button btCancelar;
 
     @FXML
     private ComboBox<Curso> cbIdiomas;
@@ -137,6 +145,20 @@ public class ControladorReservarActividad implements Initializable {
             }
         } else {
             dialogo.alertaExisteActividad();
+        }
+    }
+    
+    @FXML
+    void cancelarReservacion(ActionEvent event) {
+        try {
+            URL principal = getClass().getResource("/presentacion/Inicial.fxml");
+            AnchorPane panePrincipal = FXMLLoader.load(principal);
+            
+            BorderPane border = ControladorLogIn.getPrincipal();
+            border.setCenter(panePrincipal);
+        } catch (IOException ex) {
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
         }
     }
 

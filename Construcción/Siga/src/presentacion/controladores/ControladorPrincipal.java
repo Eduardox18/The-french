@@ -42,7 +42,6 @@ public class ControladorPrincipal {
             BorderPane border = ControladorLogIn.getPrincipal();
             border.setCenter(paneReservarActividad);
         } catch (IOException e) {
-            e.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
