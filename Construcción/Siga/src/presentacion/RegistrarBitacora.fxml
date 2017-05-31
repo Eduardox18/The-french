@@ -33,12 +33,13 @@
          </columnResizePolicy>
       </TableView>
       <Label layoutX="11.0" layoutY="143.0" text="Actividades a las que asistió:" />
-      <Button fx:id="botonNuevaActividad" layoutX="335.0" layoutY="359.0" mnemonicParsing="false" text="Nueva actividad" />
+      <Button fx:id="botonNuevaActividad" layoutX="335.0" layoutY="359.0" mnemonicParsing="false" onAction="#agregarActividadRealizada" text="Nueva actividad" />
       <TableView fx:id="tablaRealizadas" layoutX="14.0" layoutY="264.0" prefHeight="82.0" prefWidth="574.0">
          <columns>
             <TableColumn fx:id="colCodigoRealizada" prefWidth="75.0" text="Código" />
-            <TableColumn fx:id="colFechaRealizada" prefWidth="75.0" text="Fecha" />
             <TableColumn fx:id="colNombreRealizada" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="colFechaRealizada" prefWidth="75.0" text="Fecha" />
+            <TableColumn fx:id="colTiempoRealizada" prefWidth="75.0" text="Tiemppo empleado" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

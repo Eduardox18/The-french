@@ -8,6 +8,7 @@ package presentacion.controladores;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,8 +23,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.util.StringConverter;
 import logica.Actividad;
 import logica.ActividadRealizada;
 import logica.Curso;
@@ -78,6 +81,9 @@ public class ControladorRegistrarBitacora implements Initializable {
     
     @FXML
     TableColumn<Date, ActividadRealizada> colFechaRealizada;
+    
+    @FXML
+    TableColumn<Time, ActividadRealizada> colTiempoRealizada;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -134,8 +140,8 @@ public class ControladorRegistrarBitacora implements Initializable {
     
     @FXML
     private void agregarActividadRealizada () {
-        
+        ActividadRealizada actReal = new ActividadRealizada();
+        tablaRealizadas.getItems().add(actReal);
     }
-    
     
 }

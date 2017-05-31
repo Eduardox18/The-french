@@ -1,6 +1,7 @@
 package logica;
 
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
@@ -11,7 +12,8 @@ public class ActividadRealizada {
     private String codigoARealizada;
     private String nombreARealizada;
     private Date fechaARealizada;
-
+    private Time tiempoEmpleado;
+    
     public String getCodigoARealizada() {
         return codigoARealizada;
     }
@@ -38,5 +40,13 @@ public class ActividadRealizada {
     
     public boolean guardarARealizada(ActividadRealizada aRealizada) {
         return false;
+    }
+    
+    public Time getTiempoEmpleado() {
+        return tiempoEmpleado;
+    }
+
+    public void setTiempoEmpleado(Time tiempoEmpleado) {
+        this.tiempoEmpleado = tiempoEmpleado;
     }
 }
