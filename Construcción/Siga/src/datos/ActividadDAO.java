@@ -22,6 +22,7 @@ public interface ActividadDAO {
      */
     public ObservableList<Actividad> consultarActividades(int nrcCurso, Date diaActividad);
     
+    public ObservableList<Actividad> consultarActividadesAsistidas(int nrcCurso, String matriculaAlumno);
     //public boolean agregarActividad(Actividad actividad);
     //public boolean editarActividad(int noActividad);
     //public boolean eliminarActividad(int noActividad);

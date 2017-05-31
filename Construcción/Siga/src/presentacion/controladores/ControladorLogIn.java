@@ -68,6 +68,8 @@ public class ControladorLogIn extends Application {
     public void abrirInicio() {
         Usuario usuario = new Usuario();
         Dialogo dialogo = new Dialogo();
+        tfUsuario.setText("zS15011624"); //eliminar esta línea
+        tfPassword.setText("angeldominguez"); //eliminar esta línea
 
         if (tfUsuario.getText().trim().isEmpty() || tfPassword.getText().trim().isEmpty()) {
             dialogo.alertaCamposVacios();

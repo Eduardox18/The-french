@@ -5,27 +5,47 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentacion.controladores.ControladorRegistrarBitacora">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Nº de bitácora:" />
       <Label layoutX="116.0" layoutY="14.0" text="#" />
-      <Label layoutX="368.0" layoutY="14.0" text="Desempeño de la sección:" />
-      <Label layoutX="550.0" layoutY="14.0" text="#" />
-      <Label layoutX="14.0" layoutY="49.0" text="Tiempo empleado:" />
-      <Label layoutX="14.0" layoutY="102.0" text="Código de actividad:" />
-      <Label layoutX="301.0" layoutY="49.0" text="Fecha de actividad:" />
-      <Label layoutX="301.0" layoutY="102.0" text="Resultado de autoevaluación:" />
-      <Spinner layoutX="158.0" layoutY="44.0" prefHeight="27.0" prefWidth="93.0" />
-      <ComboBox layoutX="158.0" layoutY="97.0" prefHeight="27.0" prefWidth="127.0" />
-      <DatePicker layoutX="461.0" layoutY="44.0" prefHeight="27.0" prefWidth="127.0" />
-      <Label layoutX="258.0" layoutY="49.0" text="Min." />
-      <TextField layoutX="495.0" layoutY="97.0" prefHeight="27.0" prefWidth="93.0" />
-      <Label layoutX="14.0" layoutY="158.0" text="Comentario del alumno:" />
-      <TextArea layoutX="14.0" layoutY="191.0" prefHeight="124.0" prefWidth="574.0" />
-      <Button layoutX="237.0" layoutY="341.0" mnemonicParsing="false" text="Registrar bitácora" />
+      <Label layoutX="14.0" layoutY="41.0" text="Tiempo empleado:" />
+      <Label layoutX="362.0" layoutY="14.0" text="Resultado de autoevaluación:" />
+      <DatePicker fx:id="selectorFecha" layoutX="238.0" layoutY="36.0" prefHeight="27.0" prefWidth="127.0" promptText="Fecha" />
+      <Label layoutX="11.0" layoutY="69.0" text="Comentario del alumno:" />
+      <TextArea fx:id="areaComentario" layoutX="11.0" layoutY="93.0" prefHeight="42.0" prefWidth="574.0" />
+      <Button layoutX="463.0" layoutY="359.0" mnemonicParsing="false" text="Registrar bitácora" />
+      <Button fx:id="botonCancelar" layoutX="251.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelarRegistro" text="Cancelar" />
+      <Label layoutX="394.0" layoutY="41.0" text="Curso:" />
+      <ComboBox fx:id="comboCursos" layoutX="442.0" layoutY="36.0" prefHeight="27.0" prefWidth="146.0" />
+      <TableView fx:id="tablaAsistidas" layoutX="14.0" layoutY="160.0" prefHeight="82.0" prefWidth="574.0">
+        <columns>
+          <TableColumn fx:id="colNombreAsistido" editable="false" prefWidth="286.0" text="Nombre" />
+            <TableColumn fx:id="colFechaAsistido" editable="false" prefWidth="286.0" text="Fecha" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="11.0" layoutY="143.0" text="Actividades a las que asistió:" />
+      <Button fx:id="botonNuevaActividad" layoutX="335.0" layoutY="359.0" mnemonicParsing="false" text="Nueva actividad" />
+      <TableView layoutX="14.0" layoutY="264.0" prefHeight="82.0" prefWidth="574.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="Código" />
+            <TableColumn prefWidth="75.0" text="Fecha" />
+            <TableColumn prefWidth="75.0" text="Nombre" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="13.0" layoutY="248.0" text="Actividades realizadas:" />
+      <Label layoutX="579.0" layoutY="14.0" text="#" />
+      <Spinner fx:id="selectorTiempo" layoutX="132.0" layoutY="36.0" prefHeight="27.0" prefWidth="73.0" />
    </children>
 </AnchorPane>

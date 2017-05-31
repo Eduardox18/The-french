@@ -148,8 +148,14 @@ public class ControladorReservarActividad implements Initializable {
         }
     }
     
+    /**
+     * 
+     * Regresa a la ventana inicial en caso de que se desee cancelar la 
+     * reservación
+     * @param event 
+     */
     @FXML
-    void cancelarReservacion(ActionEvent event) {
+    private void cancelarReservacion(ActionEvent event) {
         try {
             URL principal = getClass().getResource("/presentacion/Inicial.fxml");
             AnchorPane panePrincipal = FXMLLoader.load(principal);

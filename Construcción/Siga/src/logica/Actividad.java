@@ -109,7 +109,7 @@ public class Actividad implements ActividadDAO{
             sentencia.setDate(2, diaActividad);
             rs = sentencia.executeQuery();
             
-            while(rs.next() && rs != null) {
+            while(rs.next()) {
                 actividadResultado = new Actividad();
                 actividadResultado.setNombreActividad(rs.getString("nombreActividad"));
                 actividadResultado.setAsesorActividad(rs.getString("asesorActividad"));
@@ -122,6 +122,39 @@ public class Actividad implements ActividadDAO{
             dialogo.alertaError();
         }
         return listaActividades;
+    }
+    
+    @Override
+    public ObservableList<Actividad> consultarActividadesAsistidas(int nrcCurso, String matriculaAlumno) {
+        Connection conexion;
+        PreparedStatement sentencia;
+        ResultSet rs;
+        Actividad actividadResultado;
+        ObservableList<Actividad> listaActividadesAsistidas = FXCollections.observableArrayList();
+        try {
+            conexion = new Conexion().connection();
+            String consulta = "select nombreActividad, diaActividad from "
+                + "actividad, asistenciaActividad, reservacion where "
+                + "asistenciaActividad.reservacion_noReservacion = "
+                + "reservacion.noReservacion and actividad.idActividad = "
+                + "reservacion.actividad_idActividad and "
+                + "actividad.curso_nrcCurso = ? and reservacion.alumno_matriculaAlumno = ?;";
+            sentencia = conexion.prepareStatement(consulta);
+            sentencia.setInt(1, nrcCurso);
+            sentencia.setString(2, matriculaAlumno);
+            rs = sentencia.executeQuery();
+            
+            while(rs.next()) {
+                actividadResultado = new Actividad();
+                actividadResultado.setNombreActividad(rs.getString("nombreActividad"));
+                actividadResultado.setDiaActividad(rs.getDate("diaActividad"));
+                listaActividadesAsistidas.add(actividadResultado);
+            }
+        } catch (SQLException ex) {
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
+        }
+        return listaActividadesAsistidas;
     }
     
     /**
@@ -151,9 +184,5 @@ public class Actividad implements ActividadDAO{
             return 0;
         }
         return 0;
-    }
-    
-    public boolean consultarActividadesAsistidas() {
-        return false;
     }
 }
