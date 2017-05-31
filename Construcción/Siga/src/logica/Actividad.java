@@ -152,4 +152,8 @@ public class Actividad implements ActividadDAO{
         }
         return 0;
     }
+    
+    public boolean consultarActividadesAsistidas() {
+        return false;
+    }
 }

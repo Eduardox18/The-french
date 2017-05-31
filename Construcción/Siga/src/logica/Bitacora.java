@@ -17,26 +17,18 @@ import presentacion.Dialogo;
 public class Bitacora implements BitacoraDAO {
     
     private Time tiempoEmpleado;
-    private int codigoActividad;
     private String comentario;
-    private int desempenoSeccion;
     private Date fechaBitacora;
-    private int resultadoAutoevaluacion;
     private int idPortafolioEvidencias;
     private int nrcCurso;
     
     public Bitacora() {}
     
-    public Bitacora(Time tiempoEmpleado, int codigoActividad, 
-            String comentario, int desempenoSeccion, Date fechaBitacora, 
-            int resultadoAutoevaluacion, int idPortafolioEvidencias, 
-            int nrcCurso) {
+    public Bitacora(Time tiempoEmpleado, String comentario, Date fechaBitacora, 
+            int idPortafolioEvidencias, int nrcCurso) {
         this.tiempoEmpleado = tiempoEmpleado;
-        this.codigoActividad = codigoActividad;
         this.comentario = comentario;
-        this.desempenoSeccion = desempenoSeccion;
         this.fechaBitacora = fechaBitacora;
-        this.resultadoAutoevaluacion = resultadoAutoevaluacion;
         this.idPortafolioEvidencias = idPortafolioEvidencias;
         this.nrcCurso = nrcCurso;
     }
@@ -49,14 +41,6 @@ public class Bitacora implements BitacoraDAO {
         this.tiempoEmpleado = tiempoEmpleado;
     }
 
-    public int getCodigoActividad() {
-        return codigoActividad;
-    }
-
-    public void setCodigoActividad(int codigoActividad) {
-        this.codigoActividad = codigoActividad;
-    }
-
     public String getComentario() {
         return comentario;
     }
@@ -65,28 +49,12 @@ public class Bitacora implements BitacoraDAO {
         this.comentario = comentario;
     }
 
-    public int getDesempenoSeccion() {
-        return desempenoSeccion;
-    }
-
-    public void setDesempenoSeccion(int desempenoSeccion) {
-        this.desempenoSeccion = desempenoSeccion;
-    }
-
     public Date getFechaBitacora() {
         return fechaBitacora;
     }
 
     public void setFechaBitacora(Date fechaBitacora) {
         this.fechaBitacora = fechaBitacora;
-    }
-
-    public int getResultadoAutoevaluacion() {
-        return resultadoAutoevaluacion;
-    }
-
-    public void setResultadoAutoevaluacion(int resultadoAutoevaluacion) {
-        this.resultadoAutoevaluacion = resultadoAutoevaluacion;
     }
 
     public int getIdPortafolioEvidencias() {
@@ -121,19 +89,15 @@ public class Bitacora implements BitacoraDAO {
         try {
             conexion = new Conexion().connection();
             String consulta = "INSERT INTO Bitacora (tiempoEmpleado, "
-                    + "codigoActividad, comentario, desempenoSeccion, "
-                    + "fechaBitacora, resultadoAutoevaluacion, "
+                    + "comentario, fechaBitacora, "
                     + "portafolioEvidencias_idportafolioEvidencias, "
-                    + "curso_nrcCurso) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                    + "curso_nrcCurso) VALUES (?, ?, ?, ?, ?);";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setTime(1, bitacora.getTiempoEmpleado());
-            sentencia.setInt(2, bitacora.getCodigoActividad());
-            sentencia.setString(3, bitacora.getComentario());
-            sentencia.setInt(4, bitacora.getDesempenoSeccion());
-            sentencia.setDate(5, bitacora.getFechaBitacora());
-            sentencia.setInt(6, bitacora.getResultadoAutoevaluacion());
-            sentencia.setInt(7, bitacora.getIdPortafolioEvidencias());
-            sentencia.setInt(8, bitacora.getNrcCurso());
+            sentencia.setString(2, bitacora.getComentario());
+            sentencia.setDate(3, bitacora.getFechaBitacora());
+            sentencia.setInt(4, bitacora.getIdPortafolioEvidencias());
+            sentencia.setInt(5, bitacora.getNrcCurso());
             
             sentencia.executeUpdate();
             return true;
