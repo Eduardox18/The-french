@@ -16,7 +16,7 @@ import presentacion.Dialogo;
  */
 public class Bitacora implements BitacoraDAO {
     
-    private Time tiempoEmpleado;
+    private Integer tiempoEmpleado;
     private String comentario;
     private Date fechaBitacora;
     private int idPortafolioEvidencias;
@@ -24,7 +24,7 @@ public class Bitacora implements BitacoraDAO {
     
     public Bitacora() {}
     
-    public Bitacora(Time tiempoEmpleado, String comentario, Date fechaBitacora, 
+    public Bitacora(Integer tiempoEmpleado, String comentario, Date fechaBitacora, 
             int idPortafolioEvidencias, int nrcCurso) {
         this.tiempoEmpleado = tiempoEmpleado;
         this.comentario = comentario;
@@ -33,11 +33,11 @@ public class Bitacora implements BitacoraDAO {
         this.nrcCurso = nrcCurso;
     }
 
-    public Time getTiempoEmpleado() {
+    public Integer getTiempoEmpleado() {
         return tiempoEmpleado;
     }
 
-    public void setTiempoEmpleado(Time tiempoEmpleado) {
+    public void setTiempoEmpleado(Integer tiempoEmpleado) {
         this.tiempoEmpleado = tiempoEmpleado;
     }
 
@@ -93,7 +93,7 @@ public class Bitacora implements BitacoraDAO {
                     + "portafolioEvidencias_idportafolioEvidencias, "
                     + "curso_nrcCurso) VALUES (?, ?, ?, ?, ?);";
             sentencia = conexion.prepareStatement(consulta);
-            sentencia.setTime(1, bitacora.getTiempoEmpleado());
+            sentencia.setInt(1, bitacora.getTiempoEmpleado());
             sentencia.setString(2, bitacora.getComentario());
             sentencia.setDate(3, bitacora.getFechaBitacora());
             sentencia.setInt(4, bitacora.getIdPortafolioEvidencias());

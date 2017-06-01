@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,12 +24,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.util.StringConverter;
 import logica.Actividad;
 import logica.ActividadRealizada;
+import logica.Bitacora;
 import logica.Curso;
 import logica.Usuario;
 import presentacion.Dialogo;
@@ -45,9 +45,6 @@ public class ControladorRegistrarBitacora implements Initializable {
     
     @FXML
     Button botonCancelar;
-    
-    @FXML
-    Button botonNuevaActividad;
     
     @FXML
     ComboBox<Curso> comboCursos;
@@ -77,9 +74,6 @@ public class ControladorRegistrarBitacora implements Initializable {
     TableColumn<String, ActividadRealizada> colNombreRealizada;
     
     @FXML
-    TableColumn<String, ActividadRealizada> colCodigoRealizada;
-    
-    @FXML
     TableColumn<Date, ActividadRealizada> colFechaRealizada;
     
     @FXML
@@ -89,15 +83,34 @@ public class ControladorRegistrarBitacora implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         llenarCursos();
         llenarTablaAsistidas();
+        llenarTablaRealizadas();
         comboCursos.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTablaAsistidas();
+            llenarTablaRealizadas();
         });
         selectorTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0, 10));
     }
     
     @FXML
     public void guardarBitacora() {
+        Bitacora bitacora = new Bitacora();
+        LocalDate fecha;
+        Date fechaSql;
         
+        try {
+            fecha = selectorFecha.getValue();
+            fechaSql = Date.valueOf(fecha);
+            bitacora.setFechaBitacora(fechaSql);
+        } catch (NullPointerException e) {
+            Dialogo dia = new Dialogo();
+            dia.alertaCamposVacios();
+        }
+        
+        bitacora.setComentario(areaComentario.getText());
+        bitacora.setNrcCurso(comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
+        bitacora.setTiempoEmpleado(selectorTiempo.getValue());
+        
+        bitacora.registrarBitacora(bitacora);
     }
     
     private void llenarCursos () {
@@ -115,6 +128,20 @@ public class ControladorRegistrarBitacora implements Initializable {
         colFechaAsistido.setCellValueFactory(
             new PropertyValueFactory<>("diaActividad"));
         tablaAsistidas.setItems(actividadAsistida.consultarActividadesAsistidas(
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(), 
+            usuario.getUsuarioActual()));
+    }
+    
+    private void llenarTablaRealizadas () {
+        ActividadRealizada act = new ActividadRealizada();
+        Usuario usuario = new Usuario();
+        colNombreRealizada.setCellValueFactory(
+            new PropertyValueFactory<>("nombreARealizada"));
+        colFechaRealizada.setCellValueFactory(
+            new PropertyValueFactory<>("fechaARealizada"));
+        colTiempoRealizada.setCellValueFactory(
+            new PropertyValueFactory<>("tiempoEmpleado"));
+        tablaRealizadas.setItems(act.obtenerActividades(
             comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(), 
             usuario.getUsuarioActual()));
     }
@@ -137,11 +164,4 @@ public class ControladorRegistrarBitacora implements Initializable {
             dialogo.alertaError();
         }
     }
-    
-    @FXML
-    private void agregarActividadRealizada () {
-        ActividadRealizada actReal = new ActividadRealizada();
-        tablaRealizadas.getItems().add(actReal);
-    }
-    
 }

@@ -47,6 +47,34 @@ INSERT INTO `actividad` VALUES (1,'Sobre franceses y torres','Asesoría','15:50:
 UNLOCK TABLES;
 
 --
+-- Table structure for table `actividadEscrita`
+--
+
+DROP TABLE IF EXISTS `actividadEscrita`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `actividadEscrita` (
+  `codigoAEscrita` int(11) NOT NULL AUTO_INCREMENT,
+  `nombreAEscrita` varchar(45) NOT NULL,
+  `tipoAEscrita` varchar(45) NOT NULL,
+  `curso_nrcCurso` int(5) NOT NULL,
+  PRIMARY KEY (`codigoAEscrita`),
+  KEY `fk_actividadEscrita_curso1_idx` (`curso_nrcCurso`),
+  CONSTRAINT `fk_actividadEscrita_curso1` FOREIGN KEY (`curso_nrcCurso`) REFERENCES `curso` (`nrcCurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `actividadEscrita`
+--
+
+LOCK TABLES `actividadEscrita` WRITE;
+/*!40000 ALTER TABLE `actividadEscrita` DISABLE KEYS */;
+INSERT INTO `actividadEscrita` VALUES (1,'Pronom personnel','Gramática',37182),(2,'Adjectifs','Gramática',37182),(3,'El cuervo','Lectura',39182),(4,'Past tense','Gramática',39182);
+/*!40000 ALTER TABLE `actividadEscrita` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `actividadRealizada`
 --
 
@@ -54,14 +82,17 @@ DROP TABLE IF EXISTS `actividadRealizada`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `actividadRealizada` (
-  `idactividadRealizada` int(11) NOT NULL AUTO_INCREMENT,
-  `codigoActividad` varchar(45) NOT NULL,
-  `nombreActividad` varchar(45) NOT NULL,
   `fechaRealizada` date NOT NULL,
-  `bitacora_noBitacora` int(11) NOT NULL,
-  PRIMARY KEY (`idactividadRealizada`),
-  KEY `fk_actividadRealizada_bitacora1_idx` (`bitacora_noBitacora`),
-  CONSTRAINT `fk_actividadRealizada_bitacora1` FOREIGN KEY (`bitacora_noBitacora`) REFERENCES `bitacora` (`noBitacora`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `tiempoDedicado` int(11) NOT NULL,
+  `alumno_matriculaAlumno` varchar(9) NOT NULL,
+  `actividadEscrita_codigoAEscrita` int(11) NOT NULL,
+  `portafolioEvidencias_idportafolioEvidencias` int(11) NOT NULL,
+  KEY `fk_actividadRealizada_alumno1_idx` (`alumno_matriculaAlumno`),
+  KEY `fk_actividadRealizada_actividadEscrita1_idx` (`actividadEscrita_codigoAEscrita`),
+  KEY `fk_actividadRealizada_portafolioEvidencias1_idx` (`portafolioEvidencias_idportafolioEvidencias`),
+  CONSTRAINT `fk_actividadRealizada_actividadEscrita1` FOREIGN KEY (`actividadEscrita_codigoAEscrita`) REFERENCES `actividadEscrita` (`codigoAEscrita`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_actividadRealizada_alumno1` FOREIGN KEY (`alumno_matriculaAlumno`) REFERENCES `alumno` (`matriculaAlumno`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_actividadRealizada_portafolioEvidencias1` FOREIGN KEY (`portafolioEvidencias_idportafolioEvidencias`) REFERENCES `portafolioEvidencias` (`idportafolioEvidencias`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -71,6 +102,7 @@ CREATE TABLE `actividadRealizada` (
 
 LOCK TABLES `actividadRealizada` WRITE;
 /*!40000 ALTER TABLE `actividadRealizada` DISABLE KEYS */;
+INSERT INTO `actividadRealizada` VALUES ('2017-05-07',30,'S15011624',1,1),('2017-05-04',25,'S15011624',2,1);
 /*!40000 ALTER TABLE `actividadRealizada` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -862,4 +894,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-31 16:53:30
+-- Dump completed on 2017-05-31 19:59:39
