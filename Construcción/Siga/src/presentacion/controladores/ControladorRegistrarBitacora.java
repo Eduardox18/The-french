@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package presentacion.controladores;
 
 import java.io.IOException;
@@ -39,10 +34,10 @@ public class ControladorRegistrarBitacora implements Initializable {
 
     @FXML
     Label noBitacora;
-    
+
     @FXML
     Label resultadoAutoevaluacion;
-    
+
     @FXML
     Button botonRegistrar;
 
@@ -95,18 +90,18 @@ public class ControladorRegistrarBitacora implements Initializable {
             completarResultadoAutoevaluacion();
         });
         selectorTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0, 10));
-        
+
         int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(
             comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
         resultadoAutoevaluacion.setText(Integer.toString(resultado));
         noBitacora.setText(Integer.toString(bitacora.recuperarNoBitacora()));
-        
     }
 
     @FXML
     public void guardarBitacora() {
         Bitacora bitacora = new Bitacora();
         Autoevaluacion autoevaluacion = new Autoevaluacion();
+        Dialogo dialogo = new Dialogo();
         PortafolioEvidencias pEvidencias = new PortafolioEvidencias();
         LocalDate fecha;
         Date fechaSql;
@@ -115,19 +110,33 @@ public class ControladorRegistrarBitacora implements Initializable {
             fecha = selectorFecha.getValue();
             fechaSql = Date.valueOf(fecha);
             bitacora.setFechaBitacora(fechaSql);
+
+            if (selectorTiempo.getValue() == 0) {
+                throw new NullPointerException();
+            }
+
+            bitacora.setIdAutoevaluacion(autoevaluacion.obtenerNoAutoevaluacion(
+                comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
+            bitacora.setIdPortafolioEvidencias(pEvidencias.recuperarIDPortafolio(
+                comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
+            bitacora.setComentario(areaComentario.getText());
+            bitacora.setTiempoEmpleado(selectorTiempo.getValue());
+
+            if (bitacora.registrarBitacora(bitacora) && bitacora.
+                guardarActividadesAsistidas(
+                    comboCursos.getSelectionModel().getSelectedItem().
+                        getNrcCurso()) && bitacora.guardarActividadesEscritas(
+                    comboCursos.getSelectionModel().getSelectedItem().
+                        getNrcCurso())) {
+                dialogo.alertaBitacoraRegistrada();
+            } else {
+                dialogo.alertarBitacoraNoRegistrada();
+            }
         } catch (NullPointerException e) {
             Dialogo dia = new Dialogo();
             dia.alertaCamposVacios();
         }
 
-        bitacora.setIdAutoevaluacion(autoevaluacion.obtenerNoAutoevaluacion(
-            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
-        bitacora.setIdPortafolioEvidencias(pEvidencias.recuperarIDPortafolio(
-            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
-        bitacora.setComentario(areaComentario.getText());
-        bitacora.setTiempoEmpleado(selectorTiempo.getValue());
-
-        bitacora.registrarBitacora(bitacora);
     }
 
     private void llenarCursos() {
@@ -148,7 +157,7 @@ public class ControladorRegistrarBitacora implements Initializable {
             comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(),
             usuario.getUsuarioActual()));
     }
-    
+
     private void completarResultadoAutoevaluacion() {
         Autoevaluacion autoevaluacion = new Autoevaluacion();
         int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(

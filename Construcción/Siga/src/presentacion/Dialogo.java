@@ -70,4 +70,21 @@ public class Dialogo {
         alertaUsuario.setContentText("No puedes realizar la misma reservación más de una vez");
         alertaUsuario.showAndWait();
     }
+    
+    public void alertaBitacoraRegistrada() {
+        Alert alertaUsuario = new Alert(Alert.AlertType.INFORMATION);
+        alertaUsuario.setTitle("¡Registro exitoso!");
+        alertaUsuario.setHeaderText("Alerta");
+        alertaUsuario.setContentText("El registro se realizó exitosamente");
+        alertaUsuario.showAndWait();
+    }
+    
+    public void alertarBitacoraNoRegistrada() {
+        Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
+        alertaUsuario.setTitle("Ocurrió un error");
+        alertaUsuario.setHeaderText("Alerta");
+        alertaUsuario.setContentText("El registro no se pudo realizar, "
+            + "intente nuevamente");
+        alertaUsuario.showAndWait();
+    }
 }

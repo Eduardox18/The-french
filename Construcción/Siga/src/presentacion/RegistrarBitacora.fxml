@@ -19,7 +19,7 @@
       <DatePicker fx:id="selectorFecha" layoutX="238.0" layoutY="36.0" prefHeight="27.0" prefWidth="127.0" promptText="Fecha" />
       <Label layoutX="11.0" layoutY="69.0" text="Comentario del alumno:" />
       <TextArea fx:id="areaComentario" layoutX="11.0" layoutY="93.0" prefHeight="42.0" prefWidth="574.0" />
-      <Button fx:id="botonRegistrar" layoutX="463.0" layoutY="359.0" mnemonicParsing="false" text="Registrar bitácora" />
+      <Button fx:id="botonRegistrar" layoutX="463.0" layoutY="359.0" mnemonicParsing="false" onAction="#guardarBitacora" text="Registrar bitácora" />
       <Button fx:id="botonCancelar" layoutX="369.0" layoutY="359.0" mnemonicParsing="false" onAction="#cancelarRegistro" text="Cancelar" />
       <Label layoutX="394.0" layoutY="41.0" text="Curso:" />
       <ComboBox fx:id="comboCursos" layoutX="442.0" layoutY="36.0" prefHeight="27.0" prefWidth="146.0" />

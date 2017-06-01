@@ -134,10 +134,11 @@ public class Bitacora implements BitacoraDAO {
         return 0;
     }
     
-    private boolean guardarActividadesAsistidas(int nrcCurso, int noBitacora) {
+    public boolean guardarActividadesAsistidas(int nrcCurso) {
         Connection conexion;
         PreparedStatement sentencia;
         ResultSet rs;
+        Usuario usuario = new Usuario();
         
         try {
             conexion = new Conexion().connection();
@@ -150,10 +151,12 @@ public class Bitacora implements BitacoraDAO {
                 + "reservacion.alumno_matriculaAlumno = ? AND "
                 + "asistenciaActividad.presencia = 1";
             sentencia = conexion.prepareStatement(consulta);
+            sentencia.setInt(1, nrcCurso);
+            sentencia.setString(2, usuario.getUsuarioActual());
             rs = sentencia.executeQuery();
             
-            while(rs.next() && rs != null) {
-                //Llamada a la función que hacer el INSERT
+            while(rs.next()) {
+                updateActividadesAsistidas(rs.getInt("idasistenciaActividad"));
             }
             return true;
         } catch (SQLException ex) {
@@ -162,4 +165,69 @@ public class Bitacora implements BitacoraDAO {
         }
         return false;
     }
+    
+    private void updateActividadesAsistidas(int idAAsistidas) {
+        Connection conexion;
+        PreparedStatement sentencia;
+        
+        try {
+            conexion = new Conexion().connection();
+            String update = "INSERT INTO actividadesPresencialesBitacora "
+                + "VALUES (?, ?)";
+            sentencia = conexion.prepareStatement(update);
+            sentencia.setInt(1, recuperarNoBitacora());
+            sentencia.setInt(2, idAAsistidas);
+            sentencia.executeUpdate();
+        } catch (SQLException ex) {
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
+        }
+    }
+    
+    public boolean guardarActividadesEscritas(int nrcCurso) {
+        Connection conexion;
+        PreparedStatement sentencia;
+        ResultSet rs;
+        Usuario usuario = new Usuario();
+        PortafolioEvidencias pEvidencias = new PortafolioEvidencias();
+        
+        try {
+            conexion = new Conexion().connection();
+            String update = "SELECT idARealizada FROM actividadRealizada "
+                + "WHERE alumno_matriculaAlumno = ? AND "
+                + "portafolioEvidencias_idportafolioEvidencias = ?";
+            sentencia = conexion.prepareStatement(update);
+            sentencia.setString(1, usuario.getUsuarioActual());
+            sentencia.setInt(2, pEvidencias.recuperarIDPortafolio(nrcCurso));
+            rs = sentencia.executeQuery();
+            
+            while(rs.next()) {
+                updateActividadesEscritas(rs.getInt("idRealizada"));
+            }
+            return true;
+        } catch (SQLException ex) {
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
+        }
+        return false;
+    }
+    
+    private void updateActividadesEscritas(int AEscritas) {
+        Connection conexion;
+        PreparedStatement sentencia;
+        
+        try {
+            conexion = new Conexion().connection();
+            String update = "INSERT INTO actividadesEscritasBitacora "
+                + "VALUES (?, ?)"; 
+            sentencia = conexion.prepareStatement(update);
+            sentencia.setInt(1, AEscritas);
+            sentencia.setInt(2, recuperarNoBitacora());
+            sentencia.executeUpdate();
+        } catch (SQLException ex) {
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
+        }
+    }
+    
 }
