@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
@@ -26,11 +27,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import logica.Actividad;
-import logica.ActividadRealizada;
-import logica.Bitacora;
-import logica.Curso;
-import logica.Usuario;
+import logica.*;
 import presentacion.Dialogo;
 
 /**
@@ -41,62 +38,79 @@ import presentacion.Dialogo;
 public class ControladorRegistrarBitacora implements Initializable {
 
     @FXML
-    Button botonRegistrar;
+    Label noBitacora;
     
+    @FXML
+    Label resultadoAutoevaluacion;
+    
+    @FXML
+    Button botonRegistrar;
+
     @FXML
     Button botonCancelar;
-    
+
     @FXML
     ComboBox<Curso> comboCursos;
-    
+
     @FXML
     TextArea areaComentario;
-    
+
     @FXML
     Spinner<Integer> selectorTiempo;
-    
+
     @FXML
     DatePicker selectorFecha;
-    
+
     @FXML
     TableView<Actividad> tablaAsistidas;
-    
+
     @FXML
     TableColumn<String, Actividad> colNombreAsistido;
-    
+
     @FXML
     TableColumn<Date, Actividad> colFechaAsistido;
-    
+
     @FXML
     TableView<ActividadRealizada> tablaRealizadas;
-    
+
     @FXML
     TableColumn<String, ActividadRealizada> colNombreRealizada;
-    
+
     @FXML
     TableColumn<Date, ActividadRealizada> colFechaRealizada;
-    
+
     @FXML
     TableColumn<Time, ActividadRealizada> colTiempoRealizada;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Bitacora bitacora = new Bitacora();
+        Autoevaluacion autoevaluacion = new Autoevaluacion();
         llenarCursos();
         llenarTablaAsistidas();
         llenarTablaRealizadas();
         comboCursos.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTablaAsistidas();
             llenarTablaRealizadas();
+            completarResultadoAutoevaluacion();
         });
         selectorTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0, 10));
+        
+        int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
+        resultadoAutoevaluacion.setText(Integer.toString(resultado));
+        noBitacora.setText(Integer.toString(bitacora.recuperarNoBitacora()));
+        
     }
-    
+
     @FXML
     public void guardarBitacora() {
         Bitacora bitacora = new Bitacora();
+        Autoevaluacion autoevaluacion = new Autoevaluacion();
+        PortafolioEvidencias pEvidencias = new PortafolioEvidencias();
         LocalDate fecha;
         Date fechaSql;
-        
+
         try {
             fecha = selectorFecha.getValue();
             fechaSql = Date.valueOf(fecha);
@@ -105,22 +119,25 @@ public class ControladorRegistrarBitacora implements Initializable {
             Dialogo dia = new Dialogo();
             dia.alertaCamposVacios();
         }
-        
+
+        bitacora.setIdAutoevaluacion(autoevaluacion.obtenerNoAutoevaluacion(
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
+        bitacora.setIdPortafolioEvidencias(pEvidencias.recuperarIDPortafolio(
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
         bitacora.setComentario(areaComentario.getText());
-        bitacora.setNrcCurso(comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
         bitacora.setTiempoEmpleado(selectorTiempo.getValue());
-        
+
         bitacora.registrarBitacora(bitacora);
     }
-    
-    private void llenarCursos () {
+
+    private void llenarCursos() {
         Curso curso = new Curso();
         Usuario usuario = new Usuario();
         comboCursos.setItems(curso.obtenerCursos(usuario.getUsuarioActual()));
         comboCursos.getSelectionModel().selectFirst();
     }
-    
-    private void llenarTablaAsistidas () {
+
+    private void llenarTablaAsistidas() {
         Actividad actividadAsistida = new Actividad();
         Usuario usuario = new Usuario();
         colNombreAsistido.setCellValueFactory(
@@ -128,11 +145,18 @@ public class ControladorRegistrarBitacora implements Initializable {
         colFechaAsistido.setCellValueFactory(
             new PropertyValueFactory<>("diaActividad"));
         tablaAsistidas.setItems(actividadAsistida.consultarActividadesAsistidas(
-            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(), 
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(),
             usuario.getUsuarioActual()));
     }
     
-    private void llenarTablaRealizadas () {
+    private void completarResultadoAutoevaluacion() {
+        Autoevaluacion autoevaluacion = new Autoevaluacion();
+        int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
+        resultadoAutoevaluacion.setText(Integer.toString(resultado));
+    }
+
+    private void llenarTablaRealizadas() {
         ActividadRealizada act = new ActividadRealizada();
         Usuario usuario = new Usuario();
         colNombreRealizada.setCellValueFactory(
@@ -142,21 +166,22 @@ public class ControladorRegistrarBitacora implements Initializable {
         colTiempoRealizada.setCellValueFactory(
             new PropertyValueFactory<>("tiempoEmpleado"));
         tablaRealizadas.setItems(act.obtenerActividades(
-            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(), 
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(),
             usuario.getUsuarioActual()));
     }
-    
+
     /**
-     * 
+     *
      * Regresa a la ventana inicial en caso de que se desee cancelar el registro
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void cancelarRegistro(ActionEvent event) {
         try {
             URL principal = getClass().getResource("/presentacion/Inicial.fxml");
             AnchorPane panePrincipal = FXMLLoader.load(principal);
-            
+
             BorderPane border = ControladorLogIn.getPrincipal();
             border.setCenter(panePrincipal);
         } catch (IOException ex) {

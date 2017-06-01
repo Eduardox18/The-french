@@ -125,12 +125,14 @@ public class Actividad implements ActividadDAO{
     }
     
     @Override
-    public ObservableList<Actividad> consultarActividadesAsistidas(int nrcCurso, String matriculaAlumno) {
+    public ObservableList<Actividad> consultarActividadesAsistidas(int nrcCurso, 
+        String matriculaAlumno) {
         Connection conexion;
         PreparedStatement sentencia;
         ResultSet rs;
         Actividad actividadResultado;
-        ObservableList<Actividad> listaActividadesAsistidas = FXCollections.observableArrayList();
+        ObservableList<Actividad> listaActividadesAsistidas = FXCollections.
+            observableArrayList();
         try {
             conexion = new Conexion().connection();
             String consulta = "select nombreActividad, diaActividad from "
@@ -138,7 +140,9 @@ public class Actividad implements ActividadDAO{
                 + "asistenciaActividad.reservacion_noReservacion = "
                 + "reservacion.noReservacion and actividad.idActividad = "
                 + "reservacion.actividad_idActividad and "
-                + "actividad.curso_nrcCurso = ? and reservacion.alumno_matriculaAlumno = ?;";
+                + "actividad.curso_nrcCurso = ? and "
+                + "reservacion.alumno_matriculaAlumno = ? AND "
+                + "asistenciaActividad.presencia = 1";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setInt(1, nrcCurso);
             sentencia.setString(2, matriculaAlumno);
@@ -146,7 +150,8 @@ public class Actividad implements ActividadDAO{
             
             while(rs.next()) {
                 actividadResultado = new Actividad();
-                actividadResultado.setNombreActividad(rs.getString("nombreActividad"));
+                actividadResultado.setNombreActividad(rs.getString(
+                    "nombreActividad"));
                 actividadResultado.setDiaActividad(rs.getDate("diaActividad"));
                 listaActividadesAsistidas.add(actividadResultado);
             }

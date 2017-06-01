@@ -7,7 +7,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import presentacion.Dialogo;
 
 /**
@@ -15,22 +16,22 @@ import presentacion.Dialogo;
  * @author Angel Eduardo Domínguez Delgado
  */
 public class Bitacora implements BitacoraDAO {
-    
-    private Integer tiempoEmpleado;
+
+    private int tiempoEmpleado;
     private String comentario;
     private Date fechaBitacora;
     private int idPortafolioEvidencias;
-    private int nrcCurso;
-    
-    public Bitacora() {}
-    
-    public Bitacora(Integer tiempoEmpleado, String comentario, Date fechaBitacora, 
-            int idPortafolioEvidencias, int nrcCurso) {
+    private int idAutoevaluacion;
+
+    public Bitacora() {
+    }
+
+    public Bitacora(Integer tiempoEmpleado, String comentario, 
+        Date fechaBitacora, int idPortafolioEvidencias) {
         this.tiempoEmpleado = tiempoEmpleado;
         this.comentario = comentario;
         this.fechaBitacora = fechaBitacora;
         this.idPortafolioEvidencias = idPortafolioEvidencias;
-        this.nrcCurso = nrcCurso;
     }
 
     public Integer getTiempoEmpleado() {
@@ -64,41 +65,44 @@ public class Bitacora implements BitacoraDAO {
     public void setIdPortafolioEvidencias(int idPortafolioEvidencias) {
         this.idPortafolioEvidencias = idPortafolioEvidencias;
     }
-
-    public int getNrcCurso() {
-        return nrcCurso;
+    
+    public int getIdAutoevaluacion() {
+        return idAutoevaluacion;
     }
-
-    public void setNrcCurso(int nrcCurso) {
-        this.nrcCurso = nrcCurso;
+    
+    public void setIdAutoevaluacion(int idAutoevaluacion) {
+        this.idAutoevaluacion = idAutoevaluacion;
     }
+     
+    
 
     /**
-     * 
+     *
      * Agrega una nueva bitácora a la base de datos.
-     * @param bitacora Objeto de tipo Bitacora de donde se obtienen todos los 
+     *
+     * @param bitacora Objeto de tipo Bitacora de donde se obtienen todos los
      * datos.
-     * @return true si la operación es exitoda o false en caso de que ocurra 
+     * @return true si la operación es exitoda o false en caso de que ocurra
      * algún error.
      */
     @Override
     public boolean registrarBitacora(Bitacora bitacora) {
         Connection conexion;
         PreparedStatement sentencia;
-        
+
         try {
             conexion = new Conexion().connection();
-            String consulta = "INSERT INTO Bitacora (tiempoEmpleado, "
-                    + "comentario, fechaBitacora, "
-                    + "portafolioEvidencias_idportafolioEvidencias, "
-                    + "curso_nrcCurso) VALUES (?, ?, ?, ?, ?);";
-            sentencia = conexion.prepareStatement(consulta);
+            String consultaBitacora = "INSERT INTO Bitacora (tiempoEmpleado, "
+                + "comentario, fechaBitacora, "
+                + "portafolioEvidencias_idportafolioEvidencias, "
+                + "autoevaluacion_idAutoevaluacion) VALUES (?, ?, ?, ?);";
+            sentencia = conexion.prepareStatement(consultaBitacora);
             sentencia.setInt(1, bitacora.getTiempoEmpleado());
             sentencia.setString(2, bitacora.getComentario());
             sentencia.setDate(3, bitacora.getFechaBitacora());
             sentencia.setInt(4, bitacora.getIdPortafolioEvidencias());
-            sentencia.setInt(5, bitacora.getNrcCurso());
-            
+            sentencia.setInt(5, bitacora.getIdAutoevaluacion());
+
             sentencia.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -107,7 +111,7 @@ public class Bitacora implements BitacoraDAO {
         }
         return false;
     }
-    
+
     public int recuperarNoBitacora() {
         Connection conexion;
         PreparedStatement sentencia;
@@ -117,9 +121,9 @@ public class Bitacora implements BitacoraDAO {
             String consulta = "SELECT MAX(noBitacora) FROM Bitacora";
             sentencia = conexion.prepareStatement(consulta);
             rs = sentencia.executeQuery();
-            
-            if(rs.next()) {
-                return rs.getInt("MAX(noBitacora)");
+
+            if (rs.next()) {
+                return rs.getInt("MAX(noBitacora)") + 1;
             } else {
                 return 1;
             }
@@ -130,36 +134,32 @@ public class Bitacora implements BitacoraDAO {
         return 0;
     }
     
-    public int recuperarIDPortafolio(int nrcCurso) {
+    private boolean guardarActividadesAsistidas(int nrcCurso, int noBitacora) {
         Connection conexion;
         PreparedStatement sentencia;
         ResultSet rs;
-        Usuario usuario = new Usuario();
-        String matriculaAlumno = usuario.getUsuarioActual();
         
         try {
             conexion = new Conexion().connection();
-            String consulta = "SELECT idportafolioEvidencias FROM "
-                    + "portafolioEvidencias, inscripcion, alumno, inscripcion, "
-                    + "grupoAlumno WHERE "
-                    + "portafolioEvidencias.inscripcion_idinscripcion = "
-                    + "inscripcion.idinscripcion AND "
-                    + "inscripcion.alumno_matriculaAlumno = ?  AND "
-                    + "inscripcion.grupoAlumno_idGrupoAlumno = "
-                    + "grupoAlumno.idGrupoAlumno AND "
-                    + "grupoAlumno.curso_nrcCurso = ?;";
+            String consulta = "SELECT idasistenciaActividad FROM actividad, "
+                + "asistenciaActividad, reservacion WHERE "
+                + "asistenciaActividad.reservacion_noReservacion = "
+                + "reservacion.noReservacion AND actividad.idActividad = "
+                + "reservacion.actividad_idActividad AND "
+                + "actividad.curso_nrcCurso = ? AND "
+                + "reservacion.alumno_matriculaAlumno = ? AND "
+                + "asistenciaActividad.presencia = 1";
             sentencia = conexion.prepareStatement(consulta);
-            sentencia.setString(1, matriculaAlumno);
-            sentencia.setInt(2, nrcCurso);
             rs = sentencia.executeQuery();
             
-            if(rs.next()) {
-                return rs.getInt("idportafolioEvidencias");
+            while(rs.next() && rs != null) {
+                //Llamada a la función que hacer el INSERT
             }
+            return true;
         } catch (SQLException ex) {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
-        return 0;
+        return false;
     }
 }

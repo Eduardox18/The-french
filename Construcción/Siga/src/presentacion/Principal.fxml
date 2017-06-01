@@ -9,12 +9,7 @@
     <Menu mnemonicParsing="false" text="Administrar">
       <items>
         <MenuItem disable="true" mnemonicParsing="false" text="Actividades" />
-            <Menu mnemonicParsing="false" text="Reservacion">
-              <items>
-                <MenuItem disable="true" mnemonicParsing="false" text="Conversación" />
-                  <MenuItem disable="true" mnemonicParsing="false" text="Asesoría" />
-              </items>
-            </Menu>
+            <MenuItem disable="true" mnemonicParsing="false" text="Reservación de Actividades" />
             <MenuItem disable="true" mnemonicParsing="false" text="Lista de Asistencia" />
             <MenuItem disable="true" mnemonicParsing="false" text="Seguimiento del Alumno" />
             <MenuItem disable="true" mnemonicParsing="false" text="Experiencias Educativas" />
