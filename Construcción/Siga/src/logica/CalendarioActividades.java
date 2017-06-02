@@ -24,6 +24,8 @@ public class CalendarioActividades {
         Connection conexion = null;
         PreparedStatement sentencia = null;
         ResultSet rs = null;
+        int idPortafolio;
+        idPortafolio = portafolio.recuperarIDPortafolio(nrcCurso);
         
         try {
             conexion = new Conexion().connection();
@@ -33,7 +35,7 @@ public class CalendarioActividades {
                 + "= calendarioActividades.noCalendarioActividades and "
                 + "portafolioEvidencias.idportafolioEvidencias  = ?;";
             sentencia = conexion.prepareStatement(consulta);
-            sentencia.setInt(1, nrcCurso);
+            sentencia.setInt(1, idPortafolio);
             rs = sentencia.executeQuery();
 
             if (rs.next()) {

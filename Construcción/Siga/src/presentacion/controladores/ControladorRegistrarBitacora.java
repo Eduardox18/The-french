@@ -125,10 +125,6 @@ public class ControladorRegistrarBitacora implements Initializable {
         Date fechaSql;
 
         try {
-            fecha = selectorFecha.getValue();
-            fechaSql = Date.valueOf(fecha);
-            bitacora.setFechaBitacora(fechaSql);
-
             //Comprobación de campos vacíos.
             if (selectorTiempo.getValue() == 0) {
                 throw new NullPointerException();
@@ -142,12 +138,13 @@ public class ControladorRegistrarBitacora implements Initializable {
             }
             //Comprueba que la entrega se haga dentro de la fecha límite
             if(selectorFecha.getValue().isAfter(
-                calendario.recuperarFechaLimiteExamen(pEvidencias.
-                    recuperarIDPortafolio(0)))) {
+                calendario.recuperarFechaLimiteExamen(comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()))){
                 throw new LinkageError();
             }
             
-
+            fecha = selectorFecha.getValue();
+            fechaSql = Date.valueOf(fecha);
+            bitacora.setFechaBitacora(fechaSql);
             //Realización del objeto tipo Bitacora.
             bitacora.setIdAutoevaluacion(autoevaluacion.obtenerNoAutoevaluacion(
                 comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
