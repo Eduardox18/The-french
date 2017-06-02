@@ -1,3 +1,14 @@
+/**
+ * Nombre del programa: SIGA (Sistema de Idiomas Gratificante para el Alumno)
+ * Versión: 0.1
+ * Autores:
+ *          Domínguez Delgado Ángel Eduardo
+ *          Domínguez González José Andrés
+ *          Hernández González Esmeralda Yamileth
+ * Fecha de inicio del desarrollo: 16 de Mayo de 2017
+ * Descripción: Programa encargado de todas las actividades que se llevan a cabo en el CADI.
+ * Realizado para optimizar los procesos que requiere el alumno a lo largo de su curso de idiomas.
+ */
 package presentacion.controladores;
 
 import java.io.IOException;
@@ -19,9 +30,9 @@ import logica.Usuario;
 import presentacion.Dialogo;
 
 /**
- * FXML Controller class
  *
- * @author Angel Eduardo Domínguez Delgado
+ * Clase controlador principal del programa. Encargada de establecer y cargar la GUI desde los
+ * archivos FXML.
  */
 public class ControladorLogIn extends Application {
 
@@ -35,10 +46,21 @@ public class ControladorLogIn extends Application {
     @FXML
     private TextField tfPassword;
 
+    /**
+     * Método que permite obtener el pane principal de la ventana.
+     *
+     * @return BorderPane donde se cargarán las escenas del programa.
+     */
     public static BorderPane getPrincipal() {
         return panePrincipal;
     }
 
+    /**
+     * Método sobreescrito que permite cargar la escena del login. Es la primera escena que se carga
+     * al iniciar el programa.
+     *
+     * @param primaryStage Primer Stage del programa.
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -60,9 +82,10 @@ public class ControladorLogIn extends Application {
     }
 
     /**
-     * 
-     * Inicia la ventana Inicial cargando los elementos del controlador y del 
-     * archivo XML
+     *
+     * Método asignado al botón "Ingresar". Si el usuario y contraseña se encuentran en la base de
+     * datos, inicia la nueva ventana cargando la interfaz FXML Inicial, que es la primera
+     * visualizable del programa, además de la barra principal de acciones.
      */
     @FXML
     public void abrirInicio() {
@@ -101,6 +124,11 @@ public class ControladorLogIn extends Application {
         }
     }
 
+    /**
+     * Método principal que inicia todo el programa.
+     *
+     * @param args String necesaria.
+     */
     public static void main(String[] args) {
         launch(args);
     }

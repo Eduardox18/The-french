@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package presentacion.controladores;
 
 import java.io.IOException;
@@ -16,8 +11,8 @@ import javafx.scene.layout.BorderPane;
 import presentacion.Dialogo;
 
 /**
- *
- * @author Angel Eduardo Domínguez
+ * Clase controlador de la barra de acciones del programa. Carga las escenas según la opción
+ * seleccionada.
  */
 public class ControladorPrincipal {
 
@@ -28,10 +23,11 @@ public class ControladorPrincipal {
     private MenuItem barRegistrarBitacora;
 
     /**
-     * 
-     * Inicia la ventana Reservarctividad cargando los elementos del controlador
-     * y la interfaz XML
-     * @param event 
+     *
+     * Método encargado de cargar la escena ReservarActividad junto con todos los elementos de su
+     * interfaz FXML
+     *
+     * @param event Evento del botón encargado.
      */
     @FXML
     void abrirReservarActividad(ActionEvent event) {
@@ -48,10 +44,11 @@ public class ControladorPrincipal {
     }
 
     /**
-     * 
-     * Inicia la ventana RegistrarBitacora cargando los elementos del controlador
-     * y la interfaz XML
-     * @param event 
+     *
+     * Método encargador de cargar la escena RegistrarBitacora junto con todos los elementos de su
+     * interfaz FXML.
+     *
+     * @param event Evento del botón encargado.
      */
     @FXML
     void abrirRegistrarBitacora(ActionEvent event) {

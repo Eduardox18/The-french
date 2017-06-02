@@ -25,15 +25,16 @@ import logica.Usuario;
 import presentacion.Dialogo;
 
 /**
- * FXML Controller class
  *
- * @author Angel Eduardo Domínguez Delgado
+ * Clase controlador de la GUI ReservarActividad. Que almacena los métodos y componentes necesarios
+ * para el archivo FXML y la funcionalidad del Sistema.
+ *
  */
 public class ControladorReservarActividad implements Initializable {
 
     @FXML
     private Button btReservar;
-    
+
     @FXML
     private Button btCancelar;
 
@@ -59,7 +60,7 @@ public class ControladorReservarActividad implements Initializable {
     private DatePicker selectorFecha;
 
     /**
-     * Initializes the controller class.
+     * Clase que inicializa los componentes de la escena.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,38 +72,37 @@ public class ControladorReservarActividad implements Initializable {
             llenarTabla();
         });
 
-        //Listener para la tabla, se utiliza para saber cuando hay un item 
-        //seleccionado
+        //Listener para la tabla, se utiliza para saber cuando hay un item seleccionado
         tablaActividades.getSelectionModel().selectedIndexProperty().
-                addListener((obs, oldSelection, newSelection) -> {
-                    if (newSelection != null) {
-                        btReservar.setDisable(false);
-                    }
-                });
+            addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    btReservar.setDisable(false);
+                }
+            });
     }
 
     /**
      *
-     * Recupera los datos de la base de datos que coincidan con el idioma y la fecha indicados y los
-     * muestra en la tabla
+     * Método que manda a llamar a la función que recupera los datos de la base de datos que
+     * coincidan con el idioma y la fecha indicados. Para posteriormente mostrarlos en la tabla
      */
     private void llenarTabla() {
         Actividad actividad = new Actividad();
         colActividad.setCellValueFactory(
-                new PropertyValueFactory<>("nombreActividad"));
+            new PropertyValueFactory<>("nombreActividad"));
         colProfesor.setCellValueFactory(
-                new PropertyValueFactory<>("asesorActividad"));
+            new PropertyValueFactory<>("asesorActividad"));
         colTipo.setCellValueFactory(
-                new PropertyValueFactory<>("tipoActividad"));
+            new PropertyValueFactory<>("tipoActividad"));
         colHora.setCellValueFactory(
-                new PropertyValueFactory<>("horaActividad"));
+            new PropertyValueFactory<>("horaActividad"));
         LocalDate fecha;
         Date fechaSql;
         try {
             fecha = selectorFecha.getValue();
             fechaSql = Date.valueOf(fecha);
             tablaActividades.setItems(actividad.consultarActividades(
-                    cbIdiomas.getSelectionModel().getSelectedItem().getNrcCurso(), fechaSql));
+                cbIdiomas.getSelectionModel().getSelectedItem().getNrcCurso(), fechaSql));
         } catch (NullPointerException e) {
             Dialogo dia = new Dialogo();
             dia.alertaCamposVacios();
@@ -111,8 +111,8 @@ public class ControladorReservarActividad implements Initializable {
 
     /**
      *
-     *Obtiene los datos del combobox obtenidos del método obtenerCursos de la 
-     * clase Curso
+     * Método que llena el comboBox de cursos, el cual recupera la información del método almacenado
+     * en la clase Curso.
      */
     private void llenarCombo() {
         Curso curso = new Curso();
@@ -122,9 +122,9 @@ public class ControladorReservarActividad implements Initializable {
     }
 
     /**
-     * 
-     * Método llamado por el botón Reservar actividd que guarda la reservación
-     * en la base de datos
+     *
+     * Método llamado por el botón "Reservar" que manda a llamar al método que guarda la reservación
+     * en la base de datos del Sistema.
      */
     @FXML
     public void guardarActividad() {
@@ -133,13 +133,13 @@ public class ControladorReservarActividad implements Initializable {
         Dialogo dialogo = new Dialogo();
         boolean existe = reservacion.comprobarReservaciones(usuario.
             getUsuarioActual(),
-                tablaActividades.getSelectionModel().getSelectedItem().
-                    obtenerIDActividad());
+            tablaActividades.getSelectionModel().getSelectedItem().
+                obtenerIDActividad());
         if (existe == true) {
             boolean verificacion = reservacion.agregarReservacion(
-                    tablaActividades.getSelectionModel().getSelectedItem().
-                            obtenerIDActividad(),
-                    usuario.getUsuarioActual());
+                tablaActividades.getSelectionModel().getSelectedItem().
+                    obtenerIDActividad(),
+                usuario.getUsuarioActual());
             if (verificacion == true) {
                 dialogo.alertaReservacionExistosa();
             }
@@ -147,19 +147,20 @@ public class ControladorReservarActividad implements Initializable {
             dialogo.alertaExisteActividad();
         }
     }
-    
+
     /**
-     * 
-     * Regresa a la ventana inicial en caso de que se desee cancelar la 
-     * reservación
-     * @param event 
+     *
+     * Método asignado al botón "Cancelar" que regresa a la escena Inicial en caso de que el usuario
+     * desee cancelar la reservación de la actividad.
+     *
+     * @param event Evento del botón asignado.
      */
     @FXML
     private void cancelarReservacion(ActionEvent event) {
         try {
             URL principal = getClass().getResource("/presentacion/Inicial.fxml");
             AnchorPane panePrincipal = FXMLLoader.load(principal);
-            
+
             BorderPane border = ControladorLogIn.getPrincipal();
             border.setCenter(panePrincipal);
         } catch (IOException ex) {

@@ -26,9 +26,10 @@ import logica.*;
 import presentacion.Dialogo;
 
 /**
- * FXML Controller class
+ * 
+ * Clase controlador de la GUI RegistrarBitacora. Que almacena los métodos y componentes necesarios
+ * para el archivo FXML y la funcionalidad del Sistema.
  *
- * @author andres
  */
 public class ControladorRegistrarBitacora implements Initializable {
 
@@ -77,26 +78,36 @@ public class ControladorRegistrarBitacora implements Initializable {
     @FXML
     TableColumn<Time, ActividadRealizada> colTiempoRealizada;
 
+    /**
+     * Método sobreescrito que inicializa la escena de RegistrarBitacora y todos los componentes que la componen. 
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Bitacora bitacora = new Bitacora();
         llenarCursos();
         llenarTablaAsistidas();
         llenarTablaRealizadas();
+        //Listener que actualiza la información de la ventana cada vez que se selecciona un curso diferente.
         comboCursos.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTablaAsistidas();
             llenarTablaRealizadas();
             actualizarNoBitacora();
             actualizarCalAutoevaluacion();
-            habilitarBotonReservar();
+            habilitarBotonRegistrar();
             limpiarCampos();
         });
         selectorTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0, 10));
         actualizarNoBitacora();
         actualizarCalAutoevaluacion();
-        habilitarBotonReservar();
+        habilitarBotonRegistrar();
     }
 
+    /**
+     * Método asignado al botón "Registrar Bitácora" que manda a llamar a los métodos necesarios para registrar
+     * una nueva bitácora en la base de datos.
+     */
     @FXML
     public void guardarBitacora() {
         Bitacora bitacora = new Bitacora();
@@ -111,6 +122,7 @@ public class ControladorRegistrarBitacora implements Initializable {
             fechaSql = Date.valueOf(fecha);
             bitacora.setFechaBitacora(fechaSql);
 
+            //Comprobación de campos vacíos.
             if (selectorTiempo.getValue() == 0) {
                 throw new NullPointerException();
             }
@@ -118,6 +130,7 @@ public class ControladorRegistrarBitacora implements Initializable {
                 throw new NullPointerException();
             }
 
+            //Realización del objeto tipo Bitacora.
             bitacora.setIdAutoevaluacion(autoevaluacion.obtenerNoAutoevaluacion(
                 comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
             bitacora.setIdPortafolioEvidencias(pEvidencias.recuperarIDPortafolio(
@@ -134,7 +147,7 @@ public class ControladorRegistrarBitacora implements Initializable {
                 dialogo.alertaBitacoraRegistrada();
                 actualizarNoBitacora();
                 actualizarCalAutoevaluacion();
-                habilitarBotonReservar();
+                habilitarBotonRegistrar();
                 limpiarCampos();
             } else {
                 dialogo.alertarBitacoraNoRegistrada();
@@ -146,6 +159,10 @@ public class ControladorRegistrarBitacora implements Initializable {
 
     }
 
+    /**
+     * Método encargado de llenar el comboBox de los curso a los que pertenece el usuario, 
+     * utilizando los métodos asignados en las clases de lacapa lógica del programa
+     */
     private void llenarCursos() {
         Curso curso = new Curso();
         Usuario usuario = new Usuario();
@@ -153,6 +170,10 @@ public class ControladorRegistrarBitacora implements Initializable {
         comboCursos.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Método encargado de llenar la tabla de las actividades a las que asistió el usuario, 
+     * utilizando los métodos asignados en las clases de lacapa lógica del programa
+     */
     private void llenarTablaAsistidas() {
         Actividad actividadAsistida = new Actividad();
         Usuario usuario = new Usuario();
@@ -165,6 +186,11 @@ public class ControladorRegistrarBitacora implements Initializable {
             usuario.getUsuarioActual()));
     }
 
+    /**
+     * Método encargado de llenar la tabla de las actividades escritas que realizó el usuario, 
+     * utilizando los métodos asignados en las clases de lacapa lógica del programa
+     * 
+     */
     private void llenarTablaRealizadas() {
         ActividadRealizada act = new ActividadRealizada();
         Usuario usuario = new Usuario();
@@ -174,14 +200,57 @@ public class ControladorRegistrarBitacora implements Initializable {
             new PropertyValueFactory<>("fechaARealizada"));
         colTiempoRealizada.setCellValueFactory(
             new PropertyValueFactory<>("tiempoEmpleado"));
-        tablaRealizadas.setItems(act.obtenerActividades(
+        tablaRealizadas.setItems(act.obtenerActividadRealizada(
             comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(),
             usuario.getUsuarioActual()));
     }
 
     /**
+     * Método encargado de mandar a llamar a la función que recupera el número de bitácora y 
+     * actualizarlo en la etiqueta que lo almacena en la escena.
+     */
+    private void actualizarNoBitacora() {
+        Bitacora bitacora = new Bitacora();
+        noBitacora.setText(Integer.toString(bitacora.recuperarNoActualBitacora()));
+    }
+
+    /**
+     * Método encargado de mandar a llamar al método que recupera la calificación de la
+     * autoevaluación del alumno y mostrarla en la etiquete correspondiente de la escena.
+     */
+    private void actualizarCalAutoevaluacion() {
+        Autoevaluacion autoevaluacion = new Autoevaluacion();
+        int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
+        resultadoAutoevaluacion.setText(Integer.toString(resultado));
+    }
+
+    /**
+     * Método encargador de habilitar o deshabilitar el botón "Registrar Bitácora", según el método que confirma si el alumno ya ha registrado anteriormente
+     * su bitácora del curso.
+     */
+    private void habilitarBotonRegistrar() {
+        Bitacora bitacora = new Bitacora();
+        if (bitacora.comprobarBitacoraExistente(comboCursos.getSelectionModel().getSelectedItem().getNrcCurso())) {
+            botonRegistrar.setDisable(true);
+        } else {
+            botonRegistrar.setDisable(false);
+        }
+    }
+
+    /**
+     * Método encargado de reestablecer los campos después de agregar una bitácora o cambiar de idioma en el comboBox.
+     */
+    private void limpiarCampos() {
+        areaComentario.setText("");
+        selectorTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0, 10));
+        selectorFecha.getEditor().clear();
+
+    }
+    
+    /**
      *
-     * Regresa a la ventana inicial en caso de que se desee cancelar el registro
+     * Método asignado al botón "Cancelar" que permite regresar al usuario a la ventana Inicial en caso de que se desee cancelar el registro
      *
      * @param event
      */
@@ -197,33 +266,5 @@ public class ControladorRegistrarBitacora implements Initializable {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
-    }
-
-    private void actualizarNoBitacora() {
-        Bitacora bitacora = new Bitacora();
-        noBitacora.setText(Integer.toString(bitacora.recuperarNoActualBitacora()));
-    }
-
-    private void actualizarCalAutoevaluacion() {
-        Autoevaluacion autoevaluacion = new Autoevaluacion();
-        int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(
-            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
-        resultadoAutoevaluacion.setText(Integer.toString(resultado));
-    }
-
-    private void habilitarBotonReservar() {
-        Bitacora bitacora = new Bitacora();
-        if (bitacora.comprobarBitacoraExistente(comboCursos.getSelectionModel().getSelectedItem().getNrcCurso())) {
-            botonRegistrar.setDisable(true);
-        } else {
-            botonRegistrar.setDisable(false);
-        }
-    }
-
-    private void limpiarCampos() {
-        areaComentario.setText("");
-        selectorTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0, 10));
-        selectorFecha.getEditor().clear();
-
     }
 }

@@ -9,24 +9,42 @@ import java.sql.SQLException;
 import presentacion.Dialogo;
 
 /**
- * Clase Usuario encargada de verificar la existencia de un usuario en la base de datos.
+ * Clase que contiene los métodos relacionados con los usuarios registrados en el Sistema. La clase
+ * implementa los métodos de la interface UsuarioDAO e implementa otros utilizados para la
+ * funcionalidad correcta del programa.
  *
- * @author Angel Eduardo Domínguez Delgado
  */
 public class Usuario implements UsuarioDAO {
 
+    /**
+     * Atributos de la clase
+     */
     private String nombre;
     private String password;
-    private static String usuarioActual;
+    private static String USUARIOACTUAL; //Constante que almacena el usuario logueado en el Sistema.
 
+    /**
+     * Constructor vacío de la clase. Permite crear objetos tipo Usuario.
+     */
     public Usuario() {
     }
 
+    /**
+     * Constructor completo de la clase. Permite crear objetos tipo Usuario.
+     *
+     * @param nombre
+     * @param password
+     */
     public Usuario(String nombre, String password) {
         this.nombre = nombre;
         this.password = password;
     }
 
+    /**
+     * Bloque de Getters y Setters de la clase. Su documentación no es necesaria.
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
@@ -42,27 +60,30 @@ public class Usuario implements UsuarioDAO {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getUsuarioActual() {
-        return usuarioActual;
+        return USUARIOACTUAL;
     }
-    
+
     public void setUsuarioActual(String xUsuarioActual) {
-        usuarioActual = xUsuarioActual;
+        USUARIOACTUAL = xUsuarioActual;
     }
 
     /**
-     * 
-     * Muestra los datos de un Usuario seleccionado
-     * @param nombre El nombre del Usuario
-     * @param password Contraseña del usuario
-     * @return true si la operación es exitosa, false en el caso contrario.
+     *
+     * Método sobreescrito que recupera la constraseña del usuario que quiere ingresar al Sistema y
+     * la compara con la registrada (recuperada por medio de otro método)
+     *
+     * @param nombre: El nombre del Usuario
+     * @param password: Contraseña del usuario
+     * @return Regresa verdadero(true) si el password de la base de datos del Sistema coincide con
+     * el proporcionado o regresa falso(false) si no coinciden.
      */
     @Override
     public boolean consultaUsuario(String nombre, String password) {
-        Connection conexion;
-        PreparedStatement sentencia;
-        ResultSet rs;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet rs = null;
         String passRecuperado = null;
 
         if (existeUsuario(nombre)) {
@@ -73,12 +94,35 @@ public class Usuario implements UsuarioDAO {
                 sentencia.setString(1, nombre);
                 rs = sentencia.executeQuery();
 
-                while (rs.next() && rs != null) {
+                while (rs.next()) {
                     passRecuperado = rs.getString("passwordUsuario");
                 }
             } catch (SQLException e) {
                 Dialogo dialogo = new Dialogo();
                 dialogo.alertaError();
+            } finally {
+                Dialogo dialogo = new Dialogo();
+                if (rs != null) {
+                    try {
+                        rs.close();
+                    } catch (SQLException ex) {
+                        dialogo.alertaCerrarConexion();
+                    }
+                }
+                if (sentencia != null) {
+                    try {
+                        sentencia.close();
+                    } catch (SQLException ex) {
+                        dialogo.alertaCerrarConexion();
+                    }
+                }
+                if (conexion != null) {
+                    try {
+                        conexion.close();
+                    } catch (SQLException ex) {
+                        dialogo.alertaCerrarConexion();
+                    }
+                }
             }
             return passRecuperado.equals(obtenerPassword(password));
         }
@@ -86,16 +130,16 @@ public class Usuario implements UsuarioDAO {
     }
 
     /**
-     * Método que se encarga de obtener el cifrado de la contraseña ingresada para compararla con la
-     * registrada en la base de datos.
+     * Método que se encarga de obtener el cifrado de 256 bits del String proporcionado (contraseña
+     * ingresada por el usuario).
      *
-     * @param password Contraseña del usuario.
-     * @return Regresa la contraseña ya cifrada.
+     * @param password: String proporcionado (Contraseña del usuario).
+     * @return Regresa el String cifrado.
      */
     public String obtenerPassword(String password) {
-        Connection conexion;
-        PreparedStatement sentencia;
-        ResultSet rs;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet rs = null;
         String passCifrado = null;
 
         try {
@@ -105,12 +149,35 @@ public class Usuario implements UsuarioDAO {
             sentencia.setString(1, password);
             rs = sentencia.executeQuery();
 
-            while (rs.next() && rs != null) {
+            while (rs.next()) {
                 passCifrado = rs.getString("cifrado");
             }
         } catch (SQLException e) {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
+        } finally {
+            Dialogo dialogo = new Dialogo();
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (sentencia != null) {
+                try {
+                    sentencia.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
         }
         return passCifrado;
     }
@@ -118,13 +185,14 @@ public class Usuario implements UsuarioDAO {
     /**
      * Método encargado de verificar que el usuario exista en la base de datos.
      *
-     * @param nombre Nombre de usuario ingresado
-     * @return Regresa verdadero o falso según la existencia del usuario en la base de datos.
+     * @param nombre: Nombre de usuario ingresado
+     * @return Regresa verdadero(true) si el usuario existe en la base de datos o falso(false) en
+     * caso contrario.
      */
     public boolean existeUsuario(String nombre) {
-        Connection conexion;
-        PreparedStatement sentencia;
-        ResultSet rs;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet rs = null;
 
         try {
             conexion = new Conexion().connection();
@@ -132,7 +200,7 @@ public class Usuario implements UsuarioDAO {
             sentencia = conexion.prepareStatement(consulta);
             rs = sentencia.executeQuery();
 
-            while (rs.next() && rs != null) {
+            while (rs.next()) {
                 if (nombre.equals(rs.getString("nombreUsuario"))) {
                     return true;
                 }
@@ -140,35 +208,83 @@ public class Usuario implements UsuarioDAO {
         } catch (SQLException e) {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
+        } finally {
+            Dialogo dialogo = new Dialogo();
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (sentencia != null) {
+                try {
+                    sentencia.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
         }
         return false;
     }
-    
+
     /**
-     * 
-     * Establece La variable global usuarioActual con la matrícula del alumno
-     * @param nombre nombre de Usuario del alumno
+     *
+     * Método que establece la variable global y constante USUARIOACTUAL con la matrícula del alumno
+     * que ingresó al sistema.
+     *
+     * @param nombre: Nombre de Usuario del alumno.
      */
     public void obtenerMatriculaAlumno(String nombre) {
-        Connection conexion;
-        PreparedStatement sentencia;
-        ResultSet rs;
-        
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet rs = null;
+
         try {
             conexion = new Conexion().connection();
             String consulta = "SELECT alumno.matriculaAlumno FROM alumno, usuario WHERE "
-                    + "alumno.usuario_idusuario = usuario.idusuario AND usuario.nombreUsuario = ?";
+                + "alumno.usuario_idusuario = usuario.idusuario AND usuario.nombreUsuario = ?";
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, nombre);
             rs = sentencia.executeQuery();
-            
-            if(rs.next()) {
-                usuarioActual = rs.getString("matriculaAlumno");
+
+            if (rs.next()) {
+                USUARIOACTUAL = rs.getString("matriculaAlumno");
             }
         } catch (SQLException ex) {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
+        } finally {
+            Dialogo dialogo = new Dialogo();
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (sentencia != null) {
+                try {
+                    sentencia.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
         }
     }
-    
+
 }

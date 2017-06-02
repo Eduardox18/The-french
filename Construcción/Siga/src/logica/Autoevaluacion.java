@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logica;
 
 import datos.AutoevaluacionDAO;
@@ -15,11 +10,15 @@ import java.sql.SQLException;
 import presentacion.Dialogo;
 
 /**
- *
- * @author lalo
+ * Clase que contiene los métodos relacionados con las autoevaluaciones del Sistema. La clase
+ * implementa los métodos de la interface AutoevaluacionDAO e implementa otros utilizados para la
+ * funcionalidad correcta del programa.
  */
 public class Autoevaluacion implements AutoevaluacionDAO {
 
+    /**
+     * Atributos de la clase.
+     */
     private String nombreElaborador;
     private String nombreMaterial;
     private String habilidadesRequeridas;
@@ -31,6 +30,43 @@ public class Autoevaluacion implements AutoevaluacionDAO {
     private int nivel;
     private int resultadoAutoevaluacion;
 
+    /**
+     * Constructor vacío de la clase. Permite crear objetos tipo Autoevaluacion.
+     */
+    public Autoevaluacion() {}
+
+    /**
+     * Constructor completo de la clase. Permite crear objetos tipo Autoevaluacion.
+     *
+     * @param nombreElaborador: Nombre del elaborador de la autoevaluación.
+     * @param nombreMaterial: Material utilizado en la autoevaluación.
+     * @param habilidadesRequeridas: Habilidades requeridas de la autoevaluación.
+     * @param fechaElaboracion: Fecha en que se elaboró la autoevaluación.
+     * @param contenidosEvaluados: Contenidos que se evaluaron en la autoevaluación.
+     * @param codificacion: Codificación de la autoevaluación.
+     * @param objetivo: Objetivo de la autoevaluación.
+     * @param sala: Sala en que se realizó la autoevaluación.
+     * @param nivel: Nivel de la autoevaluación.
+     * @param resultadoAutoevaluacion: Resultado obtenido en la autoevaluación.
+     */
+    public Autoevaluacion(String nombreElaborador, String nombreMaterial,
+        String habilidadesRequeridas, Date fechaElaboracion, String contenidosEvaluados,
+        String codificacion, String objetivo, String sala, int nivel, int resultadoAutoevaluacion) {
+        this.nombreElaborador = nombreElaborador;
+        this.nombreMaterial = nombreMaterial;
+        this.habilidadesRequeridas = habilidadesRequeridas;
+        this.fechaElaboracion = fechaElaboracion;
+        this.contenidosEvaluados = contenidosEvaluados;
+        this.codificacion = codificacion;
+        this.objetivo = objetivo;
+        this.sala = sala;
+        this.nivel = nivel;
+        this.resultadoAutoevaluacion = resultadoAutoevaluacion;
+    }
+
+    /**
+     * Bloque de Getters y Setters de la clase. Su documentación no es necesaria.
+     */
     public String getNombreElaborador() {
         return nombreElaborador;
     }
@@ -111,10 +147,17 @@ public class Autoevaluacion implements AutoevaluacionDAO {
         this.resultadoAutoevaluacion = resultadoAutoevaluacion;
     }
 
+    /**
+     * Método encargado de obtener el número de autoevaluación correspondiente al curso y alumno que
+     * lo solicita. El alumno es el logueado en el Sistema.
+     *
+     * @param nrcCurso: NRC del curso en el que se encuentra el alumno.
+     * @return Regresa el número de autoevaluación que corresponde al curso y alumno solicitados.
+     */
     public int obtenerNoAutoevaluacion(int nrcCurso) {
-        Connection conexion;
-        PreparedStatement sentencia;
-        ResultSet rs;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet rs = null;
         Usuario usuario = new Usuario();
         String matriculaAlumno = usuario.getUsuarioActual();
 
@@ -130,27 +173,57 @@ public class Autoevaluacion implements AutoevaluacionDAO {
                 + "= ? AND inscripcion.grupoAlumno_idGrupoAlumno = "
                 + "grupoAlumno.idGrupoAlumno AND "
                 + "grupoAlumno.curso_nrcCurso = ?";
-            
+
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, matriculaAlumno);
             sentencia.setInt(2, nrcCurso);
             rs = sentencia.executeQuery();
-            
-            if(rs.next()) {
+
+            if (rs.next()) {
                 return rs.getInt("noAutoevaluacion");
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
-        } 
+        } finally {
+            Dialogo dialogo = new Dialogo();
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (sentencia != null) {
+                try {
+                    sentencia.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+        }
         return 0;
     }
-    
+
+    /**
+     * Método encaragdo de obtener el resultado de la autoevaluación del alumno según el curso que
+     * se solicita. El alumno es el logueado en el Sistema.
+     *
+     * @param nrcCurso: NRC del curso en el que se encuentra el alumno.
+     * @return Regresa el resultado de la autoevaluación que obtuvo el alumno en el curso
+     * especificado.
+     */
     public int obtenerResultadoAutoevaluacion(int nrcCurso) {
-        Connection conexion;
-        PreparedStatement sentencia;
-        ResultSet rs;
+        Connection conexion = null;
+        PreparedStatement sentencia = null;
+        ResultSet rs = null;
         Usuario usuario = new Usuario();
         String matriculaAlumno = usuario.getUsuarioActual();
 
@@ -167,19 +240,42 @@ public class Autoevaluacion implements AutoevaluacionDAO {
                 + "= ? AND inscripcion.grupoAlumno_idGrupoAlumno = "
                 + "grupoAlumno.idGrupoAlumno AND "
                 + "grupoAlumno.curso_nrcCurso = ?";
-            
+
             sentencia = conexion.prepareStatement(consulta);
             sentencia.setString(1, matriculaAlumno);
             sentencia.setInt(2, nrcCurso);
             rs = sentencia.executeQuery();
-            
-            if(rs.next()) {
+
+            if (rs.next()) {
                 return rs.getInt("resultadoAutoevaluacion");
             }
         } catch (SQLException ex) {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
-        } 
+        } finally {
+            Dialogo dialogo = new Dialogo();
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (sentencia != null) {
+                try {
+                    sentencia.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+            if (conexion != null) {
+                try {
+                    conexion.close();
+                } catch (SQLException ex) {
+                    dialogo.alertaCerrarConexion();
+                }
+            }
+        }
         return 0;
     }
 }
