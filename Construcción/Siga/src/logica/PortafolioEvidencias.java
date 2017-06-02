@@ -32,8 +32,8 @@ public class PortafolioEvidencias {
         
         try {
             conexion = new Conexion().connection();
-            String consulta = "SELECT idportafolioEvidencias FROM "
-                    + "portafolioEvidencias, inscripcion, alumno, inscripcion, "
+            String consulta = "SELECT DISTINCT idportafolioEvidencias FROM "
+                    + "portafolioEvidencias, inscripcion, alumno, "
                     + "grupoAlumno WHERE "
                     + "portafolioEvidencias.inscripcion_idinscripcion = "
                     + "inscripcion.idinscripcion AND "
@@ -50,6 +50,7 @@ public class PortafolioEvidencias {
                 return rs.getInt("idportafolioEvidencias");
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }

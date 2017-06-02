@@ -80,21 +80,21 @@ public class ControladorRegistrarBitacora implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Bitacora bitacora = new Bitacora();
-        Autoevaluacion autoevaluacion = new Autoevaluacion();
         llenarCursos();
         llenarTablaAsistidas();
         llenarTablaRealizadas();
         comboCursos.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTablaAsistidas();
             llenarTablaRealizadas();
-            completarResultadoAutoevaluacion();
+            actualizarNoBitacora();
+            actualizarCalAutoevaluacion();
+            habilitarBotonReservar();
+            limpiarCampos();
         });
         selectorTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0, 10));
-
-        int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(
-            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
-        resultadoAutoevaluacion.setText(Integer.toString(resultado));
-        noBitacora.setText(Integer.toString(bitacora.recuperarNoBitacora()));
+        actualizarNoBitacora();
+        actualizarCalAutoevaluacion();
+        habilitarBotonReservar();
     }
 
     @FXML
@@ -114,13 +114,16 @@ public class ControladorRegistrarBitacora implements Initializable {
             if (selectorTiempo.getValue() == 0) {
                 throw new NullPointerException();
             }
+            if (areaComentario.getText().trim().isEmpty()) {
+                throw new NullPointerException();
+            }
 
             bitacora.setIdAutoevaluacion(autoevaluacion.obtenerNoAutoevaluacion(
                 comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
             bitacora.setIdPortafolioEvidencias(pEvidencias.recuperarIDPortafolio(
                 comboCursos.getSelectionModel().getSelectedItem().getNrcCurso()));
             bitacora.setComentario(areaComentario.getText());
-            bitacora.setTiempoEmpleado(selectorTiempo.getValue());
+            bitacora.setTiempoEmpleado(selectorTiempo.getValue() * 100);
 
             if (bitacora.registrarBitacora(bitacora) && bitacora.
                 guardarActividadesAsistidas(
@@ -129,6 +132,10 @@ public class ControladorRegistrarBitacora implements Initializable {
                     comboCursos.getSelectionModel().getSelectedItem().
                         getNrcCurso())) {
                 dialogo.alertaBitacoraRegistrada();
+                actualizarNoBitacora();
+                actualizarCalAutoevaluacion();
+                habilitarBotonReservar();
+                limpiarCampos();
             } else {
                 dialogo.alertarBitacoraNoRegistrada();
             }
@@ -156,13 +163,6 @@ public class ControladorRegistrarBitacora implements Initializable {
         tablaAsistidas.setItems(actividadAsistida.consultarActividadesAsistidas(
             comboCursos.getSelectionModel().getSelectedItem().getNrcCurso(),
             usuario.getUsuarioActual()));
-    }
-
-    private void completarResultadoAutoevaluacion() {
-        Autoevaluacion autoevaluacion = new Autoevaluacion();
-        int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(
-            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
-        resultadoAutoevaluacion.setText(Integer.toString(resultado));
     }
 
     private void llenarTablaRealizadas() {
@@ -197,5 +197,33 @@ public class ControladorRegistrarBitacora implements Initializable {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
+    }
+
+    private void actualizarNoBitacora() {
+        Bitacora bitacora = new Bitacora();
+        noBitacora.setText(Integer.toString(bitacora.recuperarNoActualBitacora()));
+    }
+
+    private void actualizarCalAutoevaluacion() {
+        Autoevaluacion autoevaluacion = new Autoevaluacion();
+        int resultado = autoevaluacion.obtenerResultadoAutoevaluacion(
+            comboCursos.getSelectionModel().getSelectedItem().getNrcCurso());
+        resultadoAutoevaluacion.setText(Integer.toString(resultado));
+    }
+
+    private void habilitarBotonReservar() {
+        Bitacora bitacora = new Bitacora();
+        if (bitacora.comprobarBitacoraExistente(comboCursos.getSelectionModel().getSelectedItem().getNrcCurso())) {
+            botonRegistrar.setDisable(true);
+        } else {
+            botonRegistrar.setDisable(false);
+        }
+    }
+
+    private void limpiarCampos() {
+        areaComentario.setText("");
+        selectorTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0, 10));
+        selectorFecha.getEditor().clear();
+
     }
 }

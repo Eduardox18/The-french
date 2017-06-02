@@ -358,12 +358,12 @@ CREATE TABLE `bitacora` (
   `comentario` varchar(45) NOT NULL,
   `fechaBitacora` date NOT NULL,
   `portafolioEvidencias_idportafolioEvidencias` int(11) NOT NULL,
-  `autoevaluación_idAutoevaluación` int(11) NOT NULL,
+  `autoevaluacion_idAutoevaluacion` int(11) NOT NULL,
   PRIMARY KEY (`noBitacora`),
   KEY `fk_Bitacora_portafolioEvidencias1_idx` (`portafolioEvidencias_idportafolioEvidencias`),
-  KEY `fk_bitacora_autoevaluación1_idx` (`autoevaluación_idAutoevaluación`),
+  KEY `fk_bitacora_autoevaluación1_idx` (`autoevaluacion_idAutoevaluacion`),
   CONSTRAINT `fk_Bitacora_portafolioEvidencias1` FOREIGN KEY (`portafolioEvidencias_idportafolioEvidencias`) REFERENCES `portafolioEvidencias` (`idportafolioEvidencias`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_bitacora_autoevaluación1` FOREIGN KEY (`autoevaluación_idAutoevaluación`) REFERENCES `autoevaluacion` (`noAutoevaluacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_bitacora_autoevaluación1` FOREIGN KEY (`autoevaluacion_idAutoevaluacion`) REFERENCES `autoevaluacion` (`noAutoevaluacion`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -927,4 +927,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-01  0:45:25
+-- Dump completed on 2017-06-01 22:20:43

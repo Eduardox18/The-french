@@ -140,6 +140,7 @@ public class Autoevaluacion implements AutoevaluacionDAO {
                 return rs.getInt("noAutoevaluacion");
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         } 

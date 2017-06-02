@@ -95,7 +95,7 @@ public class Bitacora implements BitacoraDAO {
             String consultaBitacora = "INSERT INTO Bitacora (tiempoEmpleado, "
                 + "comentario, fechaBitacora, "
                 + "portafolioEvidencias_idportafolioEvidencias, "
-                + "autoevaluacion_idAutoevaluacion) VALUES (?, ?, ?, ?);";
+                + "autoevaluacion_idAutoevaluacion) VALUES (?, ?, ?, ?, ?);";
             sentencia = conexion.prepareStatement(consultaBitacora);
             sentencia.setInt(1, bitacora.getTiempoEmpleado());
             sentencia.setString(2, bitacora.getComentario());
@@ -106,28 +106,50 @@ public class Bitacora implements BitacoraDAO {
             sentencia.executeUpdate();
             return true;
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
         return false;
     }
 
-    public int recuperarNoBitacora() {
+    public int recuperarNoActualBitacora() {
         Connection conexion;
         PreparedStatement sentencia;
         ResultSet rs;
         try {
             conexion = new Conexion().connection();
-            String consulta = "SELECT MAX(noBitacora) FROM Bitacora";
+            String consulta = "SELECT IFNULL((SELECT MAX(noBitacora) FROM "
+                + "bitacora), 0) AS noBitacora;";
             sentencia = conexion.prepareStatement(consulta);
             rs = sentencia.executeQuery();
 
             if (rs.next()) {
-                return rs.getInt("MAX(noBitacora)") + 1;
-            } else {
-                return 1;
+                return rs.getInt("noBitacora") + 1;
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
+        }
+        return 0;
+    }
+    
+    public int recuperarUltimoNoBitacora() {
+        Connection conexion;
+        PreparedStatement sentencia;
+        ResultSet rs;
+        try {
+            conexion = new Conexion().connection();
+            String consulta = "SELECT MAX(noBitacora) FROM bitacora";
+            sentencia = conexion.prepareStatement(consulta);
+            rs = sentencia.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("MAX(noBitacora)");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
@@ -160,6 +182,7 @@ public class Bitacora implements BitacoraDAO {
             }
             return true;
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
@@ -175,10 +198,11 @@ public class Bitacora implements BitacoraDAO {
             String update = "INSERT INTO actividadesPresencialesBitacora "
                 + "VALUES (?, ?)";
             sentencia = conexion.prepareStatement(update);
-            sentencia.setInt(1, recuperarNoBitacora());
+            sentencia.setInt(1, recuperarUltimoNoBitacora());
             sentencia.setInt(2, idAAsistidas);
             sentencia.executeUpdate();
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
@@ -202,10 +226,11 @@ public class Bitacora implements BitacoraDAO {
             rs = sentencia.executeQuery();
             
             while(rs.next()) {
-                updateActividadesEscritas(rs.getInt("idRealizada"));
+                updateActividadesEscritas(rs.getInt("idARealizada"));
             }
             return true;
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
@@ -222,12 +247,45 @@ public class Bitacora implements BitacoraDAO {
                 + "VALUES (?, ?)"; 
             sentencia = conexion.prepareStatement(update);
             sentencia.setInt(1, AEscritas);
-            sentencia.setInt(2, recuperarNoBitacora());
+            sentencia.setInt(2, recuperarUltimoNoBitacora());
             sentencia.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
+        }
+    }
+    
+    public boolean comprobarBitacoraExistente(int nrcCurso) {
+        Connection conexion;
+        PreparedStatement sentencia;
+        ResultSet rs;
+        Usuario usuario = new Usuario();
+        
+        try {
+            conexion = new Conexion().connection();
+            String consulta = "SELECT DISTINCT noBitacora FROM bitacora, "
+                + "portafolioEvidencias, inscripcion, grupoAlumno, curso "
+                + "WHERE bitacora.portafolioEvidencias_idportafolioEvidencias "
+                + "= portafolioEvidencias.idportafolioEvidencias AND "
+                + "portafolioEvidencias.inscripcion_idinscripcion = "
+                + "inscripcion.idinscripcion AND "
+                + "inscripcion.alumno_matriculaAlumno = ? AND "
+                + "inscripcion.grupoAlumno_idGrupoAlumno = "
+                + "grupoAlumno.idGrupoAlumno AND grupoAlumno.curso_nrcCurso "
+                + "= ?";
+            sentencia = conexion.prepareStatement(consulta);
+            sentencia.setString(1, usuario.getUsuarioActual());
+            sentencia.setInt(2, nrcCurso);
+            rs = sentencia.executeQuery();
+            
+            return rs.next();
+            
         } catch (SQLException ex) {
             Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
+        return false;
     }
     
 }
