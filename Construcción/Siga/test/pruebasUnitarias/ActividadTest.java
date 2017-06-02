@@ -59,13 +59,12 @@ public class ActividadTest {
    */
   @Test
   public void obtenerIDActividadTest() {
-    System.out.println("obtenerIDActivdad");
-    String nombreActividad = "OUI";
-    java.sql.Time horaActividad = java.sql.Time.valueOf("15:00:00");
+    System.out.println("obtenerIDActividad");
+    String nombreActividad = "El Oui";
     
     Actividad act = new Actividad();
     int resultado = act.obtenerIDActividad();
-    if ("OUI".equals(nombreActividad)) {
+    if ("El Oui".equals(nombreActividad)) {
       resultado = 3;
     }
     

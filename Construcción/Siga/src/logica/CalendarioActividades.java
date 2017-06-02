@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logica;
 
 import datos.Conexion;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,11 +10,43 @@ import java.time.LocalDate;
 import presentacion.Dialogo;
 
 /**
- *
- * @author José Andrés Domínguez González
+ * Clase que contiene los métodos relacionados con los calendarios de actividades del Sistema. La clase implementa
+ * los métodos de la interface CalendarioActividadesDAO e implementa otros utilizados para la funcionalidad
+ * correcta del programa.
  */
 public class CalendarioActividades {
     
+    private int noCalendario;
+    private Date fechaLimiteExamen;
+    private String materialReportar;
+    private String convCalendarioActividades;
+    
+    /**
+     * Constructor vacío de la clase. Permite crear objetos tipo CalendarioActividades.
+     */
+    public CalendarioActividades() {}
+    
+    /**
+     * Constructor completo de la clase. Permite crear objetos tipo CalendarioActividades.
+     * @param noCalendario
+     * @param fechaLimiteExamen
+     * @param materialReportar
+     * @param convCalendarioActividades 
+     */
+    public CalendarioActividades(int noCalendario, Date fechaLimiteExamen, String materialReportar,
+        String convCalendarioActividades) {
+        this.noCalendario = noCalendario;
+        this.fechaLimiteExamen = fechaLimiteExamen;
+        this.materialReportar = materialReportar;
+        this.convCalendarioActividades = convCalendarioActividades;
+        
+    }
+    
+    /**
+     * Método que permite recuperar la fecha límite para entregar el examen del curso.
+     * @param nrcCurso NRC del curso del que se desea saber la fecha límite del examen.
+     * @return Regresa la fecha límite del examen.
+     */
     public LocalDate recuperarFechaLimiteExamen (int nrcCurso) {
         PortafolioEvidencias portafolio = new PortafolioEvidencias();
         Connection conexion = null;
