@@ -109,4 +109,24 @@ public class Dialogo {
             + "intente nuevamente");
         alertaUsuario.showAndWait();
     }
+    
+    /**
+     * 
+     * Método que muestra una alerta que informa que la fecha seleccionada aun no ha ocurrido
+     */
+    public void alertarFechaFutura() {
+        Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
+        alertaUsuario.setTitle("Fecha erronea");
+        alertaUsuario.setHeaderText("Alerta");
+        alertaUsuario.setContentText("La fecha ingresada aun no llega");
+        alertaUsuario.showAndWait();
+    }
+    
+    public void fechaLimiteExcedida() {
+        Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
+        alertaUsuario.setTitle("Fuera de tiempo");
+        alertaUsuario.setHeaderText("Alerta");
+        alertaUsuario.setContentText("El periodo de entrega ha terminado");
+        alertaUsuario.showAndWait();
+    }
 }

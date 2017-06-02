@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="358.0" prefWidth="249.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentacion.controladores.ControladorLogIn">
+   <children>
+      <ImageView fitHeight="116.0" fitWidth="120.0" layoutX="67.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="179.0">
+         <image>
+            <Image url="@recursos/user.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="tfUsuario" layoutX="41.0" layoutY="195.0" promptText="Usuario" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="41.0" />
+      <PasswordField fx:id="tfPassword" layoutX="41.0" layoutY="250.0" promptText="Contraseña" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="41.0" />
+      <Button fx:id="botonIngresar" layoutX="76.0" layoutY="317.0" mnemonicParsing="false" onAction="#abrirInicio" prefHeight="27.0" prefWidth="98.0" text="Ingresar" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="76.0" AnchorPane.rightAnchor="75.0" />
+      <Label layoutX="104.0" layoutY="14.0" text="SIGA">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

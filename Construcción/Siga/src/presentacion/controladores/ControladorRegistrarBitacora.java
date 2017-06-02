@@ -4,7 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -111,6 +117,7 @@ public class ControladorRegistrarBitacora implements Initializable {
     @FXML
     public void guardarBitacora() {
         Bitacora bitacora = new Bitacora();
+        CalendarioActividades calendario =  new CalendarioActividades();
         Autoevaluacion autoevaluacion = new Autoevaluacion();
         Dialogo dialogo = new Dialogo();
         PortafolioEvidencias pEvidencias = new PortafolioEvidencias();
@@ -129,6 +136,17 @@ public class ControladorRegistrarBitacora implements Initializable {
             if (areaComentario.getText().trim().isEmpty()) {
                 throw new NullPointerException();
             }
+            //Comprueba que la fecha no sea mayor a la fecha actual
+            if(selectorFecha.getValue().isAfter(fechaActual())) {
+                throw new IllegalStateException();
+            }
+            //Comprueba que la entrega se haga dentro de la fecha límite
+            if(selectorFecha.getValue().isAfter(
+                calendario.recuperarFechaLimiteExamen(pEvidencias.
+                    recuperarIDPortafolio(0)))) {
+                throw new LinkageError();
+            }
+            
 
             //Realización del objeto tipo Bitacora.
             bitacora.setIdAutoevaluacion(autoevaluacion.obtenerNoAutoevaluacion(
@@ -155,8 +173,26 @@ public class ControladorRegistrarBitacora implements Initializable {
         } catch (NullPointerException e) {
             Dialogo dia = new Dialogo();
             dia.alertaCamposVacios();
+        } catch (IllegalStateException ex) {
+            Dialogo dia = new Dialogo();
+            dia.alertarFechaFutura();
+        } catch (LinkageError ed) {
+            Dialogo dia = new Dialogo();
+            dia.fechaLimiteExcedida();
         }
 
+    }
+    
+    /**
+     * 
+     * Método que devuelve la fecha actual del sistema en formato YY-MM-DD
+     * @return LocalDate con la fecha actual del sistema 
+     */
+    private LocalDate fechaActual () {
+        java.util.Date fecha = new java.util.Date();
+        Instant instante = Instant.ofEpochMilli(fecha.getTime());
+        return LocalDateTime.ofInstant(instante, ZoneId.systemDefault())
+        .toLocalDate();
     }
 
     /**
