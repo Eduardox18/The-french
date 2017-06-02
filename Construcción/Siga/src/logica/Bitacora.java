@@ -7,6 +7,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import presentacion.Dialogo;
 
 /**
@@ -444,6 +448,18 @@ public class Bitacora implements BitacoraDAO {
                 }
             }
         }
+    }
+    
+    /**
+     * 
+     * Método que devuelve la fecha actual del sistema en formato YY-MM-DD
+     * @return LocalDate con la fecha actual del sistema 
+     */
+    public LocalDate fechaActual () {
+        java.util.Date fecha = new java.util.Date();
+        Instant instante = Instant.ofEpochMilli(fecha.getTime());
+        return LocalDateTime.ofInstant(instante, ZoneId.systemDefault())
+        .toLocalDate();
     }
 
     /**

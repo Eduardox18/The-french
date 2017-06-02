@@ -4,13 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -133,7 +127,7 @@ public class ControladorRegistrarBitacora implements Initializable {
                 throw new NullPointerException();
             }
             //Comprueba que la fecha no sea mayor a la fecha actual
-            if(selectorFecha.getValue().isAfter(fechaActual())) {
+            if(selectorFecha.getValue().isAfter(bitacora.fechaActual())) {
                 throw new IllegalStateException();
             }
             //Comprueba que la entrega se haga dentro de la fecha límite
@@ -180,18 +174,6 @@ public class ControladorRegistrarBitacora implements Initializable {
 
     }
     
-    /**
-     * 
-     * Método que devuelve la fecha actual del sistema en formato YY-MM-DD
-     * @return LocalDate con la fecha actual del sistema 
-     */
-    private LocalDate fechaActual () {
-        java.util.Date fecha = new java.util.Date();
-        Instant instante = Instant.ofEpochMilli(fecha.getTime());
-        return LocalDateTime.ofInstant(instante, ZoneId.systemDefault())
-        .toLocalDate();
-    }
-
     /**
      * Método encargado de llenar el comboBox de los curso a los que pertenece el usuario, 
      * utilizando los métodos asignados en las clases de lacapa lógica del programa
