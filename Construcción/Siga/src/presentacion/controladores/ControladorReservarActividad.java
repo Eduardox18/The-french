@@ -19,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import logica.Actividad;
+import logica.Bitacora;
 import logica.Curso;
 import logica.Reservacion;
 import logica.Usuario;
@@ -66,7 +67,14 @@ public class ControladorReservarActividad implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         llenarCombo();
         selectorFecha.valueProperty().addListener((ov, oldValue, newValue) -> {
-            llenarTabla();
+            if(comprobarFecha(selectorFecha.getValue())) {
+                Dialogo dialogo = new Dialogo();
+                dialogo.alertarFechaPasada();
+                selectorFecha.getEditor().clear();
+            } else {
+                llenarTabla();
+            }
+            
         });
         cbIdiomas.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTabla();
@@ -147,6 +155,17 @@ public class ControladorReservarActividad implements Initializable {
             dialogo.alertaExisteActividad();
         }
     }
+    
+    /**
+     * Método que comprueba si la fecha proporcionada es anterior a la actual.
+     * @param fechaIngresada Fecha proporcionada para comparar con la actual.
+     * @return Regresa verdadero(true) si la fecha proporcionada es anterior a la actual o 
+     * regresa falso(false) en caso contrario.
+     */
+    private boolean comprobarFecha(LocalDate fechaIngresada) {
+        Bitacora bitacora = new Bitacora();
+        return fechaIngresada.isBefore(LocalDate.now());
+    }
 
     /**
      *
@@ -168,5 +187,4 @@ public class ControladorReservarActividad implements Initializable {
             dialogo.alertaError();
         }
     }
-
 }

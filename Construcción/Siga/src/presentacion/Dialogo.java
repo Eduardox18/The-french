@@ -112,7 +112,7 @@ public class Dialogo {
     
     /**
      * 
-     * Método que muestra una alerta que informa que la fecha seleccionada aun no ha ocurrido
+     * Método que muestra una alerta que informa que la fecha seleccionada aún no ha ocurrido
      */
     public void alertarFechaFutura() {
         Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
@@ -122,6 +122,21 @@ public class Dialogo {
         alertaUsuario.showAndWait();
     }
     
+    /**
+     * 
+     * Método que muestra una alerta que informa que la fecha seleccionada es anterior a la actual.
+     */
+    public void alertarFechaPasada() {
+        Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
+        alertaUsuario.setTitle("Fecha erronea");
+        alertaUsuario.setHeaderText("Alerta");
+        alertaUsuario.setContentText("No puede seleccionar una fecha pasada");
+        alertaUsuario.showAndWait();
+    }
+    
+    /**
+     * Método que muestra una alerta que informa que el periodo de entrega de la bitácora ha expirado.
+     */
     public void fechaLimiteExcedida() {
         Alert alertaUsuario = new Alert(Alert.AlertType.WARNING);
         alertaUsuario.setTitle("Fuera de tiempo");

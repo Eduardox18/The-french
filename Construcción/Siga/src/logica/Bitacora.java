@@ -23,7 +23,7 @@ public class Bitacora implements BitacoraDAO {
     /**
      * Atributos de la clase
      */
-    private int tiempoEmpleado;
+    private Integer tiempoEmpleado;
     private String comentario;
     private Date fechaBitacora;
     private int idPortafolioEvidencias;
@@ -44,11 +44,12 @@ public class Bitacora implements BitacoraDAO {
      * bitácora
      */
     public Bitacora(Integer tiempoEmpleado, String comentario,
-        Date fechaBitacora, int idPortafolioEvidencias) {
+        Date fechaBitacora, int idPortafolioEvidencias, int idAutoevaluacion) {
         this.tiempoEmpleado = tiempoEmpleado;
         this.comentario = comentario;
         this.fechaBitacora = fechaBitacora;
         this.idPortafolioEvidencias = idPortafolioEvidencias;
+        this.idAutoevaluacion = idAutoevaluacion;
     }
 
     /**
