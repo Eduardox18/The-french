@@ -28,7 +28,8 @@ public class Conexion {
             password = "construccionSW";
             conexion = DriverManager.getConnection("jdbc:mysql://localhost/siga", username, password);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
         }
     }
 
@@ -47,7 +48,8 @@ public class Conexion {
             conexion = DriverManager.getConnection("jdbc:mysql://localhost/siga",
                 username, password);
         } catch (ClassNotFoundException | SQLException ex) {
-            System.err.print("Error: " + ex.getMessage());
+            Dialogo dialogo = new Dialogo();
+            dialogo.alertaError();
         }
     }
 

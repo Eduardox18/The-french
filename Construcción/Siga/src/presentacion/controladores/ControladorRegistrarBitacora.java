@@ -80,8 +80,8 @@ public class ControladorRegistrarBitacora implements Initializable {
 
     /**
      * Método sobreescrito que inicializa la escena de RegistrarBitacora y todos los componentes que la componen. 
-     * @param url
-     * @param rb 
+     * @param url URL del incializador
+     * @param rb ResourceBundel de inicializador
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

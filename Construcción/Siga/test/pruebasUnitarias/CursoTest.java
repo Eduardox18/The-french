@@ -1,8 +1,5 @@
 package pruebasUnitarias;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import logica.Curso;
@@ -10,8 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Esmeralda Yamileth Hernández González
+ * Clase que contiene los métodos para probar los contenidos en la clase Curso
  */
 public class CursoTest {
   

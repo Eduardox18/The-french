@@ -7,8 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Esmeralda Yamileth Hernández González
+ * Clase que contiene los métodos para probar los contenidos en la clase Actividad.
  */
 public class ActividadTest {
 
@@ -59,12 +58,15 @@ public class ActividadTest {
    */
   @Test
   public void obtenerIDActividadTest() {
-    System.out.println("obtenerIDActividad");
-    String nombreActividad = "El Oui";
+    System.out.println("obtenerIDActivdad");
+    String nombreActividad = "OUI";
+    java.sql.Time horaActividad = java.sql.Time.valueOf("15:00:00");
     
     Actividad act = new Actividad();
+    act.setHoraActividad(horaActividad);
+    act.setNombreActividad(nombreActividad);
     int resultado = act.obtenerIDActividad();
-    if ("El Oui".equals(nombreActividad)) {
+    if ("OUI".equals(nombreActividad)) {
       resultado = 3;
     }
     

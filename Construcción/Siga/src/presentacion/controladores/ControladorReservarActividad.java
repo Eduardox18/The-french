@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -66,15 +67,9 @@ public class ControladorReservarActividad implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarCombo();
+        Bitacora bit = new Bitacora();
         selectorFecha.valueProperty().addListener((ov, oldValue, newValue) -> {
-            if(comprobarFecha(selectorFecha.getValue())) {
-                Dialogo dialogo = new Dialogo();
-                dialogo.alertarFechaPasada();
-                selectorFecha.getEditor().clear();
-            } else {
-                llenarTabla();
-            }
-            
+            llenarTabla();
         });
         cbIdiomas.valueProperty().addListener((ov, oldValue, newValue) -> {
             llenarTabla();
@@ -143,27 +138,33 @@ public class ControladorReservarActividad implements Initializable {
             getUsuarioActual(),
             tablaActividades.getSelectionModel().getSelectedItem().
                 obtenerIDActividad());
-        if (existe == true) {
-            boolean verificacion = reservacion.agregarReservacion(
-                tablaActividades.getSelectionModel().getSelectedItem().
-                    obtenerIDActividad(),
-                usuario.getUsuarioActual());
-            if (verificacion == true) {
-                dialogo.alertaReservacionExistosa();
-            }
+
+        if (selectorFecha.getValue().isBefore(LocalDate.now())) {
+            dialogo.alertarFechaPasada();
         } else {
-            dialogo.alertaExisteActividad();
+            if (existe == true) {
+                boolean verificacion = reservacion.agregarReservacion(
+                    tablaActividades.getSelectionModel().getSelectedItem().
+                        obtenerIDActividad(),
+                    usuario.getUsuarioActual());
+                if (verificacion == true) {
+                    dialogo.alertaReservacionExistosa();
+                }
+            } else {
+                dialogo.alertaExisteActividad();
+            }
         }
+
     }
-    
+
     /**
      * Método que comprueba si la fecha proporcionada es anterior a la actual.
+     *
      * @param fechaIngresada Fecha proporcionada para comparar con la actual.
-     * @return Regresa verdadero(true) si la fecha proporcionada es anterior a la actual o 
-     * regresa falso(false) en caso contrario.
+     * @return Regresa verdadero(true) si la fecha proporcionada es anterior a la actual o regresa
+     * falso(false) en caso contrario.
      */
     private boolean comprobarFecha(LocalDate fechaIngresada) {
-        Bitacora bitacora = new Bitacora();
         return fechaIngresada.isBefore(LocalDate.now());
     }
 
@@ -176,14 +177,16 @@ public class ControladorReservarActividad implements Initializable {
      */
     @FXML
     private void cancelarReservacion(ActionEvent event) {
+        Dialogo dialogo = new Dialogo();
         try {
-            URL principal = getClass().getResource("/presentacion/Inicial.fxml");
+            if(dialogo.confirmacionCancelar() == ButtonType.OK) {
+                URL principal = getClass().getResource("/presentacion/Inicial.fxml");
             AnchorPane panePrincipal = FXMLLoader.load(principal);
 
             BorderPane border = ControladorLogIn.getPrincipal();
             border.setCenter(panePrincipal);
+            }
         } catch (IOException ex) {
-            Dialogo dialogo = new Dialogo();
             dialogo.alertaError();
         }
     }

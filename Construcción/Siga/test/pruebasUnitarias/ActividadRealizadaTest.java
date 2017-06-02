@@ -3,16 +3,11 @@ package pruebasUnitarias;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import logica.ActividadRealizada;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Esmeralda Yamileth Hernández González
+ * Clase que contiene los métodos para probar los contenidos en la clase ActividadRealizada.
  */
 public class ActividadRealizadaTest {
 

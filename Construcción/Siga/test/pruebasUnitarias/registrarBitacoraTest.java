@@ -5,8 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author Esmeralda Yamileth Hernández González
+ * Clase que contiene los métodos para probar los contenidos en la clase RegistrarBitacora.
  */
 public class registrarBitacoraTest {
   
