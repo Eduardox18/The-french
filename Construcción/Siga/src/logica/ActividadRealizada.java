@@ -35,10 +35,10 @@ public class ActividadRealizada implements ActividadRealizadaDAO {
     /**
      * Constructor completo de la clase. Permite crear objetos tipo ActividadRealizada.
      *
-     * @param tipoARealizada: Tipo de la actividad realizada.
-     * @param nombreARealizada: Nombre de la actividad realizada.
-     * @param fechaARealizada: Fecha en que se realizó la actividad.
-     * @param tiempoEmpleado : Tiempo empleado en la actividad que se realizó.
+     * @param tipoARealizada Tipo de la actividad realizada.
+     * @param nombreARealizada Nombre de la actividad realizada.
+     * @param fechaARealizada Fecha en que se realizó la actividad.
+     * @param tiempoEmpleado Tiempo empleado en la actividad que se realizó.
      */
     public ActividadRealizada(String tipoARealizada, String nombreARealizada, Date fechaARealizada,
         Integer tiempoEmpleado) {
@@ -92,8 +92,8 @@ public class ActividadRealizada implements ActividadRealizadaDAO {
      * Método sobreescrito que permite consultar la lista de actividades realizadas por el alumno en
      * un curso específico.
      *
-     * @param nrcCurso: NRC del curso que se desea buscar.
-     * @param matriculaAlumno: Matrícula del alumno del que se está interesado.
+     * @param nrcCurso NRC del curso que se desea buscar.
+     * @param matriculaAlumno Matrícula del alumno del que se está interesado.
      * @return Regresa un ObservableList de objetos tipo ActividadRealizada que satisfacen todas las
      * coincidencias de búsqueda.
      */

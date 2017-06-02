@@ -33,9 +33,9 @@ public class Bitacora implements BitacoraDAO {
     /**
      * Constructor completo de la clase. Permite crear objetos tipo bitácora.
      *
-     * @param tiempoEmpleado: Tiempo empleado en realizar la bitácora.
-     * @param comentario: Comentario sobre la bitácora.
-     * @param fechaBitacora: Fecha en que se realizó la bitácora.
+     * @param tiempoEmpleado Tiempo empleado en realizar la bitácora.
+     * @param comentario Comentario sobre la bitácora.
+     * @param fechaBitacora Fecha en que se realizó la bitácora.
      * @param idPortafolioEvidencias: ID del portafolio de evidencias donde se almacenará la
      * bitácora
      */
@@ -94,7 +94,7 @@ public class Bitacora implements BitacoraDAO {
      *
      * Método sobreescrito encargado de agregar una nueva bitácora a la base de datos del Sistema.
      *
-     * @param bitacora: Objeto de tipo Bitacora de donde se obtienen todos los datos.
+     * @param bitacora Objeto de tipo Bitacora de donde se obtienen todos los datos.
      * @return Regresa verdadero(true) si el registro de la bitácora fue exitosa o falso (false) si
      * ocurrió un error al registrar la bitácora.
      */
@@ -246,7 +246,7 @@ public class Bitacora implements BitacoraDAO {
      * Método encargado recuperar las actividades a las que asistió el alumno para posteriormente
      * hacer un registro con el número de bitácora que le corresponde.
      *
-     * @param nrcCurso: NRC del curso en el que se registró la bitácora.
+     * @param nrcCurso NRC del curso en el que se registró la bitácora.
      * @return Regresa verdadero(true) si el registro fue un éxito o falso(false) si ocurrió algún
      * error.
      */
@@ -310,7 +310,7 @@ public class Bitacora implements BitacoraDAO {
      * el número de bitácora que le corresponde. Se guarda para actualizaciones futuras del
      * programa.
      *
-     * @param idAAsistidas: ID de la actividad a la que asistió el alumno.
+     * @param idAAsistidas ID de la actividad a la que asistió el alumno.
      */
     private void updateActividadesAsistidas(int idAAsistidas) {
         Connection conexion = null;
@@ -350,7 +350,7 @@ public class Bitacora implements BitacoraDAO {
      * Método encargado recuperar las actividades escritas que completó el alumno para
      * posteriormente hacer un registro con el número de bitácora que le corresponde.
      *
-     * @param nrcCurso: NRC del curso al que pertenecen las actividades escritas.
+     * @param nrcCurso NRC del curso al que pertenecen las actividades escritas.
      * @return Regresa verdadero(true) si el registro fue un éxito o falso(false) si ocurrió algún
      * error.
      */
@@ -410,7 +410,7 @@ public class Bitacora implements BitacoraDAO {
      * y el número de bitácora que le corresponde. Se guarda para actualizaciones futuras del
      * programa.
      *
-     * @param idAEscritas: ID de las actividades escritas que realizó el alumno.
+     * @param idAEscritas ID de las actividades escritas que realizó el alumno.
      */
     private void updateActividadesEscritas(int idAEscritas) {
         Connection conexion = null;
@@ -449,7 +449,7 @@ public class Bitacora implements BitacoraDAO {
     /**
      * Método encargado de comprobar si la bitácora registrada del alumno en el curso ya existe.
      *
-     * @param nrcCurso: NRC del curso que se desea buscar.
+     * @param nrcCurso NRC del curso que se desea buscar.
      * @return Regresa verdadero(true) si ya existe la bitácora del alumno en ese curso o falso
      * (false) si es que no existe.
      */

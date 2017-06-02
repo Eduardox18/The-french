@@ -15,7 +15,7 @@ public interface BitacoraDAO {
      * Habrá un registro único de bitácoras y sólo se podrá añadir una bitácora por curso que tenga
      * el alumno.
      *
-     * @param bitacora: Objeto de tipo Bitacora de donde se obtienen todos los datos que se
+     * @param bitacora Objeto de tipo Bitacora de donde se obtienen todos los datos que se
      * registrarán.
      * @return Regresará verdadero (true) si la operación de registro fue exitosa o falso (false) si
      * la operación de registro falló.

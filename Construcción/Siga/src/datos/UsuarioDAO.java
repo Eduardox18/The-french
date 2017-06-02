@@ -12,8 +12,8 @@ public interface UsuarioDAO {
      * 
      * Método que se utiliza para consultar la información del usuario y comprobar si existe en 
      * la base de datos del Sistema.
-     * @param nombre: Nombre de usuario.
-     * @param password: Contraseña de usuario
+     * @param nombre Nombre de usuario.
+     * @param password Contraseña de usuario
      * @return Regresa verdadero(true) si el usuario existe en la base de datos y su contraseña
      * coincide con la proporcionada o regresa falso(false) si el usuario no existe en el Sistema
      * o la contraseña proporcionada no coincide con la registrada.

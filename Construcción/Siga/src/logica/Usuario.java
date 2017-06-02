@@ -32,8 +32,8 @@ public class Usuario implements UsuarioDAO {
     /**
      * Constructor completo de la clase. Permite crear objetos tipo Usuario.
      *
-     * @param nombre
-     * @param password
+     * @param nombre Nombre de usuario
+     * @param password Contraseña del usuario
      */
     public Usuario(String nombre, String password) {
         this.nombre = nombre;
@@ -74,8 +74,8 @@ public class Usuario implements UsuarioDAO {
      * Método sobreescrito que recupera la constraseña del usuario que quiere ingresar al Sistema y
      * la compara con la registrada (recuperada por medio de otro método)
      *
-     * @param nombre: El nombre del Usuario
-     * @param password: Contraseña del usuario
+     * @param nombre El nombre del Usuario
+     * @param password Contraseña del usuario
      * @return Regresa verdadero(true) si el password de la base de datos del Sistema coincide con
      * el proporcionado o regresa falso(false) si no coinciden.
      */
@@ -133,7 +133,7 @@ public class Usuario implements UsuarioDAO {
      * Método que se encarga de obtener el cifrado de 256 bits del String proporcionado (contraseña
      * ingresada por el usuario).
      *
-     * @param password: String proporcionado (Contraseña del usuario).
+     * @param password String proporcionado (Contraseña del usuario).
      * @return Regresa el String cifrado.
      */
     public String obtenerPassword(String password) {
@@ -185,7 +185,7 @@ public class Usuario implements UsuarioDAO {
     /**
      * Método encargado de verificar que el usuario exista en la base de datos.
      *
-     * @param nombre: Nombre de usuario ingresado
+     * @param nombre Nombre de usuario ingresado
      * @return Regresa verdadero(true) si el usuario existe en la base de datos o falso(false) en
      * caso contrario.
      */
@@ -240,7 +240,7 @@ public class Usuario implements UsuarioDAO {
      * Método que establece la variable global y constante USUARIOACTUAL con la matrícula del alumno
      * que ingresó al sistema.
      *
-     * @param nombre: Nombre de Usuario del alumno.
+     * @param nombre Nombre de Usuario del alumno.
      */
     public void obtenerMatriculaAlumno(String nombre) {
         Connection conexion = null;

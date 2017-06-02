@@ -13,8 +13,8 @@ public interface ActividadRealizadaDAO {
      * Método declarado que recupera un ObservableList de objetos ActividadRealizada a partir del
      * NRC de un curso y la matrícula del alumno del que se desean obtener las actividades.
      *
-     * @param nrcCurso: NRC del curso en el que está el alumno.
-     * @param matriculaAlumno: Matrícula registrada del alumno interesado.
+     * @param nrcCurso NRC del curso en el que está el alumno.
+     * @param matriculaAlumno Matrícula registrada del alumno interesado.
      * @return ObservableList de objetos ActividadRealizada, donde se encuentran las coincidencias
      * de la búsqueda.
      */

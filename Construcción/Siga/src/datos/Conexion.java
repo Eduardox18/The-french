@@ -35,8 +35,8 @@ public class Conexion {
     /**
      * Constructor que permite la conexión con la base de datos registrada.
      *
-     * @param username: Usuario de mySQL que tiene permisos para ingresar a la base de datos.
-     * @param password: Contraseña del usuario de mySQL que tiene permisos para ingresar a la base
+     * @param username Usuario de mySQL que tiene permisos para ingresar a la base de datos.
+     * @param password Contraseña del usuario de mySQL que tiene permisos para ingresar a la base
      * de datos.
      */
     public Conexion(String username, String password) {

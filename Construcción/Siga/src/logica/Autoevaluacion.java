@@ -38,16 +38,16 @@ public class Autoevaluacion implements AutoevaluacionDAO {
     /**
      * Constructor completo de la clase. Permite crear objetos tipo Autoevaluacion.
      *
-     * @param nombreElaborador: Nombre del elaborador de la autoevaluación.
-     * @param nombreMaterial: Material utilizado en la autoevaluación.
-     * @param habilidadesRequeridas: Habilidades requeridas de la autoevaluación.
-     * @param fechaElaboracion: Fecha en que se elaboró la autoevaluación.
-     * @param contenidosEvaluados: Contenidos que se evaluaron en la autoevaluación.
-     * @param codificacion: Codificación de la autoevaluación.
-     * @param objetivo: Objetivo de la autoevaluación.
-     * @param sala: Sala en que se realizó la autoevaluación.
-     * @param nivel: Nivel de la autoevaluación.
-     * @param resultadoAutoevaluacion: Resultado obtenido en la autoevaluación.
+     * @param nombreElaborador Nombre del elaborador de la autoevaluación.
+     * @param nombreMaterial Material utilizado en la autoevaluación.
+     * @param habilidadesRequeridas Habilidades requeridas de la autoevaluación.
+     * @param fechaElaboracion Fecha en que se elaboró la autoevaluación.
+     * @param contenidosEvaluados Contenidos que se evaluaron en la autoevaluación.
+     * @param codificacion Codificación de la autoevaluación.
+     * @param objetivo Objetivo de la autoevaluación.
+     * @param sala Sala en que se realizó la autoevaluación.
+     * @param nivel Nivel de la autoevaluación.
+     * @param resultadoAutoevaluacion Resultado obtenido en la autoevaluación.
      */
     public Autoevaluacion(String nombreElaborador, String nombreMaterial,
         String habilidadesRequeridas, Date fechaElaboracion, String contenidosEvaluados,
@@ -151,7 +151,7 @@ public class Autoevaluacion implements AutoevaluacionDAO {
      * Método encargado de obtener el número de autoevaluación correspondiente al curso y alumno que
      * lo solicita. El alumno es el logueado en el Sistema.
      *
-     * @param nrcCurso: NRC del curso en el que se encuentra el alumno.
+     * @param nrcCurso NRC del curso en el que se encuentra el alumno.
      * @return Regresa el número de autoevaluación que corresponde al curso y alumno solicitados.
      */
     public int obtenerNoAutoevaluacion(int nrcCurso) {
@@ -216,7 +216,7 @@ public class Autoevaluacion implements AutoevaluacionDAO {
      * Método encaragdo de obtener el resultado de la autoevaluación del alumno según el curso que
      * se solicita. El alumno es el logueado en el Sistema.
      *
-     * @param nrcCurso: NRC del curso en el que se encuentra el alumno.
+     * @param nrcCurso NRC del curso en el que se encuentra el alumno.
      * @return Regresa el resultado de la autoevaluación que obtuvo el alumno en el curso
      * especificado.
      */

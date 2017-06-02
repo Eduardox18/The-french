@@ -49,7 +49,7 @@ public class PortafolioEvidencias {
      * Método encargador de recuperar el ID del protafolio de evidencias de un alumno según su
      * curso.
      *
-     * @param nrcCurso: NRC del curso que se quiere recuperar el portafolio.
+     * @param nrcCurso NRC del curso que se quiere recuperar el portafolio.
      * @return Regresa el ID del portafolio de evidencias del alumno según el curso buscado.
      */
     public int recuperarIDPortafolio(int nrcCurso) {

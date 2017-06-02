@@ -30,8 +30,8 @@ public class Curso implements CursoDAO {
     /**
      * Constructor completo de la clase. Permite crear objetos tipo Curso.
      *
-     * @param nombreCurso: Nombre del curso.
-     * @param nrcCurso: NRC (clave) del curso.
+     * @param nombreCurso Nombre del curso.
+     * @param nrcCurso NRC (clave) del curso.
      */
     public Curso(String nombreCurso, Integer nrcCurso) {
         this.nombreCurso = nombreCurso;
@@ -72,7 +72,7 @@ public class Curso implements CursoDAO {
      * Método sobreescrito que recupera un ObservableList con objetos tipo Curso, los cuales son los
      * cursos que está llevando actualmente el alumno.
      *
-     * @param matriculaAlumno: Matrícula del alumno del que se desean consultar los cursos.
+     * @param matriculaAlumno Matrícula del alumno del que se desean consultar los cursos.
      * @return Regresa un ObservableList con todos los cursos en los que se encuentra inscrito el
      * alumno
      */

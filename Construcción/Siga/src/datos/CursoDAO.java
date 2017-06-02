@@ -13,7 +13,7 @@ public interface CursoDAO {
     /**
      * Método declarado que recupera un ObservableList de objetos tipo Curso, los cuales 
      * son los que el alumno está cursando actualmente.
-     * @param matriculaAlumno: Matrícula del alumno del que se desean recuperar los cursos.
+     * @param matriculaAlumno Matrícula del alumno del que se desean recuperar los cursos.
      * @return Regresa un ObservableList de objetos tipo Curso. Son los cursos a los que está
      * inscrito el alumno.
      */

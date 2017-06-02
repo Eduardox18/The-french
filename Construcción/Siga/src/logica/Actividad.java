@@ -37,11 +37,11 @@ public class Actividad implements ActividadDAO {
     /**
      * Constructor completo de la clase. Permite crear objetos Actividad.
      *
-     * @param nombre: Nombre de la actividad.
-     * @param tipoActividad: Tipo de la actividad (Asesoría, Conversación o Taller de lectura).
-     * @param horaActividad: Hora de la actividad.
-     * @param diaActividad: Fecha en que se impartirá la actividad.
-     * @param asesorActividad: Asesor encargado de impartir la actividad (Asesor del curso al que
+     * @param nombre Nombre de la actividad.
+     * @param tipoActividad Tipo de la actividad (Asesoría, Conversación o Taller de lectura).
+     * @param horaActividad Hora de la actividad.
+     * @param diaActividad Fecha en que se impartirá la actividad.
+     * @param asesorActividad Asesor encargado de impartir la actividad (Asesor del curso al que
      * pertenece la actividad).
      */
     public Actividad(String nombre, String tipoActividad, Time horaActividad, Date diaActividad,
@@ -101,8 +101,8 @@ public class Actividad implements ActividadDAO {
      * Método sobreescrito que recupera un ObservableList de objetos Actividad, a partir del NRC del
      * curso del que se interesa recuperar actividades y la fecha interesada.
      *
-     * @param nrcCurso: NRC del curso que se desea buscar
-     * @param diaActividad: Fecha en la que se desean buscar las actividades
+     * @param nrcCurso NRC del curso que se desea buscar
+     * @param diaActividad Fecha en la que se desean buscar las actividades
      * @return Regresa un ObservableList de objetos Actividad, que satisfacen todas las
      * coincidencias de la búsqueda.
      */
@@ -170,8 +170,8 @@ public class Actividad implements ActividadDAO {
      * alumno. Esto se recupera de las que ya haya reservado anteriormente y que el asesor haya
      * confirmado su asistencia.
      *
-     * @param nrcCurso: NRC del curso que se desea buscar.
-     * @param matriculaAlumno: Matrícula del alumno del que se desea recuperar las actividades a las
+     * @param nrcCurso NRC del curso que se desea buscar.
+     * @param matriculaAlumno Matrícula del alumno del que se desea recuperar las actividades a las
      * que asistió.
      * @return Regresa un ObservableList de objetos Actividad que satisfacen todas las coincidencias
      * de búsqueda.

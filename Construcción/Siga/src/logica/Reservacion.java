@@ -52,8 +52,8 @@ public class Reservacion implements ReservacionDAO {
      * Método sobreescrito que agrega una reservación de una actividad hecha por el alumno a la base
      * de datos del Sistema.
      *
-     * @param idActividad: ID de la Actividad que se desea reservar
-     * @param matriculaAlumno: Matrícula del Alumno que hace la reservación
+     * @param idActividad ID de la Actividad que se desea reservar
+     * @param matriculaAlumno Matrícula del Alumno que hace la reservación
      * @return Regresa verdadero (true) si la reservación es exitosa o falso(false) en el caso
      * contrario.
      */
@@ -103,8 +103,8 @@ public class Reservacion implements ReservacionDAO {
      *
      * Método que comprueba que el alumno no tenga ya una reservación de la actividad proporcionada.
      *
-     * @param matriculaAlumno: La matrícula del alumno del que se desea consultar.
-     * @param idActividad: El ID de la actividad de la que se desea comprobar
+     * @param matriculaAlumno La matrícula del alumno del que se desea consultar.
+     * @param idActividad El ID de la actividad de la que se desea comprobar
      * @return Regresa verdadero(true) si el alumno no ha reservado esa actividad o falso(false) si
      * ya reservó esa actividad.
      */

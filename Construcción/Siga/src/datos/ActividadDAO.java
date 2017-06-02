@@ -16,8 +16,8 @@ public interface ActividadDAO {
      * Método declarado que recupera un ObservableList de objetos Actividad a partir del NRC de un
      * curso y el día interesado para consultar actividades.
      *
-     * @param nrcCurso: NRC del curso que se desea buscar
-     * @param diaActividad: Fecha en la que se desean buscar las actividades
+     * @param nrcCurso NRC del curso que se desea buscar
+     * @param diaActividad Fecha en la que se desean buscar las actividades
      * @return ObservableList de objetos Actividad, donde se encuentran todas las coincidencias de
      * la búsqueda
      */
@@ -27,8 +27,8 @@ public interface ActividadDAO {
      * Método declarado que recupera una lista de objetos Actividad a las que el alumno asistió en
      * el transcurso del curso. Se recuperan a partir del NRC del curso y la matrícula del alumno.
      *
-     * @param nrcCurso: NRC del curso en el que está el alumno.
-     * @param matriculaAlumno: Matrícula registrada del alumno del que se interesan recuperar las
+     * @param nrcCurso NRC del curso en el que está el alumno.
+     * @param matriculaAlumno Matrícula registrada del alumno del que se interesan recuperar las
      * actividades a las que asistió.
      * @return Lista de objetos Actividad, donde se encuentran las coincidencias de la búsqueda.
      */

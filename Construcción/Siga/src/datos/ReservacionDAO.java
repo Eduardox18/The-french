@@ -12,8 +12,8 @@ public interface ReservacionDAO {
      * Método que agrega una reservación de una actividad a la base de datos del Sistema. Un alumno
      * no podrá reservar la misma actividad dos veces.
      *
-     * @param idActividad: ID de la Actividad que se desea reservar
-     * @param matriculaAlumno: Matrícula del Alumno que hace la reservación
+     * @param idActividad ID de la Actividad que se desea reservar
+     * @param matriculaAlumno Matrícula del Alumno que hace la reservación
      * @return Regresa verdadero (true) si la reservación fue exitosa o falso (false) si no se pudo
      * completar la reservación.
      */
