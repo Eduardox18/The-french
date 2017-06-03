@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * Clase que contiene los métodos para probar los contenidos en la clase RegistrarBitacora.
  */
-public class registrarBitacoraTest {
+public class RegistrarBitacoraTest {
   
  /**
   * Prueba que verifica que se registre correctamente una bitácora, comparando los 
